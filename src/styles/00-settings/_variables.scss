@@ -1,0 +1,33 @@
+:root {
+  /*Color primario recuerda al color de la piel de un reptil o de la jungla de tono azul verdoso*/
+  --primary-color: #3A737D; /*Con saturación 36% y luminosidad 36%/*/
+  --primary-color-disabled: #C2D4D7;/*Con saturación 23% y luminosidad 80%*/
+  --primary-color-active: #2E5C64;/*Con saturación 37% y luminosidad 28%*/
+  --primary-color-hover: #346871;/*Con saturación 37% y luminosidad 32%*/
+
+
+  /*Color secundario recuerda a selva húmeda, vegetación exuberante, o incluso la fuerza de un dinosaurio por su tono reptiliano .*/
+  --secondary-color: #65C1BE;/*Con saturación 40% y luminosidad 58%*/
+  --secondary-color-disabled: #B0E4DD;/*Con saturación 44% y luminosidad 80%*/
+  --secondary-color-active: #008774;/*Con saturación 100% y luminosidad 27%*/
+  --secondary-color-hover: #009883;/*Con saturación 23% y luminosidad 80%*/
+
+
+  /*Color de apoyo que se usa para dar intuibilidad a elementos interactuables o marcados. Evoca rocas arcilla y fuego.*/
+  --support-color: #EF7B51;/*Con saturación 83% y luminosidad 63%*/
+  --support-color-disabled: #FAD6C9;/*Con saturación 77% y luminosidad 87%*/
+  --support-color-active: #BF6241;/*Con saturación 49% y luminosidad 50%*/
+  --support-color-hover: #D76F49;/*Con saturación 62% y luminosidad 56%*/
+
+
+  /*Color de fondo con tonos amarillentos alrededor de los 70º. Transmite naturalidad ligereza y no es estridente. Se usan en fondos.*/
+  --background-color: #D6E18D;/*Con saturación 55% y luminosidad 73%*/
+  --background-color-disabled: #F5FADC;/*Con saturación 70% y luminosidad 93%*/
+  --background-color-active: #C2CD73;/*Con saturación 50% y luminosidad 62%*/
+  --background-color-hover: #EAF0B4;/*Con saturación 60% y luminosidad 82%*/
+
+
+  /*Color de texto principal oscuro para asegurar legibilidad y contraste con los fondos claros.*/
+  --text-color: #3A4243;/* tono neutro y apagado, con predominancia de verde mezclado con gris.*/
+
+}
