@@ -1,33 +1,188 @@
-:root {
-  /*Color primario recuerda al color de la piel de un reptil o de la jungla de tono azul verdoso*/
-  --primary-color: #3A737D; /*Con saturación 36% y luminosidad 36%/*/
-  --primary-color-disabled: #C2D4D7;/*Con saturación 23% y luminosidad 80%*/
-  --primary-color-active: #2E5C64;/*Con saturación 37% y luminosidad 28%*/
-  --primary-color-hover: #346871;/*Con saturación 37% y luminosidad 32%*/
 
+  /*--------------------VARIABLES DE COLORES--------------------*/
+  /*Color primario recuerda al color de la piel de un reptil o de la jungla de tono azul verdoso*/
+  :root {
+    --primary-color: #3A737D;          /*Con saturación 36% y luminosidad 36%/*/
+    --primary-color-disabled: #C2D4D7; /*Con saturación 23% y luminosidad 80%*/
+    --primary-color-active: #2E5C64;   /*Con saturación 37% y luminosidad 28%*/
+    --primary-color-hover: #346871;    /*Con saturación 37% y luminosidad 32%*/
+  }
 
   /*Color secundario recuerda a selva húmeda, vegetación exuberante, o incluso la fuerza de un dinosaurio por su tono reptiliano .*/
-  --secondary-color: #65C1BE;/*Con saturación 40% y luminosidad 58%*/
-  --secondary-color-disabled: #B0E4DD;/*Con saturación 44% y luminosidad 80%*/
-  --secondary-color-active: #008774;/*Con saturación 100% y luminosidad 27%*/
-  --secondary-color-hover: #009883;/*Con saturación 23% y luminosidad 80%*/
-
+  :root {
+    --secondary-color: #65C1BE;          /*Con saturación 40% y luminosidad 58%*/
+    --secondary-color-disabled: #B0E4DD; /*Con saturación 44% y luminosidad 80%*/
+    --secondary-color-active: #008774;   /*Con saturación 100% y luminosidad 27%*/
+    --secondary-color-hover: #009883;    /*Con saturación 23% y luminosidad 80%*/
+  }
 
   /*Color de apoyo que se usa para dar intuibilidad a elementos interactuables o marcados. Evoca rocas arcilla y fuego.*/
-  --support-color: #EF7B51;/*Con saturación 83% y luminosidad 63%*/
-  --support-color-disabled: #FAD6C9;/*Con saturación 77% y luminosidad 87%*/
-  --support-color-active: #BF6241;/*Con saturación 49% y luminosidad 50%*/
-  --support-color-hover: #D76F49;/*Con saturación 62% y luminosidad 56%*/
-
+  :root {
+    --support-color: #EF7B51;          /*Con saturación 83% y luminosidad 63%*/
+    --support-color-disabled: #FAD6C9; /*Con saturación 77% y luminosidad 87%*/
+    --support-color-active: #BF6241;   /*Con saturación 49% y luminosidad 50%*/
+    --support-color-hover: #D76F49;    /*Con saturación 62% y luminosidad 56%*/
+  }
 
   /*Color de fondo con tonos amarillentos alrededor de los 70º. Transmite naturalidad ligereza y no es estridente. Se usan en fondos.*/
-  --background-color: #D6E18D;/*Con saturación 55% y luminosidad 73%*/
-  --background-color-disabled: #F5FADC;/*Con saturación 70% y luminosidad 93%*/
-  --background-color-active: #C2CD73;/*Con saturación 50% y luminosidad 62%*/
-  --background-color-hover: #EAF0B4;/*Con saturación 60% y luminosidad 82%*/
+  :root {
+    --background-color: #D6E18D;          /*Con saturación 55% y luminosidad 73%*/
+    --background-color-disabled: #F5FADC; /*Con saturación 70% y luminosidad 93%*/
+    --background-color-active: #C2CD73;   /*Con saturación 50% y luminosidad 62%*/
+    --background-color-hover: #EAF0B4;    /*Con saturación 60% y luminosidad 82%*/
+  }
 
+  /*Escala de grises para textos y elementos de formularios*/
+  :root {
+    --gray-scale: #CFCFCF;
+    --gray-scale-light: #F7F7F7;
+    --gray-scale-dark: #B8B8B8;
+  }
 
   /*Color de texto principal oscuro para asegurar legibilidad y contraste con los fondos claros.*/
-  --text-color: #3A4243;/* tono neutro y apagado, con predominancia de verde mezclado con gris.*/
+  :root {
+    --text-color: #3A4243; /* tono neutro y apagado, con predominancia de verde mezclado con gris.*/
+  }
 
-}
+  /*Color de texto principal claro para asegurar legibilidad y contraste con los fondos oscuros.*/
+  :root {
+    --text-color-light: #FDF2EE;
+    --text-color-hover: #FDEBE5;
+  }
+
+  /*--------------------VARIABLES DE FUENTES--------------------*/
+  :root {
+    --font-primary: 'Baloo 2', sans-serif;       /* Texto principal */
+    --font-secondary: 'Fredoka One', cursive;    /* Títulos y encabezados */
+  }
+
+
+  /*--------------------VARIABLES DE TAMAÑOS--------------------*/
+  /*Tamaños de fuentes*/
+  :root {
+    --font-size-5xl: 48px; /*Encabezados principales*/
+    --font-size-4xl: 36px; /*Títulos grandes*/
+    --font-size-3xl: 24px; /*Subtítulos*/
+    --font-size-2xl: 20px; /*Destacados*/
+    --font-size-xl: 16px;  /*Texto base*/
+    --font-size-lg: 14px;  /*Texto secundario*/
+    --font-size-sm: 12px;  /*Letra pequeña*/
+  }
+
+  /*Pesos*/
+  :root {
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+  }
+
+  /*--------------------VARIABLES DE ESPACIOS--------------------*/
+  /*Espaciado de alturas en textos y elementos*/
+  /*line-height*/
+  :root {
+    --line-height-tight: 1.2;   /*Para títulos*/
+    --line-height-normal: 1.5;  /*Para párrafos*/
+    --line-height-relaxed: 1.8; /*Para textos largos*/
+  }
+
+
+  /*The 8-point grid system. Espaciado en márgenes y paddings*/
+  :root {
+    --spacing-1: 0.5rem;   /*8px*/
+    --spacing-2: 1rem;     /*16px*/
+    --spacing-3: 1.5rem;   /*24px*/
+    --spacing-4: 2rem;     /*32px*/
+    --spacing-5: 2.5rem;   /*40px*/
+    --spacing-6: 3rem;     /*48px*/
+    --spacing-7: 3.5rem;   /*56px*/
+    --spacing-8: 4rem;     /*64px*/
+    --spacing-9: 4.5rem;   /*72px*/
+    --spacing-10: 5rem;    /*80px*/
+    --spacing-12: 6rem;    /*96px*/
+    --spacing-13: 6.5rem;  /*104px*/
+    --spacing-14: 7rem;    /*112px*/
+    --spacing-15: 7.5rem;  /*120px*/
+    --spacing-16: 8rem;    /*128px*/
+    --spacing-17: 8.5rem;  /*136px*/
+    --spacing-18: 9rem;    /*144px*/
+    --spacing-19: 9.5rem;  /*152px*/
+    --spacing-20: 10rem;   /*160px*/
+    --spacing-21: 10.5rem; /*168px*/
+    --spacing-22: 11rem;   /*176px*/
+    --spacing-23: 11.5rem; /*184px*/
+    --spacing-24: 12rem;   /*192px*/
+  }
+
+
+  /*--------------------VARIABLES DE BREAKPOINTS--------------------*/
+  /*Breakpoint genérico basado en la escala moderna del estilo tailwind*/
+  :root {
+    --breakpoint-sm: 640px;   /*Móviles grandes*/
+    --breakpoint-md: 768px;   /*Tablets*/
+    --breakpoint-lg: 1024px;  /*Laptops*/
+    --breakpoint-xl: 1280px;  /*Pantallas grandes*/
+    --breakpoint-2xl: 1536px; /*Monitores anchos*/
+  }
+
+
+  /*--------------------VARIABLES DE SOMBRAS--------------------*/
+
+  :root {
+    /*Sombra sutil: botones inicio/perfil. M3/elevation light/5*/
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.15);
+
+    /*Sombra media: botones restantes AppWeb. Drop Shadow/600*/
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.20);
+
+    /*Sombra grande: para tarjetas o elementos destacados*/
+    --shadow-lg: 0 8px 12px rgba(0, 0, 0, 0.25);
+
+    /*Sombra muy grande: overlays o menús flotantes*/
+    --shadow-xl: 0 12px 16px rgba(0, 0, 0, 0.30);
+
+    /*Sombra interna: botones inicio y perfil. Inner Shadow/600*/
+    --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.20);
+  }
+
+
+  /*--------------------VARIABLES DE BORDES Y RADIOS--------------------*/
+  :root {
+    /*Grosores de borde genéricos*/
+    --border-thin: 1px;     /*Líneas sutiles*/
+    --border-medium: 2px;   /*Líneas medias*/
+    --border-thick: 4px;    /*Líneas gruesas*/
+
+    /*Grosores específicos del proyecto*/
+    --border-progress: 3px; /*Barras de progreso del usuario*/
+    --border-minigames: 10px;    /*Tarjetas de Minijuegos*/
+
+    /*Radios de borde genéricos*/
+    --radius-sm: 2px;        /*Esquinas muy ligeras*/
+    --radius-md: 4px;        /*Esquinas medias*/
+    --radius-lg: 8px;        /*Esquinas grandes*/
+    --radius-xl: 16px;       /*Esquinas muy grandes*/
+    --radius-full: 9999px;   /*Círculos completos*/
+
+    /*Radios de borde específicos del proyecto*/
+    --radius-button-start: 90px;   /*Botón de inicio*/
+    --radius-button-profile: ;     /*Botón de perfil*/
+    --radius-button-header: 25px;  /*Botones de cabecera y genéricos*/
+    --radius-button-header2: 0px;  /*Botones de cabecera y genéricos*/
+    --radius-form-field: 50px;     /*Campos de formulario*/
+    --radius-form-button: 25px;    /*Botones de formulario*/
+  }
+
+
+  /*--------------------VARIABLES DE TRANSICIONES--------------------*/
+  :root {
+    /* Duraciones estándar */
+    --transition-fast: 150ms;   /*Transiciones rápidas: hover en los botones*/
+    --transition-base: 300ms;   /*Transiciones normales: menús y tarjetas*/
+    --transition-slow: 500ms;   /*Transiciones lentas: modal registro y overlays*/
+
+    /* Función de tiempo */
+    --transition-ease: ease-in-out; /*Transiciones suaves*/
+  }
+
