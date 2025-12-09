@@ -1,0 +1,87 @@
+
+/*--------------------BOTÓN SECUNDARIO--------------------*/
+
+@mixin button-secondary{
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
+
+  border-radius: var(--radius-button-top-left) var(--radius-button-top-right) var(--radius-button-bottom-right) var(--radius-button-bottom-left);
+
+  box-shadow: var(--shadow-md);
+  border: none;
+  cursor: pointer;
+
+  padding: var(--spacing-2) var(--spacing-4);
+
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-medium);
+
+  transition: background-color var(--transition-fast) var(--transition-ease), transform var(--transition-fast) var(--transition-ease);
+
+  &:hover {
+    background-color: var(--primary-color-hover);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    background-color: var(--primary-color-active);
+    transform: translateY(0);
+  }
+}
+
+
+/*--------------------CAMPO DE FORMULARIO (INPUT)--------------------*/
+
+@mixin input-field {
+  display: block;
+  width: 100%;
+
+  border-radius: var(--radius-form-field);
+
+  background-color: var(--gray-scale-light);
+  border: var(--border-thin) solid var(--gray-scale);
+  color: var(--text-color);
+
+  padding: var(--spacing-2) var(--spacing-4);
+
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xl);
+
+  outline: none;
+  transition: border-color var(--transition-fast) var(--transition-ease),
+  box-shadow var(--transition-fast) var(--transition-ease);
+
+  &:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-color-disabled); /* Un anillo suave */
+  }
+
+  &::placeholder {
+    color: var(--gray-scale-dark);
+  }
+}
+
+/*--------------------RESPONSIVE--------------------*/
+
+@mixin respond-to($breakpoint) {
+  $breakpoints: (
+    'sm': 640px,
+    'md': 768px,
+    'lg': 1024px,
+    'xl': 1280px,
+    '2xl': 1536px
+  );
+
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content; /* Aquí va el código CSS */
+    }
+  } @else {
+    @warn "El breakpoint '#{$breakpoint}' no es válido. Usa: sm, md, lg, xl, 2xl.";
+  }
+}

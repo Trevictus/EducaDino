@@ -155,7 +155,7 @@
     --border-thick: 4px;    /*Líneas gruesas*/
 
     /*Grosores específicos del proyecto*/
-    --border-progress: 3px; /*Barras de progreso del usuario*/
+    --border-progress: 3px;      /*Barras de progreso del usuario*/
     --border-minigames: 10px;    /*Tarjetas de Minijuegos*/
 
     /*Radios de borde genéricos*/
@@ -166,12 +166,14 @@
     --radius-full: 9999px;   /*Círculos completos*/
 
     /*Radios de borde específicos del proyecto*/
-    --radius-button-start: 90px;   /*Botón de inicio*/
-    --radius-button-profile: ;     /*Botón de perfil*/
-    --radius-button-header: 25px;  /*Botones de cabecera y genéricos*/
-    --radius-button-header2: 0px;  /*Botones de cabecera y genéricos*/
-    --radius-form-field: 50px;     /*Campos de formulario*/
-    --radius-form-button: 25px;    /*Botones de formulario*/
+    --radius-button-start: 90px;         /*Botón de inicio*/
+    --radius-button-profile: ;           /*Botón de perfil*/
+    --radius-button-top-left: 0px;       /*Botón secundario*/
+    --radius-button-top-right: 25px;     /*Botón secundario*/
+    --radius-button-bottom-right: 25px;  /*Botón secundario*/
+    --radius-button-bottom-left: 25px;   /*Botón secundario*/
+    --radius-form-field: 50px;           /*Campos de formulario*/
+    --radius-form-button: 25px;          /*Botones de formulario*/
   }
 
 
