@@ -2,7 +2,7 @@
 
 ## 🎯 Introducción
 
-Este documento describe toda la estructura base creada para el backend de **EducaDIno**, una aplicación web educativa sobre dinosaurios, construida con **Spring Boot 4.0** y **H2 Database**.
+Este documento describe toda la estructura base creada para el backend de **EducaDino**, una aplicación web educativa sobre dinosaurios, construida con **Spring Boot 4.0** y **H2 Database**.
 
 ---
 
@@ -323,36 +323,6 @@ src/main/resources/
 
 ---
 
-## ✨ Buenas Prácticas Aplicadas
-
-✅ **Arquitectura en Capas**: Controller → Service → Repository  
-✅ **DTOs Separados**: Create, Update, Response  
-✅ **Validación Automática**: Anotaciones `@Valid`  
-✅ **Manejo de Errores**: GlobalExceptionHandler  
-✅ **Timestamps Automáticos**: `@PrePersist`, `@PreUpdate`  
-✅ **Transaccionalidad**: `@Transactional`  
-✅ **Inyección de Dependencias**: Constructor con `@RequiredArgsConstructor`  
-✅ **Documentación**: Javadoc en todas las clases  
-✅ **CORS**: Habilitado para frontend  
-✅ **Encriptación**: Contraseñas con BCrypt  
-
----
-
-## 🎓 Próximos Pasos
-
-1. **Autenticación JWT**: Implementar login y tokens
-2. **Roles y Permisos**: Autorización por rol
-3. **Pruebas Unitarias**: Tests con JUnit y Mockito
-4. **Pruebas de Integración**: Tests e2e
-5. **Documentación OpenAPI/Swagger**: API docs automática
-6. **Paginación y Sorting**: Mejora de consultas
-7. **Relaciones N:M**: Usuario-Actividad para historial
-8. **WebSockets**: Notificaciones en tiempo real
-9. **Cache**: Redis para datos frecuentes
-10. **Monitoreo**: Actuator y métricas
-
----
-
 ## 📝 Notas Finales
 
 - La base de datos se **reinicia cada vez** que ejecutas la aplicación (modo in-memory)
@@ -360,10 +330,4 @@ src/main/resources/
 - Todos los **endpoints usan validación automática** con Hibernate
 - Las **respuestas excluyen contraseñas** por seguridad
 - Los **emails son únicos** a nivel de base de datos y lógica
-
----
-
-**Estado**: ✅ **LISTO PARA DESARROLLO**
-
-Víctor, ¡tu estructura base está completa y funcional! 🎉🦕
 
