@@ -100,18 +100,5 @@ curl -X POST http://localhost:8080/api/usuarios \
 
 ---
 
-## 🎓 Próximos Pasos
-
-1. Implementar autenticación JWT
-2. Agregar autorización por roles
-3. Crear pruebas unitarias
-4. Agregar Swagger/OpenAPI
-5. Implementar paginación
-6. Crear relaciones N:M para historial de actividades
-
----
-
-**Estado**: ✅ Listo para desarrollo
-
 Para más detalles, consulta `DOCUMENTACION.md`
 
