@@ -2,6 +2,9 @@
 
 Una aplicación web educativa sobre dinosaurios construida con **Spring Boot 4.0** y **H2 Database**.
 
+## Modelo E/R
+![diagrama-EducaDino-ER.jpg](docs/diagrama-EducaDino-ER.jpg)
+
 ## 🚀 Inicio Rápido
 
 ### Requisitos
