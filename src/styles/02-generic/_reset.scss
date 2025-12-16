@@ -1,0 +1,50 @@
+// 02-generic/_reset.scss
+
+/*--------------------RESET--------------------*/
+
+// 1. Modelo de caja
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+// 2. Eliminar márgenes y paddings predeterminados
+body,
+h1, h2, h3, h4, h5, h6,
+p, figure, blockquote, dl, dd {
+  margin: 0;
+}
+
+// 3. Configuración del body
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+// 4. Listas sin estilos
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+// 5. Imágenes responsive
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+// 6. Heredar fuentes en inputs y botones
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}

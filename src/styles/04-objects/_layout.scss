@@ -1,0 +1,59 @@
+
+/*--------------------CONETENEDORES--------------------*/
+
+// Contenedor principal: Centra el contenido y evita que toque los bordes
+.l-container {
+  width: 100%;
+  max-width: var(--breakpoint-xl);
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: var(--spacing-4);
+  padding-left: var(--spacing-4);
+
+  // Para pantallas más grandes damos mas espaciado
+  @media (min-width: 1280px) {
+    padding-right: var(--spacing-8);
+    padding-left: var(--spacing-8);
+  }
+}
+
+// Contenedor que ocupa todo el ancho pero amntiene el padding
+.l-container-fluid {
+  width: 100%;
+  padding-right: var(--spacing-4);
+  padding-left: var(--spacing-4);
+}
+
+
+/*--------------------GRID--------------------*/
+
+.l-grid {
+  display: grid;
+  gap: var(--spacing-4); /* Espacio entre columnas y filas */
+}
+
+/* --- OPCIÓN A: GRID "MÁGICA" (AUTO-FIT) --- */
+/* Para tarjetas. Se adapta sola */
+.l-grid--auto-fit {
+  /* Crea tantas columnas como quepan de mínimo 280px de ancho */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+
+/*--------------------FLEXBOX--------------------*/
+
+.l-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
+}
+
+.l-flex--center {
+  justify-content: center;
+  align-items: center;
+}
+
+.l-flex--between {
+  justify-content: space-between;
+  align-items: center;
+}

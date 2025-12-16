@@ -1,0 +1,101 @@
+/*--------------------PÁGINA--------------------*/
+
+
+// 03-elements/_page.scss
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color-ligth);
+
+  /* Tipografía */
+  font-family: var(--font-primary);          /* Baloo2 */
+  font-size: var(--font-size-xl);            /* 16px */
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);    /* 1.5 para buena lectura */
+
+  /* Suavizado */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selección de texto */
+::selection {
+  background-color: var(--primary-color-disabled);
+  color: var(--primary-color-active);
+}
+
+
+/*--------------------TIPOGRAFÍA--------------------*/
+
+// --- Encabezados ---
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-secondary);
+  color: var(--text-color);
+  margin-bottom: var(--spacing-3);
+  line-height: var(--line-height-tight);
+
+  font-weight: var(--font-weight-regular);
+}
+
+// Asignación de tu escala de tamaños
+h1 { font-size: var(--font-size-5xl); }
+h2 { font-size: var(--font-size-4xl); }
+h3 { font-size: var(--font-size-3xl); }
+h4 { font-size: var(--font-size-2xl); }
+h5 { font-size: var(--font-size-xl);  }
+h6 { font-size: var(--font-size-lg);  }
+
+
+// --- Párrafos ---
+p {
+  margin-bottom: var(--spacing-2);
+  max-width: 65ch;
+}
+
+// Letra pequeña
+small {
+  font-size: var(--font-size-sm);
+}
+
+// Negritas
+b, strong {
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-color-active);
+}
+
+// --- Blockquotes ---
+blockquote {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-2xl);
+  color: var(--primary-color);
+
+  border-left: var(--border-thick) solid var(--support-color);
+  background-color: var(--background-color-hover);
+
+  padding: var(--spacing-3);
+  margin: var(--spacing-4) 0;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+}
+
+
+// --- Imágenes ---
+
+figure {
+  margin: 0 0 var(--spacing-4) 0;
+  display: block;
+}
+
+// La imagen dentro de la figura
+figure img {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+// El texto explicativo debajo
+figcaption {
+  margin-top: var(--spacing-1);
+  font-size: var(--font-size-sm);
+  color: var(--gray-scale-dark);
+  font-style: italic;
+  text-align: center;
+}
