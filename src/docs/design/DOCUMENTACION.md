@@ -155,3 +155,116 @@ Se utiliza la metodología **BEM (Block, Element, Modifier)** para mantener un c
   }
 }
 ```
+---
+## 1.3 Organización de archivos
+
+El proyecto utiliza la arquitectura **IInverted Triangle CSS** o **ITCSS**, organizando los estilos de menor a mayor especificidad. Esta estructura se refleja en el árbol de carpetas del proyecto:
+
+**Estructura de Carpetas:**
+
+```text
+src/
+└── styles/
+    ├── 00-settings/
+    │   └── _variables.scss      # Variables globales
+    ├── 01-tools/
+    │   └── _mixins.scss         # Mixins
+    ├── 02-generic/
+    │   └── _reset.scss          # Box-sizing
+    ├── 03-elements/
+    │   └── _base.scss           # Estilos de etiquetas HTML base
+    ├── 04-objects/
+    │   └── _layout.scss         # Contenedores y Grid
+    ├── 05-components/           # Componentes con BEM
+    │   ├── _buttons.scss        # Botones
+    │   ├── _card.scss           # Tarjetas de dinosaurios
+    │   └── _header.scss         # Barra de navegación
+    └── 06-utilities/
+        └── main.scss
+```
+
+1.  **Settings (`00-settings`):** Contiene variables de configuración, tokens de diseño de colores y fuentes, que no generan CSS por sí mismas.
+2.  **Tools (`01-tools`):** Contiene mixins y funciones Sass que se reutilizarán en el proyecto.
+3.  **Generic (`02-generic`):** Resetea los estilos del navegador (`_reset.scss`) para asegurar consistencia entre diferentes navegadores.
+4.  **Elements (`03-elements`):** Define la apariencia base de las etiquetas HTML sin clases, como el estilo por defecto de `body` o `h1`.
+5.  **Objects (`04-objects`):** Define patrones de estructura y esqueleto, como el sistema de grid y contenedores.
+6.  **Components (`05-components`):** Aquí se construyen los widgets específicos de la interfaz con estética propia (`_card.scss`, `_header.scss`, `_buttons.scss`).
+7.  **Utilities (`06-utilities`):** Clase con más especificidad.
+
+---
+
+## 1.4 Sistema de Design Tokens
+
+A la identidad visual se le da forma mediante `00-settings/_variables.scss`. El diseño responde a la temática "Jurásica/Infantil":
+
+* **Paleta de Color:**
+  * `--primary-color` (#3A737D): Tono verde azulado oscuro para elementos principales y serios.
+  * `--background-color` (#D6E18D): Tono amarillo verdoso claro para el fondo, suave para la vista.
+  * `--support-color` (#EF7B51): Naranja arcilla para destacar alertas o elementos "favoritos", aportando calidez y contraste.
+* **Tipografía:**
+  * **Títulos (`--font-secondary`):** `'Fredoka One'`, fuente display redondeada y gruesa de carácter amigable.
+  * **Cuerpo (`--font-primary`):** `'Baloo 2'`, fuente sans-serif legible y suave.
+* **Bordes:**
+  * Uso de radios grandes (`--radius-xl`) para evocar seguridad y suavidad, dirigido al público infantil.
+* **Brakpoints:**  
+  * Se ha adoptado una escala de breakpoints moderna y estandarizada similar a la de Tailwind CSS para asegurar la compatibilidad con los dispositivos actuales.
+  * Esta escala cubre de manera fluida las transiciones de móvil (1 columna) a tablet (2 columnas) y escritorio (3/4 columnas), garantizando que el diseño sea Mobile-First y escale progresivamente.
+
+---
+
+## 1.5 Mixins y funciones
+
+El archivo `01-tools/_mixins.scss` contiene herramientas Sass diseñadas para aplicar el principio DRY, estandarizando elementos y la lógica responsiva.
+
+### 1. Mixin: `button-secondary`
+Genera los estilos visuales y de comportamiento para los botones de la interfaz. Define bordes redondeados asimétricos, la tipografía, el espaciado y los hover y active.
+
+* **Propósito:** Crear botones consistentes que utilizan las variables de color primario y fuentes secundarias, incluyendo animaciones de elevación al pasar el cursor.
+
+    ```scss
+    .btn-intro {
+      @include button-secondary;
+    }
+    ```
+
+### 2. Mixin: `input-field`
+Estandariza todos los campos de entrada de datos del sitio.
+
+* **Propósito:** Asegura que todos los formularios tengan el mismo ancho completo, fondo gris claro, bordes redondeados (`--radius-form-field`) y tipografía base. El estado `:focus` añade un anillo de color suave para mejorar la accesibilidad y el estado del placeholder.
+
+    ```scss
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      @include input-field;
+    }
+    ```
+
+### 3. Mixin: `respond-to-max`
+Gestiona la creación de Media Queries siguiendo **Desktop-First**. Utiliza breakpoints predefinidos para aplicar estilos únicamente en pantallas más pequeñas que el valor indicado (`max-width`).
+
+* **Mapas definidos:** `sm` (640px), `md` (768px), `lg` (1024px), `xl` (1280px), `2xl` (1536px).
+* **Propósito:** Facilita la escritura de CSS partiendo de la versión de escritorio como base predeterminada y adaptándola regresivamente hacia dispositivos móviles. Incluye validación para evitar el uso de breakpoints inexistentes.
+
+    ```scss
+    .dino-card {
+      width: 33.33%; // Estilo base para Escritorio (3 columnas)
+
+      /* Se aplica en pantallas más pequeñas que 'md' (768px) */
+      @include respond-to-max('md') {
+        width: 100%; // Estilo para Móvil/Tablet (1 columna)
+      }
+    }
+    ```
+
+---
+
+## 1.6 ViewEncapsulation en Angular
+
+**Emulated:** `ViewEncapsulation.Emulated`.
+
+He elegido la configuración estándar de Angular porque ofrece el mejor equilibrio entre orden y flexibilidad:
+
+* **Protección de Estilos aislados:** Garantiza que el diseño específico de un componente, como el color de una tarjeta, se quede dentro de ese componente y no rompa accidentalmente el diseño de otras partes de la web.
+* **Conexión Global:** A pesar de tener su propia "cápsula", los componentes pueden seguir utilizando los estilos generales definidos en la arquitectura principal, algo que otras opciones de aislamiento más estrictas impedirían.
+* **Facilidad de uso:** Nos permite aplicar clases de ayuda generales como las de centrar texto o márgenes en cualquier lugar de la aplicación sin configuraciones extra.

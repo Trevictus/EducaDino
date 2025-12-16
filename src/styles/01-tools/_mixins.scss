@@ -68,7 +68,7 @@
 
 /*--------------------RESPONSIVE--------------------*/
 
-@mixin respond-to($breakpoint) {
+@mixin respond-to-max($breakpoint) {
   $breakpoints: (
     'sm': 640px,
     'md': 768px,
@@ -78,7 +78,7 @@
   );
 
   @if map-has-key($breakpoints, $breakpoint) {
-    @media (min-width: map-get($breakpoints, $breakpoint)) {
+    @media (max-width: map-get($breakpoints, $breakpoint)) {
       @content; /* Aquí va el código CSS */
     }
   } @else {
