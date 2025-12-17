@@ -420,5 +420,86 @@
       </div>
     </section>
 
+    <!-- ========================================================================
+         SECCIÓN: TOASTS (FASE 2)
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Toasts (Notificaciones)</h2>
+      <p class="style-guide__section-desc">
+        Sistema de notificaciones globales usando <code>ToastService</code>.
+      </p>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Tipos de Toast</h3>
+        <div class="style-guide__row">
+          <app-button variant="secondary" (clicked)="showSuccessToast()">
+            <span class="material-icons">check_circle</span>
+            Success
+          </app-button>
+          <app-button variant="danger" (clicked)="showErrorToast()">
+            <span class="material-icons">error</span>
+            Error
+          </app-button>
+          <app-button variant="ghost" (clicked)="showWarningToast()">
+            <span class="material-icons">warning</span>
+            Warning
+          </app-button>
+          <app-button variant="primary" (clicked)="showInfoToast()">
+            <span class="material-icons">info</span>
+            Info
+          </app-button>
+        </div>
+        <p class="style-guide__note">
+          Los toasts aparecen arriba a la derecha y se cierran automáticamente.
+          Puedes cerrarlos manualmente con el botón X.
+        </p>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: LOADING (FASE 2)
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Loading States</h2>
+      <p class="style-guide__section-desc">
+        Sistema de estados de carga usando <code>LoadingService</code>.
+      </p>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Loading Global</h3>
+        <div class="style-guide__row">
+          <app-button variant="primary" (clicked)="simulateLoading()">
+            <span class="material-icons">sync</span>
+            Simular Loading (2s)
+          </app-button>
+        </div>
+        <p class="style-guide__note">
+          El overlay de loading usa un contador de peticiones.
+          Solo se oculta cuando TODAS las peticiones terminan.
+        </p>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Loading Local (Botón)</h3>
+        <div class="style-guide__row">
+          <app-button
+            variant="secondary"
+            [disabled]="isSaving()"
+            (clicked)="simulateSave()">
+            @if (isSaving()) {
+              <span class="material-icons" style="animation: spin 1s linear infinite;">sync</span>
+              Guardando...
+            } @else {
+              <span class="material-icons">save</span>
+              Guardar
+            }
+          </app-button>
+        </div>
+        <p class="style-guide__note">
+          Usa <code>signal()</code> para estados de carga locales en botones.
+        </p>
+      </div>
+    </section>
+
   </div>
 </main>

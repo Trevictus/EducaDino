@@ -30,3 +30,58 @@ Usuario → DOM Event (click/keydown)
 | focus/blur | Full | Full | Full | Full |
 | transitionend | Full | Full | Full | Full |
 
+## FASE 2: ARQUITECTURA Y SERVICIOS
+
+### Diagrama de flujo de datos
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        FLUJO DE DATOS                           │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌─────────┐    ┌───────────┐    ┌─────────┐    ┌─────────┐    │
+│  │ Usuario │ -> │ Componente│ -> │ Servicio│ -> │ Estado  │    │
+│  │ (click) │    │  (Dumb)   │    │ (Smart) │    │ (Signal)│    │
+│  └─────────┘    └───────────┘    └─────────┘    └─────────┘    │
+│                       │                              │          │
+│                       └──────────────────────────────┘          │
+│                              Re-render (Vista)                  │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Patrón "Smart Services / Dumb Components"
+
+**Dumb Components (Presentacionales):**
+- Solo reciben datos via `@Input()` y emiten eventos via `@Output()`
+- No tienen lógica de negocio
+- Usan Signals para estado local de UI
+- Ejemplo: `ButtonComponent`, `CardComponent`, `AlertComponent`
+
+**Smart Services (Lógica):**
+- Centralizan datos y lógica de negocio
+- Usan `BehaviorSubject` para estado reactivo
+- Exponen Signals para consumo en templates
+- `providedIn: 'root'` para singleton global
+- Ejemplo: `ToastService`, `LoadingService`, `DinoService`
+
+### Servicios principales
+
+| Servicio | Propósito | Patrón |
+| :--- | :--- | :--- |
+| `CommunicationService` | Comunicación entre componentes hermanos | BehaviorSubject + Observable |
+| `ToastService` | Notificaciones globales (success, error, warning, info) | BehaviorSubject + Signal + Auto-dismiss |
+| `LoadingService` | Estados de carga global con contador de peticiones | BehaviorSubject + Signal + Request Counter |
+| `DinoService` | Datos centralizados de dinosaurios | BehaviorSubject + Signal + Computed |
+| `ThemeService` | Modo oscuro/claro con persistencia | Signal + localStorage + matchMedia |
+
+### Uso de Signals vs Observables
+
+**Signals (Angular 17+):**
+- Para estado local en templates: `isLoading = signal(false)`
+- Para computed values: `favorites = computed(() => this.dinos().filter(d => d.liked))`
+- Mejor rendimiento en templates sin `async` pipe
+
+**Observables (RxJS):**
+- Para streams de datos asíncronos
+- Para operadores complejos (debounce, switchMap, etc.)
+- Integración con HTTP Client

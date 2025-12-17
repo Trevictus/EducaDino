@@ -1,0 +1,111 @@
+/* ==========================================================================
+   COMPONENTE: LOADING OVERLAY
+   Overlay global con spinner para operaciones asíncronas
+   ========================================================================== */
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+
+  /* Animación de entrada */
+  animation: overlayFadeIn 0.2s ease-out;
+
+  /* --- CONTENIDO --- */
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-3);
+
+    padding: var(--spacing-6);
+    background-color: var(--background-color);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+
+    animation: overlaySlideUp 0.3s ease-out;
+  }
+
+  /* --- SPINNER --- */
+  &__spinner {
+    width: 60px;
+    height: 60px;
+    position: relative;
+  }
+
+  &__spinner-circle {
+    width: 100%;
+    height: 100%;
+    border: 4px solid var(--primary-color-disabled);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spinnerRotate 1s linear infinite;
+  }
+
+  /* --- TEXTO --- */
+  &__text {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-xl);
+    color: var(--text-color);
+    margin: 0;
+  }
+
+  /* --- EMOJI DECORATIVO --- */
+  &__emoji {
+    font-size: 2rem;
+    animation: dinoWalk 0.5s ease-in-out infinite alternate;
+  }
+}
+
+/* ==========================================================================
+   ANIMACIONES
+   ========================================================================== */
+
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes overlaySlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes spinnerRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dinoWalk {
+  from {
+    transform: translateX(-5px);
+  }
+  to {
+    transform: translateX(5px);
+  }
+}
+
