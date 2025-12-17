@@ -1,0 +1,59 @@
+<section class="home-page">
+
+  <div class="home-page__map-section">
+    <div class="l-container">
+      <div class="map-container">
+
+        <img src="/img/world-map.png" alt="Mapa mundial interactivo" class="map-image">
+
+        <div class="map-point" style="top: 30%; left: 20%;" title="Norteamérica"></div>
+        <div class="map-point" style="top: 60%; left: 35%;" title="Sudamérica"></div>
+        <div class="map-point" style="top: 25%; left: 50%;" title="Europa"></div>
+        <div class="map-point" style="top: 70%; left: 80%;" title="Australia"></div>
+      </div>
+    </div>
+
+    <div class="map-info">
+      <h1 class="map-info__title">¡Mira nuestro mapa interactivo!</h1>
+      <h2 class="map-info__desc">
+        ¡Descubre cada rincón del mundo prehistórico con nuestro mapa interactivo y viaja
+        entre dinosaurios como un auténtico explorador jurásico!
+      </h2>
+      <p class="map-info__sub">
+        Si pasas el ratón sobre los puntos de interés del mapa verás el icónico descubrimiento de cada lugar.
+      </p>
+    </div>
+  </div>
+
+  <div class="home-page__trends-section">
+    <div class="l-container">
+
+      <h2 class="trends-title">Tendencias</h2>
+
+      <div class="trends-carousel">
+        <button class="carousel-arrow carousel-arrow--left" (click)="scrollLeft()">
+          <span class="material-icons">chevron_left</span>
+        </button>
+
+        <div class="cards-container" #cardsContainer>
+          @for (item of trends; track item.title) {
+            <div class="card-wrapper">
+              <app-card
+                [category]="item.category"
+                [title]="item.title"
+                [description]="item.desc"
+                [image]="item.img">
+              </app-card>
+            </div>
+          }
+        </div>
+
+        <button class="carousel-arrow carousel-arrow--right" (click)="scrollRight()">
+          <span class="material-icons">chevron_right</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</section>

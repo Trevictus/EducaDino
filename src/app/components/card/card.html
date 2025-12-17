@@ -1,0 +1,27 @@
+<article class="dino-card">
+
+  <span class="dino-card__category">{{ category }}</span>
+
+  <img [src]="image" [alt]="title" class="dino-card__media">
+
+  <h3 class="dino-card__title">{{ title }}</h3>
+
+  <p class="dino-card__description">
+    {{ description }}
+  </p>
+
+  <div class="dino-card__footer">
+
+    <button class="dino-card__btn">
+      Siguiente curiosidad
+    </button>
+
+    <span
+      class="dino-card__icon material-icons"
+      [class.is-liked]="isLiked"
+      (click)="toggleLike()">
+      favorite
+    </span>
+  </div>
+
+</article>

@@ -268,3 +268,101 @@ He elegido la configuración estándar de Angular porque ofrece el mejor equilib
 * **Protección de Estilos aislados:** Garantiza que el diseño específico de un componente, como el color de una tarjeta, se quede dentro de ese componente y no rompa accidentalmente el diseño de otras partes de la web.
 * **Conexión Global:** A pesar de tener su propia "cápsula", los componentes pueden seguir utilizando los estilos generales definidos en la arquitectura principal, algo que otras opciones de aislamiento más estrictas impedirían.
 * **Facilidad de uso:** Nos permite aplicar clases de ayuda generales como las de centrar texto o márgenes en cualquier lugar de la aplicación sin configuraciones extra.
+
+---
+
+## 2. HTML Semántico y Estructura
+
+### 2.1 Elementos semánticos utilizados
+En el proyecto se han sustituido los `div` por etiquetas de HTML5 para mejorar el SEO.
+
+* **`<header>`**: Contenedor de la cabecera.
+  * *Uso:* En `app-header`, contiene el logo, la navegación y el perfil.
+* **`<nav>`**: Navegación principal.
+  * *Uso:* Dentro del header para los enlaces.
+* **`<main>`**: Contenido principal único de cada vista.
+  * *Uso:* En `app-main` envuelve el `router-outlet`.
+* **`<section>`**: Agrupación temática de contenido.
+  * *Uso:* Para dividir la Home (`.home-page__map-section`, `.home-page__trends-section`).
+* **`<article>`**: Contenido independiente.
+  * *Uso:* En el componente `app-card`, ya que cada curiosidad es un ítem con sentido propio.
+* **`<aside>`**: Contenido relacionado con el principal.
+  * *Uso:* En la página de Contacto para las ilustraciones de los dinosaurios laterales que decoran.
+* **`<footer>`**: Pie de página.
+  * *Uso:* En `app-footer`, contiene información legal y enlaces secundarios.
+
+**Ejemplo de código de Contacto:**
+```html
+<section class="contact-page">
+  <aside class="contact-page__side-img">...</aside>
+  
+  <div class="contact-page__form-container">
+    <h1>Formulario de contacto</h1>
+    <app-contact-form></app-contact-form>
+  </div>
+  
+  <aside class="contact-page__side-img">...</aside>
+</section>
+```
+
+---
+
+### 2.2 Jerarquía de headings
+Se sigue una estructura de encabezados para facilitar la lectura por buscadores.
+
+**Reglas:**
+1.  **`<h1>`**: Solo uno por página (vista). Representa el título principal.
+2.  **`<h2>`**: Títulos de secciones principales dentro de la página.
+3.  **`<h3>`**: Subtítulos de componentes como las tarjetas.
+4.  No se saltan niveles.
+
+**Diagrama de jerarquía actual:**
+
+```text
+Sitio Web
+├── Header
+│
+├── Página: Home
+│   ├── h1: "¡Mira nuestro mapa interactivo!"
+│   │
+│   └── Section: Tendencias
+│       ├── h2: "Tendencias"
+│       └── Article: Card
+│           └── h3: "No eran para pelear"
+│
+├── Página: Contacto
+│   └── h1: "Formulario de contacto"
+│
+└── Footer
+    └── Títulos de columnas maquetados con estructura plana
+```
+
+---
+
+### 2.3 Estructura de Formularios
+Los formularios se reutilizan, cumpliendo con los estándares.
+
+
+* **Agrupación:** Uso de `<fieldset>` para agrupar campos relacionados lógicamente y `<legend>` para titular dicho grupo.
+* **Accesibilidad:** Asociación entre `label` e `input` mediante los atributos `for` en el label e `id` en el input.
+* **Componentes:** Uso de `app-form-input` para encapsular la lógica.
+
+**Ejemplo del componente `form-input`:**
+
+```html
+<label [for]="inputId" class="form-group__label">
+  {{ label }}
+</label>
+
+<input 
+  [id]="inputId"
+  [type]="type"
+  [name]="name"
+  [required]="required"
+  class="form-group__input"
+>
+
+@if (errorText) {
+  <p class="form-group__error">{{ errorText }}</p>
+}
+```

@@ -1,0 +1,10 @@
+.l-main {
+  /* Usamos el color de fondo desactivado (más claro) para el cuerpo */
+  background-color: var(--background-color-disabled);
+
+  /* Aseguramos que ocupe buena parte de la pantalla */
+  min-height: 80vh;
+
+  /* Espaciado inferior para respirar antes del footer */
+  padding-bottom: var(--spacing-8);
+}

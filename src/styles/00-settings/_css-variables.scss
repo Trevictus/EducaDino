@@ -1,0 +1,22 @@
+:root {
+  /* --- COLORES DE FONDO --- */
+  /* Fondo principal */
+  --bg-primary: var(--background-color);
+
+  /* Fondo secundario */
+  --bg-secondary: var(--background-color-active);
+
+  /* --- COLORES DE TEXTO --- */
+  /* Texto principal */
+  --text-primary: var(--text-color);
+
+  /* Texto secundario o sobre fondos oscuros */
+  --text-secondary: var(--text-color-light);
+
+  /* --- BORDES --- */
+  /* Color de borde por defecto */
+  --border-color: var(--primary-color);
+
+  /* Color de borde para inputs o elementos deshabilitados */
+  --border-muted: var(--primary-color-disabled);
+}

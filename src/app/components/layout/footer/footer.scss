@@ -1,0 +1,131 @@
+.footer {
+  background-color: var(--background-color);
+  padding: var(--spacing-8) 0;
+  border-top: 4px solid var(--secondary-color);
+
+  /* Reducir padding en tablets y móvil */
+  @media (max-width: 768px) {
+    padding: var(--spacing-4) 0;
+  }
+
+  &__grid {
+    display: grid;
+    /* Responsive: 1 col en móvil, 2 en tablets, 4 en escritorio */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--spacing-6);
+
+    /* 2 columnas en tablets */
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-4);
+    }
+
+    /* 1 columna en móvil */
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-3);
+    }
+  }
+
+  &__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+
+    /* Centrar contenido en móvil */
+    @media (max-width: 768px) {
+      text-align: center;
+    }
+  }
+
+  &__logo {
+    max-width: 140px;
+    margin-bottom: var(--spacing-2);
+
+    /* Logo más pequeño en móvil */
+    @media (max-width: 768px) {
+      max-width: 80px;
+      margin: 0 auto var(--spacing-2);
+    }
+  }
+
+  /* Botón grande de Contacto */
+  &__cta {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    font-family: var(--font-secondary);
+    padding: 12px 24px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-button-top-left) var(--radius-button-top-right) var(--radius-button-bottom-right) var(--radius-button-bottom-left);
+    align-self: flex-start;
+    transition: background-color var(--transition-fast);
+    font-size: var(--font-size-lg);
+
+    &:hover {
+      background-color: var(--primary-color-hover);
+    }
+
+    /* Centrar y ajustar en móvil */
+    @media (max-width: 768px) {
+      align-self: center;
+      padding: 10px 20px;
+      font-size: var(--font-size-sm);
+    }
+  }
+
+  /* Filas (Etiqueta + Píldora) */
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-2);
+
+    /* Stack vertical en móvil */
+    @media (max-width: 768px) {
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--spacing-1);
+    }
+  }
+
+  &__label {
+    font-family: var(--font-secondary);
+    color: var(--text-color);
+    font-weight: bold;
+    font-size: var(--font-size-lg);
+
+    /* Texto más pequeño en móvil */
+    @media (max-width: 768px) {
+      font-size: var(--font-size-sm);
+    }
+  }
+
+  /* Botones de datos */
+  &__pill {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-sm);
+    padding: 6px 14px;
+    border-radius: var(--radius-button-top-left) var(--radius-button-top-right) var(--radius-button-bottom-right) var(--radius-button-bottom-left);
+    white-space: nowrap;
+
+    /* Píldoras más pequeñas en móvil */
+    @media (max-width: 768px) {
+      font-size: var(--font-size-sm);
+      padding: 4px 10px;
+      white-space: normal;
+    }
+
+    &--link {
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color var(--transition-fast);
+      &:hover {
+        background-color: var(--support-color);
+      }
+    }
+  }
+}

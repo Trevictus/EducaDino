@@ -1,0 +1,86 @@
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1); /* 8px de separación entre label e input */
+  margin-bottom: var(--spacing-3); /* Separación entre cada campo */
+  width: 100%;
+
+  /* --- ETIQUETA --- */
+  &__label {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-xl);     /* 16px */
+    color: var(--text-color);           /* Gris verdoso oscuro */
+    margin-left: var(--spacing-2);      /* Pequeño margen izq para alinear visualmente con la curva */
+    display: flex;
+    align-items: center;
+  }
+
+  &__required {
+    color: var(--support-color);
+    margin-left: 4px;
+    font-weight: var(--font-weight-bold);
+  }
+
+  /* --- CAJA DE TEXTO --- */
+  &__input {
+    width: 100%;
+
+    /* TIPOGRAFÍA INTERNA */
+    font-family: var(--font-primary);
+    font-size: var(--font-size-xl);
+    color: var(--text-color);
+
+    /* FORMA Y BORDES */
+    border-radius: var(--radius-form-field);
+    border: var(--border-thin) solid transparent;
+
+    /* COLORES */
+    background-color: #F7F7F7;
+
+    /* ESPACIADO INTERNO */
+    padding: 12px var(--spacing-3);
+
+    /* TRANSICIONES Y SOMBRAS */
+    box-shadow: var(--shadow-sm);
+    outline: none;
+    transition: all var(--transition-fast) var(--transition-ease);
+
+    /* Placeholder */
+    &::placeholder {
+      color: var(--gray-scale-dark);
+      opacity: 0.8;
+    }
+
+    /* ESTADO DE FOCUS */
+    &:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px var(--primary-color-disabled);
+      background-color: #FFFFFF;
+    }
+
+    /* ESTADO DE ERROR */
+    &.has-error {
+      border-color: var(--support-color);
+      background-color: #FFF5F5;
+      color: var(--support-color-active);
+    }
+  }
+
+  /* --- TEXTOS DE AYUDA/ERROR --- */
+  &__helper {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-sm);
+    color: var(--text-color);
+    margin-left: var(--spacing-2);
+    margin-top: 4px;
+  }
+
+  &__error {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-sm);
+    color: var(--support-color);
+    font-weight: var(--font-weight-bold);
+    margin-left: var(--spacing-2);
+    margin-top: 4px;
+  }
+}

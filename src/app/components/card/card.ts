@@ -1,0 +1,23 @@
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-card',
+  standalone: true,
+  imports: [],
+  templateUrl: './card.html',
+  styleUrl: './card.scss'
+})
+export class Card {
+  // Inputs: Reciben datos desde el Home
+  @Input() category: string = 'Curiosidad';
+  @Input() title: string = '';
+  @Input() description: string = '';
+  @Input() image: string = '';
+
+  // Estado del botón corazón
+  isLiked: boolean = false;
+
+  toggleLike() {
+    this.isLiked = !this.isLiked;
+  }
+}

@@ -1,0 +1,89 @@
+.dino-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 300px; /* Ancho fijo para que funcione el carrusel */
+
+  background-color: var(--background-color);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-4);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-fast);
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  &__category {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-3xl);
+    color: var(--primary-color-active);
+    text-align: center;
+    margin-bottom: var(--spacing-2);
+  }
+
+  &__media {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    background-color: rgba(255,255,255,0.5);
+    margin-bottom: var(--spacing-3);
+  }
+
+  &__title {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-2xl);
+    color: var(--primary-color-active);
+    line-height: 1.1;
+    margin-bottom: var(--spacing-2);
+  }
+
+  &__description {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-lg);
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-4);
+    flex-grow: 1;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    gap: var(--spacing-2);
+  }
+
+  /* Botón con esquina recta arriba-izquierda */
+  &__btn {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-sm);
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: var(--radius-button-top-left) var(--radius-button-top-right) var(--radius-button-bottom-right) var(--radius-button-bottom-left);
+    transition: background-color var(--transition-fast);
+
+    &:hover {
+      background-color: var(--primary-color-hover);
+    }
+  }
+
+  &__icon {
+    color: rgba(0,0,0,0.2);
+    font-size: 2rem;
+    cursor: pointer;
+    user-select: none;
+    transition: all var(--transition-fast);
+
+    &:hover { transform: scale(1.1); }
+
+    &.is-liked {
+      color: var(--support-color); /* Naranja */
+    }
+  }
+}

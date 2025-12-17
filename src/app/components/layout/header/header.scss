@@ -1,0 +1,133 @@
+.header {
+  background-color: var(--background-color);
+  padding: var(--spacing-3) 0;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__logo img {
+    height: 140px;
+    transition: transform var(--transition-fast);
+    &:hover { transform: scale(1.05); }
+
+    /* Logo más pequeño en móvil */
+    @media (max-width: 768px) {
+      height: 45px;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+
+    /* Ocultar nav en móvil */
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  /* --- ESTILO BOTÓN ASIMÉTRICO --- */
+  &__search,
+  &__link {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    font-family: var(--font-secondary);
+    border-radius: var(--radius-button-top-left) var(--radius-button-top-right) var(--radius-button-bottom-right) var(--radius-button-bottom-left);
+    padding: 8px 20px;
+    text-decoration: none;
+    font-size: var(--font-size-lg);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color var(--transition-fast);
+
+    &:hover {
+      background-color: var(--primary-color-hover);
+    }
+
+    /* Texto más pequeño en tablets */
+    @media (max-width: 1024px) {
+      font-size: var(--font-size-sm);
+      padding: 6px 14px;
+    }
+  }
+
+  &__search {
+    padding: 5px 15px;
+    input {
+      background: transparent;
+      border: none;
+      color: white;
+      font-family: inherit;
+      outline: none;
+      width: 80px;
+      &::placeholder { color: rgba(255,255,255, 0.7); }
+
+      /* Input más pequeño en tablets */
+      @media (max-width: 1024px) {
+        width: 60px;
+        font-size: var(--font-size-sm);
+      }
+    }
+    .material-icons { font-size: 18px; }
+  }
+
+  &__menu {
+    display: flex;
+    list-style: none;
+    gap: var(--spacing-2);
+    margin: 0;
+    padding: 0;
+
+    /* Reducir gap en tablets */
+    @media (max-width: 1024px) {
+      gap: var(--spacing-1);
+    }
+  }
+
+  /* Estrella de Perfil */
+  &__profile {
+    text-decoration: none;
+    color: var(--text-color-light);
+    font-family: var(--font-secondary);
+  }
+
+  &__star {
+    width: 110px;
+    height: 110px;
+    background-color: var(--primary-color);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-lg);
+    transform: rotate(15deg);
+    transition: all var(--transition-fast);
+
+    &:hover {
+      background-color: var(--primary-color-hover);
+      transform: rotate(0deg) scale(1.1);
+    }
+
+    /* Estrella más pequeña en tablets */
+    @media (max-width: 1024px) {
+      width: 90px;
+      height: 90px;
+      font-size: var(--font-size-sm);
+    }
+
+    /* Estrella aún más pequeña en móvil */
+    @media (max-width: 768px) {
+      width: 70px;
+      height: 70px;
+      font-size: var(--font-size-sm);
+    }
+  }
+}

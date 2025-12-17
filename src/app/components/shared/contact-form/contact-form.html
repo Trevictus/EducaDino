@@ -1,0 +1,44 @@
+<form class="structured-form" (submit)="onSubmit($event)">
+
+  <fieldset class="structured-form__group">
+
+    <legend class="structured-form__legend">Información de Usuario</legend>
+
+    <app-form-input
+      label="Nombre completo"
+      placeholder="Ej: Víctor Gómez"
+      inputId="user-name"
+      name="nombre"
+      [required]="true">
+    </app-form-input>
+
+    <app-form-input
+      label="Correo electrónico"
+      placeholder="nombre@ejemplo.com"
+      inputId="user-email"
+      type="email"
+      name="email"
+      [required]="true"
+      helperText="No compartiremos tu email.">
+    </app-form-input>
+
+  </fieldset>
+
+  <fieldset class="structured-form__group">
+    <legend class="structured-form__legend">Tu Mensaje</legend>
+
+    <app-form-input
+      label="Asunto"
+      placeholder="¿Sobre qué quieres hablar?"
+      inputId="subject"
+      name="asunto">
+    </app-form-input>
+  </fieldset>
+
+  <div class="structured-form__actions">
+    <button type="submit" class="btn-submit">
+      Enviar Mensaje
+    </button>
+  </div>
+
+</form>

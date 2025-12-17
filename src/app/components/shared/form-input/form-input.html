@@ -1,0 +1,34 @@
+<div class="form-group">
+
+  <label [for]="inputId" class="form-group__label">
+    {{ label }}
+
+    @if (required) {
+      <span class="form-group__required">*</span>
+    }
+  </label>
+
+  <input
+    [id]="inputId"
+    [type]="type"
+    [name]="name"
+    [placeholder]="placeholder"
+    [required]="required"
+    [disabled]="disabled"
+    class="form-group__input"
+    [class.has-error]="errorText"
+  >
+
+  @if (helperText && !errorText) {
+    <p class="form-group__helper">
+      {{ helperText }}
+    </p>
+  }
+
+  @if (errorText) {
+    <p class="form-group__error">
+      {{ errorText }}
+    </p>
+  }
+
+</div>

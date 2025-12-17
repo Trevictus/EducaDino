@@ -1,0 +1,48 @@
+.structured-form {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+
+  /* Estilos para el fieldset */
+  &__group {
+    border: none; /* sin borde */
+    padding: 0;
+    margin: 0 0 var(--spacing-4) 0;
+  }
+
+  /* Estilos para el legend */
+  &__legend {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-2xl);
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-3);
+    padding: 0;
+    border-bottom: 2px solid var(--primary-color-disabled);
+    width: 100%;
+    padding-bottom: 4px;
+  }
+
+  /* Estilos para el botón */
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .btn-submit {
+    background-color: var(--secondary-color);
+    color: var(--text-color-light);
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-xl);
+    padding: 10px 32px;
+    border: none;
+    border-radius: var(--radius-form-button); /* 25px */
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: transform var(--transition-fast), background-color var(--transition-fast);
+
+    &:hover {
+      background-color: var(--secondary-color-hover);
+      transform: scale(1.05);
+    }
+  }
+}

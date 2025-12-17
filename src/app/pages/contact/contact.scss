@@ -1,0 +1,141 @@
+.contact-page {
+  /* Espaciado superior e inferior */
+  padding: var(--spacing-6) 0;
+
+  /* Rejilla de 3 columnas (Imagen - Formulario - Imagen) */
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: var(--spacing-4);
+    align-items: center;
+  }
+
+  /* Título */
+  &__title {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-4xl);
+    color: var(--text-color);
+    text-align: center;
+    margin-bottom: var(--spacing-6);
+
+    /* Subrayado */
+    text-decoration: underline;
+    text-decoration-color: var(--text-color);
+    text-decoration-thickness: var(--border-progress);
+    text-underline-offset: 8px;
+  }
+
+  /* Imágenes */
+  &__side-img {
+    display: flex;
+    justify-content: center;
+
+    img {
+      max-width: 200%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    /* El dino de la derecha */
+    &--right {
+      align-self: end;
+      margin-bottom: -40px; /* Pisa el borde inferior */
+    }
+  }
+
+  /* --- ESTILOS DEL FORMULARIO --- */
+
+  .form-row {
+    display: flex;
+    gap: var(--spacing-4);
+
+    /* En pantallas pequeñas se ponen uno debajo de otro */
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Los inputs ocupan el 50% cada uno */
+    app-form-input {
+      flex: 1;
+    }
+  }
+
+  /* Estilo para la caja grande de texto */
+  .form-group-textarea {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--spacing-4);
+
+    .form-label {
+      font-family: var(--font-secondary);
+      color: var(--text-color);
+      font-weight: bold;
+      font-size: var(--font-size-lg);
+      margin-left: var(--spacing-2);
+      margin-bottom: var(--spacing-1);
+    }
+
+    .form-textarea {
+      width: 100%;
+      background-color: #F7F7F7;
+      border: 2px solid transparent;
+      border-radius: var(--radius-form-button);
+      padding: var(--spacing-3);
+
+      font-family: var(--font-primary);
+      font-size: var(--font-size-xl);
+      color: var(--text-color);
+      outline: none;
+      resize: none; /* Que no se pueda estirar */
+
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: all var(--transition-fast);
+
+      &:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 4px var(--secondary-color-disabled);
+      }
+    }
+  }
+
+  /* Botón Enviar */
+  .btn-submit {
+    display: block;
+    margin: 0 auto; /* Centrado */
+
+    /* Color Verde Agua (Secundario) como en tu diseño */
+    background-color: var(--secondary-color);
+    color: #FFFFFF;
+
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-2xl);
+    font-weight: bold;
+
+    padding: 10px 50px;
+    border: none;
+    border-radius: 50px; /* Píldora */
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: transform var(--transition-fast);
+
+    &:hover {
+      transform: scale(1.05);
+      background-color: var(--secondary-color-hover);
+    }
+  }
+}
+
+/* --- RESPONSIVE --- */
+/* Cuando la pantalla sea de tablet o móvil */
+@media (max-width: 1024px) {
+  .contact-page__grid {
+    /* Cambiamos a 1 sola columna */
+    grid-template-columns: 1fr;
+  }
+
+  /* Ocultamos los dinos en móviles para que quepa el formulario bien */
+  .contact-page__side-img {
+    display: none;
+  }
+}

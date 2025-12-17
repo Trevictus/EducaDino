@@ -1,0 +1,160 @@
+.home-page {
+  /* Fondo general coincidente con variables */
+  background-color: var(--background-color-disabled);
+
+  /* --- SECCIÓN MAPA --- */
+  &__map-section {
+    background-color: var(--background-color-disabled);
+    padding: 0;
+    text-align: center;
+  }
+
+  .l-container {
+    background-color: var(--background-color-disabled);
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .map-container {
+    position: relative;
+    width: calc(100% - 88px);
+    aspect-ratio: 16 / 9;
+    margin: 0 auto;
+
+    .map-image {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* Puntos interactivos sobre el mapa */
+    .map-point {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: var(--text-color);
+      border: 2px solid var(--text-color-light);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform var(--transition-fast), background-color var(--transition-fast);
+
+      &:hover {
+        transform: scale(1.5);
+        background-color: var(--support-color); /* Naranja al hover */
+      }
+    }
+  }
+
+  .map-info {
+    background-color: var(--background-color-disabled);
+    color: var(--text-color);
+    padding: var(--spacing-6) var(--spacing-4);
+    text-align: center;
+
+    &__title {
+      font-family: var(--font-secondary);
+      font-size: var(--font-size-5xl);
+      margin-bottom: var(--spacing-3);
+    }
+
+    &__desc {
+      font-family: var(--font-secondary);
+      font-size: var(--font-size-3xl);
+      max-width: 800px;
+      margin: 0 auto var(--spacing-2);
+      line-height: var(--line-height-relaxed);
+    }
+
+    &__sub {
+      font-family: var(--font-primary);
+      font-size: var(--font-size-2xl);
+      max-width: 800px;
+      margin: 0 auto var(--spacing-2);
+      line-height: var(--line-height-relaxed);
+      opacity: 0.9;
+    }
+  }
+
+  /* --- SECCIÓN TENDENCIAS --- */
+  &__trends-section {
+    background-color: var(--background-color-disabled); /* Fondo crema claro */
+    padding: var(--spacing-8) 0;
+  }
+
+  .trends-title {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-4xl);
+    color: var(--text-color);
+    text-align: center;
+    text-decoration: underline;
+    text-decoration-color: var(--text-color);
+    text-underline-offset: 8px;
+    margin-bottom: var(--spacing-6);
+  }
+
+  .trends-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .cards-container {
+    display: flex;
+    gap: var(--spacing-4);
+    overflow: hidden; /* Oculta las tarjetas fuera del viewport */
+    padding: var(--spacing-4);
+    scroll-behavior: smooth;
+    width: 990px; /* 3 tarjetas x 300px + 2 gaps x 16px = 960px */
+    max-width: 100%;
+
+    /* Ocultar barra de scroll para estética */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+
+    .card-wrapper {
+      flex: 0 0 300px; /* Ancho fijo de tarjeta para carrusel */
+      height: 550px; /* Altura fija de 550px */
+      display: flex;
+      flex-direction: column;
+
+      /* Responsive: reducir en tablets */
+      @media (max-width: 1024px) {
+        flex: 0 0 280px;
+        height: 520px;
+      }
+
+      /* Responsive: más reducido en móvil */
+      @media (max-width: 768px) {
+        flex: 0 0 90%;
+        height: auto;
+        max-width: 350px;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  .carousel-arrow {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--gray-scale-dark);
+    transition: transform var(--transition-fast), color var(--transition-fast);
+
+    .material-icons {
+      font-size: 48px;
+    }
+
+    &:hover {
+      color: var(--text-color);
+      transform: scale(1.2);
+    }
+  }
+}
