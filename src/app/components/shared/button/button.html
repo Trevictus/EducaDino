@@ -1,0 +1,18 @@
+<button
+  [type]="type"
+  [class]="buttonClasses"
+  [disabled]="disabled"
+  [attr.aria-label]="ariaLabel || null"
+  (click)="onClick()">
+
+  @if (icon && iconPosition === 'left') {
+    <span class="material-icons button__icon" aria-hidden="true">{{ icon }}</span>
+  }
+
+  <ng-content></ng-content>
+
+  @if (icon && iconPosition === 'right') {
+    <span class="material-icons button__icon" aria-hidden="true">{{ icon }}</span>
+  }
+
+</button>

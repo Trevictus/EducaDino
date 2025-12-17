@@ -5,6 +5,7 @@
       <img src="/img/logotipo-EducaDino.png" alt="EducaDino Logo">
     </a>
 
+    <!-- Navegación Desktop -->
     <nav class="header__nav">
 
       <div class="header__search">
@@ -20,7 +21,19 @@
       </ul>
     </nav>
 
+    <!-- Botón Hamburguesa (solo móvil) -->
+    <button
+      class="header__hamburger"
+      [class.is-active]="isMenuOpen"
+      (click)="toggleMenu()"
+      aria-label="Abrir menú de navegación"
+      [attr.aria-expanded]="isMenuOpen">
+      <span class="header__hamburger-line"></span>
+      <span class="header__hamburger-line"></span>
+      <span class="header__hamburger-line"></span>
+    </button>
 
+    <!-- Perfil Desktop -->
     <a routerLink="/perfil" class="header__profile">
       <div class="header__star">
         <span>Perfil</span>
@@ -28,4 +41,51 @@
     </a>
 
   </div>
+
+  <!-- Menú Móvil -->
+  <nav
+    class="header__mobile-nav"
+    [class.is-open]="isMenuOpen"
+    [attr.aria-hidden]="!isMenuOpen">
+
+    <ul class="header__mobile-menu">
+      <li>
+        <a routerLink="/minijuegos" class="header__mobile-link" (click)="closeMenu()">
+          <span class="material-icons" aria-hidden="true">sports_esports</span>
+          Minijuegos
+        </a>
+      </li>
+      <li>
+        <a routerLink="/curiosidades" class="header__mobile-link" (click)="closeMenu()">
+          <span class="material-icons" aria-hidden="true">lightbulb</span>
+          Curiosidades
+        </a>
+      </li>
+      <li>
+        <a routerLink="/ordenes" class="header__mobile-link" (click)="closeMenu()">
+          <span class="material-icons" aria-hidden="true">category</span>
+          Órdenes
+        </a>
+      </li>
+      <li>
+        <a routerLink="/contacto" class="header__mobile-link" (click)="closeMenu()">
+          <span class="material-icons" aria-hidden="true">mail</span>
+          Contacto
+        </a>
+      </li>
+      <li>
+        <a routerLink="/perfil" class="header__mobile-link" (click)="closeMenu()">
+          <span class="material-icons" aria-hidden="true">person</span>
+          Mi Perfil
+        </a>
+      </li>
+    </ul>
+
+  </nav>
+
+  <!-- Overlay para cerrar el menú -->
+  @if (isMenuOpen) {
+    <div class="header__overlay" (click)="closeMenu()"></div>
+  }
+
 </header>

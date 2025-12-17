@@ -1,0 +1,126 @@
+/* ==========================================================================
+   COMPONENTE: FORM-SELECT
+   Siguiendo el mismo patrón que form-input
+   ========================================================================== */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  margin-bottom: var(--spacing-3);
+  width: 100%;
+
+  /* --- ETIQUETA --- */
+  &__label {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-xl);
+    color: var(--text-color);
+    margin-left: var(--spacing-2);
+    display: flex;
+    align-items: center;
+  }
+
+  &__required {
+    color: var(--support-color);
+    margin-left: 4px;
+    font-weight: var(--font-weight-bold);
+  }
+
+  /* --- WRAPPER DEL SELECT (para posicionar el icono) --- */
+  &__select-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  /* --- SELECT --- */
+  &__select {
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* TIPOGRAFÍA INTERNA */
+    font-family: var(--font-primary);
+    font-size: var(--font-size-xl);
+    color: var(--text-color);
+
+    /* FORMA Y BORDES */
+    border-radius: var(--radius-form-field);
+    border: var(--border-thin) solid transparent;
+
+    /* COLORES */
+    background-color: #F7F7F7;
+
+    /* ESPACIADO INTERNO */
+    padding: 12px var(--spacing-3);
+    padding-right: var(--spacing-6); /* Espacio para el icono */
+
+    /* TRANSICIONES Y SOMBRAS */
+    box-shadow: var(--shadow-sm);
+    outline: none;
+    cursor: pointer;
+    transition: all var(--transition-fast) var(--transition-ease);
+
+    /* ESTADO DE FOCUS */
+    &:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px var(--primary-color-disabled);
+      background-color: #FFFFFF;
+    }
+
+    /* ESTADO DE ERROR */
+    &.has-error {
+      border-color: var(--support-color);
+      background-color: #FFF5F5;
+      color: var(--support-color-active);
+    }
+
+    /* ESTADO DISABLED */
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background-color: var(--gray-scale-light);
+    }
+
+    /* Opción placeholder */
+    option[value=""][disabled] {
+      color: var(--gray-scale-dark);
+    }
+  }
+
+  /* --- ICONO DE FLECHA --- */
+  &__select-icon {
+    position: absolute;
+    right: var(--spacing-2);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    pointer-events: none;
+    font-size: 1.5rem;
+    transition: transform var(--transition-fast) var(--transition-ease);
+  }
+
+  /* Rotar icono cuando el select está abierto (focus) */
+  &__select:focus + &__select-icon {
+    transform: translateY(-50%) rotate(180deg);
+  }
+
+  /* --- TEXTOS DE AYUDA/ERROR --- */
+  &__helper {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-sm);
+    color: var(--text-color);
+    margin-left: var(--spacing-2);
+    margin-top: 4px;
+  }
+
+  &__error {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-sm);
+    color: var(--support-color);
+    font-weight: var(--font-weight-bold);
+    margin-left: var(--spacing-2);
+    margin-top: 4px;
+  }
+}
+

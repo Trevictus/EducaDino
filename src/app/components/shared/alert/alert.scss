@@ -1,0 +1,153 @@
+/* ==========================================================================
+   COMPONENTE: ALERT
+   Tipos: success, error, warning, info
+   ========================================================================== */
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-2);
+
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius-lg);
+  border-left: var(--border-thick) solid;
+
+  font-family: var(--font-primary);
+  box-shadow: var(--shadow-sm);
+
+  /* --- ICONO --- */
+  &__icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* --- CONTENIDO --- */
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    display: block;
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-xl);
+    margin-bottom: 4px;
+  }
+
+  &__message {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-normal);
+    margin: 0;
+  }
+
+  /* --- BOTÓN CERRAR --- */
+  &__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: opacity var(--transition-fast) var(--transition-ease),
+                background-color var(--transition-fast) var(--transition-ease);
+
+    &:hover {
+      opacity: 1;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    &:focus {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+    }
+
+    .material-icons {
+      font-size: 1.25rem;
+    }
+  }
+
+  /* ==========================================================================
+     VARIANTES DE TIPO
+     ========================================================================== */
+
+  /* --- SUCCESS (Verde) --- */
+  &--success {
+    background-color: var(--secondary-color-disabled);
+    border-color: var(--secondary-color);
+    color: var(--text-color);
+
+    .alert__icon {
+      color: var(--secondary-color-active);
+    }
+
+    .alert__title {
+      color: var(--secondary-color-active);
+    }
+
+    .alert__close {
+      color: var(--secondary-color-active);
+    }
+  }
+
+  /* --- ERROR (Naranja/Terracota) --- */
+  &--error {
+    background-color: var(--support-color-disabled);
+    border-color: var(--support-color);
+    color: var(--text-color);
+
+    .alert__icon {
+      color: var(--support-color-active);
+    }
+
+    .alert__title {
+      color: var(--support-color-active);
+    }
+
+    .alert__close {
+      color: var(--support-color-active);
+    }
+  }
+
+  /* --- WARNING (Naranja) --- */
+  &--warning {
+    background-color: var(--support-color-disabled);
+    border-color: var(--support-color);
+    color: var(--text-color);
+
+    .alert__icon {
+      color: var(--support-color);
+    }
+
+    .alert__title {
+      color: var(--support-color-active);
+    }
+
+    .alert__close {
+      color: var(--support-color-active);
+    }
+  }
+
+  /* --- INFO (Verde oscuro) --- */
+  &--info {
+    background-color: var(--primary-color-disabled);
+    border-color: var(--primary-color);
+    color: var(--text-color);
+
+    .alert__icon {
+      color: var(--primary-color);
+    }
+
+    .alert__title {
+      color: var(--primary-color-active);
+    }
+
+    .alert__close {
+      color: var(--primary-color-active);
+    }
+  }
+}
+

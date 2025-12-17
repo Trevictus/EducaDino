@@ -1,0 +1,40 @@
+@if (isOpen) {
+  <div
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-labelledby]="title ? 'modal-title' : null"
+    (click)="onOverlayClick()">
+
+    <div [class]="modalClasses" (click)="onContentClick($event)">
+
+      <!-- Header del Modal -->
+      <div class="modal__header">
+        @if (title) {
+          <h2 id="modal-title" class="modal__title">{{ title }}</h2>
+        }
+
+        <button
+          type="button"
+          class="modal__close"
+          aria-label="Cerrar modal"
+          (click)="close()">
+          <span class="material-icons" aria-hidden="true">close</span>
+        </button>
+      </div>
+
+      <!-- Contenido del Modal -->
+      <div class="modal__body">
+        <ng-content></ng-content>
+      </div>
+
+      <!-- Footer del Modal (opcional, por slot) -->
+      <div class="modal__footer">
+        <ng-content select="[modal-footer]"></ng-content>
+      </div>
+
+    </div>
+
+  </div>
+}
+

@@ -1,0 +1,327 @@
+<main class="style-guide">
+  <div class="l-container">
+
+    <!-- HEADER -->
+    <header class="style-guide__header">
+      <h1 class="style-guide__title">🦕 EducaDino Style Guide</h1>
+      <p class="style-guide__subtitle">Documentación visual de todos los componentes UI</p>
+    </header>
+
+    <!-- ========================================================================
+         SECCIÓN: BOTONES
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Botones</h2>
+      <p class="style-guide__section-desc">
+        Componente <code>&lt;app-button&gt;</code> con variantes, tamaños y estados.
+      </p>
+
+      <!-- Variantes -->
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Variantes</h3>
+        <div class="style-guide__row">
+          <app-button variant="primary" (clicked)="onButtonClick('primary')">Primary</app-button>
+          <app-button variant="secondary" (clicked)="onButtonClick('secondary')">Secondary</app-button>
+          <app-button variant="ghost" (clicked)="onButtonClick('ghost')">Ghost</app-button>
+          <app-button variant="danger" (clicked)="onButtonClick('danger')">Danger</app-button>
+        </div>
+      </div>
+
+      <!-- Tamaños -->
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Tamaños</h3>
+        <div class="style-guide__row style-guide__row--align-center">
+          <app-button variant="primary" size="sm">Small</app-button>
+          <app-button variant="primary" size="md">Medium</app-button>
+          <app-button variant="primary" size="lg">Large</app-button>
+        </div>
+      </div>
+
+      <!-- Con iconos -->
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Con iconos</h3>
+        <div class="style-guide__row">
+          <app-button variant="primary" icon="favorite" iconPosition="left">Me gusta</app-button>
+          <app-button variant="secondary" icon="send" iconPosition="right">Enviar</app-button>
+          <app-button variant="primary" icon="search" ariaLabel="Buscar"></app-button>
+          <app-button variant="danger" icon="delete" ariaLabel="Eliminar"></app-button>
+        </div>
+      </div>
+
+      <!-- Estados -->
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Estados</h3>
+        <div class="style-guide__row">
+          <app-button variant="primary">Normal</app-button>
+          <app-button variant="primary" [disabled]="true">Disabled</app-button>
+          <app-button variant="secondary" [disabled]="true">Disabled</app-button>
+          <app-button variant="ghost" [disabled]="true">Disabled</app-button>
+          <app-button variant="danger" [disabled]="true">Disabled</app-button>
+        </div>
+        <p class="style-guide__note">
+          <em>Nota: Los estados :hover, :focus y :active se muestran al interactuar.</em>
+        </p>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: CARDS
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Cards</h2>
+      <p class="style-guide__section-desc">
+        Componente <code>&lt;app-card&gt;</code> para mostrar contenido de dinosaurios.
+      </p>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Card básica</h3>
+        <div class="style-guide__card-grid">
+          <app-card
+            category="Curiosidad"
+            title="Tyrannosaurus Rex"
+            description="El T-Rex podía ejercer una fuerza de mordida de hasta 6 toneladas, suficiente para triturar huesos."
+            image="/img/t-rex.png">
+          </app-card>
+
+          <app-card
+            category="Dato"
+            title="Velociraptor"
+            description="Contrario a lo mostrado en películas, el Velociraptor real era del tamaño de un pavo."
+            image="/img/velocirraptor.png">
+          </app-card>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: FORMULARIOS
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Formularios</h2>
+      <p class="style-guide__section-desc">
+        Componentes de formulario: input, textarea y select.
+      </p>
+
+      <!-- Input -->
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Input <code>&lt;app-form-input&gt;</code></h3>
+        <div class="style-guide__form-grid">
+          <app-form-input
+            label="Nombre"
+            placeholder="Escribe tu nombre"
+            helperText="Tu nombre completo">
+          </app-form-input>
+
+          <app-form-input
+            label="Email"
+            type="email"
+            placeholder="tu@email.com"
+            [required]="true">
+          </app-form-input>
+
+          <app-form-input
+            label="Con error"
+            placeholder="Campo con error"
+            errorText="Este campo es obligatorio">
+          </app-form-input>
+
+          <app-form-input
+            label="Deshabilitado"
+            placeholder="No editable"
+            [disabled]="true">
+          </app-form-input>
+        </div>
+      </div>
+
+      <!-- Textarea -->
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Textarea <code>&lt;app-form-textarea&gt;</code></h3>
+        <div class="style-guide__form-grid">
+          <app-form-textarea
+            label="Mensaje"
+            placeholder="Escribe tu mensaje..."
+            helperText="Máximo 500 caracteres">
+          </app-form-textarea>
+
+          <app-form-textarea
+            label="Con error"
+            placeholder="Campo con error"
+            errorText="El mensaje es demasiado corto">
+          </app-form-textarea>
+        </div>
+      </div>
+
+      <!-- Select -->
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Select <code>&lt;app-form-select&gt;</code></h3>
+        <div class="style-guide__form-grid">
+          <app-form-select
+            label="Dinosaurio favorito"
+            [options]="selectOptions"
+            helperText="Elige tu dinosaurio preferido">
+          </app-form-select>
+
+          <app-form-select
+            label="Con error"
+            [options]="selectOptions"
+            errorText="Debes seleccionar una opción">
+          </app-form-select>
+
+          <app-form-select
+            label="Deshabilitado"
+            [options]="selectOptions"
+            [disabled]="true">
+          </app-form-select>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: ALERTAS
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Alertas</h2>
+      <p class="style-guide__section-desc">
+        Componente <code>&lt;app-alert&gt;</code> para mensajes de feedback.
+      </p>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Tipos de alerta</h3>
+        <div class="style-guide__alerts">
+          <app-alert type="success" title="¡Éxito!">
+            Tu progreso ha sido guardado correctamente.
+          </app-alert>
+
+          <app-alert type="error" title="Error">
+            No se pudo conectar con el servidor. Inténtalo de nuevo.
+          </app-alert>
+
+          <app-alert type="warning" title="Advertencia">
+            Tu sesión expirará en 5 minutos.
+          </app-alert>
+
+          <app-alert type="info" title="Información">
+            Hay nuevas curiosidades disponibles sobre dinosaurios.
+          </app-alert>
+        </div>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Alertas cerrables</h3>
+        <div class="style-guide__alerts">
+          <app-alert type="success" [dismissible]="true">
+            Alerta cerrable sin título.
+          </app-alert>
+
+          <app-alert type="info" title="Nota" [dismissible]="true">
+            Puedes cerrar esta alerta con el botón X.
+          </app-alert>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: MODAL
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Modal</h2>
+      <p class="style-guide__section-desc">
+        Componente <code>&lt;app-modal&gt;</code> para diálogos superpuestos.
+      </p>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Demostración</h3>
+        <div class="style-guide__row">
+          <app-button variant="primary" (clicked)="openModal()">Abrir Modal</app-button>
+        </div>
+
+        <app-modal
+          [isOpen]="isModalOpen"
+          title="Modal de ejemplo"
+          size="md"
+          (closed)="closeModal()">
+          <p>Este es el contenido del modal. Puedes incluir cualquier contenido aquí: texto, formularios, imágenes, etc.</p>
+          <p>Cierra el modal con el botón X, haciendo clic fuera o presionando ESC.</p>
+
+          <div modal-footer>
+            <app-button variant="ghost" (clicked)="closeModal()">Cancelar</app-button>
+            <app-button variant="primary" (clicked)="closeModal()">Aceptar</app-button>
+          </div>
+        </app-modal>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Tamaños disponibles</h3>
+        <p class="style-guide__note">
+          <code>size="sm"</code> (400px) | <code>size="md"</code> (600px) | <code>size="lg"</code> (900px)
+        </p>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: COLORES
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Paleta de Colores</h2>
+      <p class="style-guide__section-desc">
+        Variables CSS disponibles para mantener la coherencia del tema jurásico.
+      </p>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Colores principales</h3>
+        <div class="style-guide__colors">
+          <div class="style-guide__color style-guide__color--primary">
+            <span class="style-guide__color-name">Primary</span>
+            <code>--primary-color</code>
+          </div>
+          <div class="style-guide__color style-guide__color--secondary">
+            <span class="style-guide__color-name">Secondary</span>
+            <code>--secondary-color</code>
+          </div>
+          <div class="style-guide__color style-guide__color--support">
+            <span class="style-guide__color-name">Support</span>
+            <code>--support-color</code>
+          </div>
+          <div class="style-guide__color style-guide__color--background">
+            <span class="style-guide__color-name">Background</span>
+            <code>--background-color</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: TIPOGRAFÍA
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Tipografía</h2>
+      <p class="style-guide__section-desc">
+        Fuentes y tamaños usados en la aplicación.
+      </p>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Fuentes</h3>
+        <p class="style-guide__font style-guide__font--primary">
+          <strong>Baloo 2</strong> (--font-primary) - Para textos y párrafos
+        </p>
+        <p class="style-guide__font style-guide__font--secondary">
+          <strong>Fredoka One</strong> (--font-secondary) - Para títulos y botones
+        </p>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Escala de tamaños</h3>
+        <div class="style-guide__type-scale">
+          <p class="style-guide__type style-guide__type--5xl">48px - Encabezados principales</p>
+          <p class="style-guide__type style-guide__type--4xl">36px - Títulos grandes</p>
+          <p class="style-guide__type style-guide__type--3xl">24px - Subtítulos</p>
+          <p class="style-guide__type style-guide__type--2xl">20px - Destacados</p>
+          <p class="style-guide__type style-guide__type--xl">16px - Texto base</p>
+          <p class="style-guide__type style-guide__type--lg">14px - Texto secundario</p>
+          <p class="style-guide__type style-guide__type--sm">12px - Letra pequeña</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>

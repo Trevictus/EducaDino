@@ -1,0 +1,29 @@
+@if (isVisible) {
+  <div [class]="alertClasses" role="alert">
+
+    <span class="material-icons alert__icon" aria-hidden="true">
+      {{ alertIcon }}
+    </span>
+
+    <div class="alert__content">
+      @if (title) {
+        <strong class="alert__title">{{ title }}</strong>
+      }
+
+      <p class="alert__message">
+        <ng-content></ng-content>
+      </p>
+    </div>
+
+    @if (dismissible) {
+      <button
+        type="button"
+        class="alert__close"
+        aria-label="Cerrar alerta"
+        (click)="close()">
+        <span class="material-icons" aria-hidden="true">close</span>
+      </button>
+    }
+
+  </div>
+}

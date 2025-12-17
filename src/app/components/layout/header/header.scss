@@ -4,6 +4,7 @@
   top: 0;
   z-index: 100;
   box-shadow: var(--shadow-sm);
+  position: relative;
 
   &__container {
     display: flex;
@@ -97,6 +98,11 @@
     text-decoration: none;
     color: var(--text-color-light);
     font-family: var(--font-secondary);
+
+    /* Ocultar en móvil */
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 
   &__star {
@@ -129,5 +135,144 @@
       height: 70px;
       font-size: var(--font-size-sm);
     }
+  }
+
+  /* ==========================================================================
+     BOTÓN HAMBURGUESA (Solo móvil)
+     ========================================================================== */
+
+  &__hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    z-index: 110;
+    transition: background-color var(--transition-fast);
+
+    &:hover {
+      background-color: var(--primary-color-hover);
+    }
+
+    &:focus {
+      outline: 2px solid var(--secondary-color);
+      outline-offset: 2px;
+    }
+
+    /* Mostrar solo en móvil */
+    @media (max-width: 768px) {
+      display: flex;
+    }
+  }
+
+  &__hamburger-line {
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-color-light);
+    border-radius: 2px;
+    transition: all var(--transition-fast) var(--transition-ease);
+    transform-origin: center;
+  }
+
+  /* Animación del hamburguesa a X */
+  &__hamburger.is-active {
+    .header__hamburger-line:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .header__hamburger-line:nth-child(2) {
+      opacity: 0;
+    }
+    .header__hamburger-line:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+  }
+
+  /* ==========================================================================
+     MENÚ MÓVIL
+     ========================================================================== */
+
+  &__mobile-nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background-color: var(--background-color);
+    box-shadow: var(--shadow-xl);
+    z-index: 105;
+    padding: var(--spacing-8) var(--spacing-3) var(--spacing-3);
+    transition: right var(--transition-base) var(--transition-ease);
+
+    /* Cuando está abierto */
+    &.is-open {
+      right: 0;
+    }
+  }
+
+  &__mobile-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+  }
+
+  &__mobile-link {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-2) var(--spacing-3);
+    text-decoration: none;
+    color: var(--text-color);
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-xl);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-fast) var(--transition-ease);
+
+    .material-icons {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+    }
+
+    &:hover {
+      background-color: var(--primary-color);
+      color: var(--text-color-light);
+
+      .material-icons {
+        color: var(--text-color-light);
+      }
+    }
+
+    &:focus {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 2px;
+    }
+  }
+
+  /* ==========================================================================
+     OVERLAY
+     ========================================================================== */
+
+  &__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    animation: fadeIn var(--transition-fast) var(--transition-ease);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }

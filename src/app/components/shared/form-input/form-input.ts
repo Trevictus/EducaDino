@@ -26,10 +26,23 @@ export class FormInput implements OnInit {
   @Input() helperText: string = ''; // Texto de ayuda
   @Input() errorText: string = '';  // Mensaje de error
 
-//Se genera un id aleatorio para el input
+  // ID para aria-describedby (accesibilidad)
+  helperTextId: string = '';
+  errorTextId: string = '';
+
+  //Se genera un id aleatorio para el input
   ngOnInit() {
     if (!this.inputId) {
       this.inputId = `input-${Math.random().toString(36).substr(2, 9)}`;
     }
+    this.helperTextId = `${this.inputId}-helper`;
+    this.errorTextId = `${this.inputId}-error`;
+  }
+
+  // Genera el valor de aria-describedby dinámicamente
+  get ariaDescribedBy(): string | null {
+    if (this.errorText) return this.errorTextId;
+    if (this.helperText) return this.helperTextId;
+    return null;
   }
 }

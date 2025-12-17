@@ -1,35 +1,47 @@
 <div class="form-group">
 
-  <label [for]="inputId" class="form-group__label">
+  <label [for]="textareaId" class="form-group__label">
+
     {{ label }}
 
     @if (required) {
+
       <span class="form-group__required">*</span>
+
     }
+
   </label>
 
-  <input
-    [id]="inputId"
-    [type]="type"
+  <textarea
+    [id]="textareaId"
     [name]="name"
     [placeholder]="placeholder"
+    [rows]="rows"
     [required]="required"
     [disabled]="disabled"
     [attr.aria-describedby]="ariaDescribedBy"
-    class="form-group__input"
+    class="form-group__textarea"
     [class.has-error]="errorText"
-  >
+  ></textarea>
 
   @if (helperText && !errorText) {
+
     <p [id]="helperTextId" class="form-group__helper">
+
       {{ helperText }}
+
     </p>
+
   }
 
   @if (errorText) {
+
     <p [id]="errorTextId" class="form-group__error" role="alert">
+
       {{ errorText }}
+
     </p>
+
   }
 
 </div>
