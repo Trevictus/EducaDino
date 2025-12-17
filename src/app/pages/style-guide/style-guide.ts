@@ -10,6 +10,12 @@ import { FormSelect, SelectOption } from '../../components/shared/form-select/fo
 import { Alert } from '../../components/shared/alert/alert';
 import { Modal } from '../../components/modal/modal';
 
+// Nuevos componentes de Fase 1
+import { Tabs, Tab } from '../../components/shared/tabs/tabs';
+import { Tooltip } from '../../components/shared/tooltip/tooltip';
+import { DomDemo } from '../../components/shared/dom-demo/dom-demo';
+import { ThemeToggle } from '../../components/shared/theme-toggle/theme-toggle';
+
 @Component({
   selector: 'app-style-guide',
   standalone: true,
@@ -21,7 +27,11 @@ import { Modal } from '../../components/modal/modal';
     FormTextarea,
     FormSelect,
     Alert,
-    Modal
+    Modal,
+    Tabs,
+    Tooltip,
+    DomDemo,
+    ThemeToggle
   ],
   templateUrl: './style-guide.html',
   styleUrl: './style-guide.scss',
@@ -34,6 +44,17 @@ export class StyleGuide {
     { value: 'triceratops', label: 'Triceratops' },
     { value: 'brachiosaurus', label: 'Brachiosaurus', disabled: true }
   ];
+
+  // Pestañas de ejemplo
+  demoTabs: Tab[] = [
+    { id: 'info', label: 'Información', icon: 'info' },
+    { id: 'gallery', label: 'Galería', icon: 'image' },
+    { id: 'settings', label: 'Configuración', icon: 'settings' },
+    { id: 'disabled', label: 'Deshabilitada', icon: 'block', disabled: true }
+  ];
+
+  // Pestaña activa
+  activeTabId: string = 'info';
 
   // Estado del modal de demostración
   isModalOpen: boolean = false;
@@ -49,5 +70,11 @@ export class StyleGuide {
   // Handler para demostrar eventos de botón
   onButtonClick(message: string): void {
     console.log('Botón clickeado:', message);
+  }
+
+  // Handler para cambio de pestañas
+  onTabChange(tabId: string): void {
+    this.activeTabId = tabId;
+    console.log('Pestaña activa:', tabId);
   }
 }

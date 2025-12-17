@@ -1,0 +1,229 @@
+/* ==========================================================================
+   PÁGINA: STYLE GUIDE
+   Documentación visual de todos los componentes UI
+   ========================================================================== */
+
+.style-guide {
+  padding: var(--spacing-6) 0;
+  min-height: 100vh;
+
+  /* --- HEADER --- */
+  &__header {
+    text-align: center;
+    margin-bottom: var(--spacing-8);
+    padding-bottom: var(--spacing-4);
+    border-bottom: var(--border-medium) solid var(--primary-color-disabled);
+  }
+
+  &__title {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-5xl);
+    color: var(--primary-color-active);
+    margin: 0 0 var(--spacing-2);
+  }
+
+  &__subtitle {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-xl);
+    color: var(--text-color);
+    margin: 0;
+  }
+
+  /* --- SECCIONES --- */
+  &__section {
+    margin-bottom: var(--spacing-8);
+    padding: var(--spacing-4);
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+  }
+
+  &__section-title {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-4xl);
+    color: var(--primary-color-active);
+    margin: 0 0 var(--spacing-2);
+    padding-bottom: var(--spacing-2);
+    border-bottom: var(--border-thin) solid var(--primary-color-disabled);
+  }
+
+  &__section-desc {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-lg);
+    color: var(--text-color);
+    margin: 0 0 var(--spacing-4);
+
+    code {
+      background-color: var(--primary-color-disabled);
+      padding: 2px 8px;
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-lg);
+    }
+  }
+
+  /* --- SUBSECCIONES --- */
+  &__subsection {
+    margin-bottom: var(--spacing-4);
+    padding: var(--spacing-3);
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-lg);
+  }
+
+  &__subsection-title {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-2xl);
+    color: var(--primary-color);
+    margin: 0 0 var(--spacing-3);
+
+    code {
+      font-size: var(--font-size-lg);
+      background-color: var(--primary-color-disabled);
+      padding: 2px 6px;
+      border-radius: var(--radius-md);
+    }
+  }
+
+  /* --- LAYOUTS --- */
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+    align-items: center;
+
+    &--align-center {
+      align-items: center;
+    }
+  }
+
+  &__card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-4);
+  }
+
+  &__form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-4);
+  }
+
+  &__alerts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+  }
+
+  /* --- NOTAS --- */
+  &__note {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-sm);
+    color: var(--text-color);
+    margin-top: var(--spacing-2);
+    padding: var(--spacing-2);
+    background-color: var(--primary-color-disabled);
+    border-radius: var(--radius-md);
+
+    code {
+      background-color: rgba(255, 255, 255, 0.5);
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+    }
+  }
+
+  /* --- COLORES --- */
+  &__colors {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-3);
+  }
+
+  &__color {
+    padding: var(--spacing-4);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+
+    &--primary {
+      background-color: var(--primary-color);
+      color: var(--text-color-light);
+    }
+
+    &--secondary {
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+    }
+
+    &--support {
+      background-color: var(--support-color);
+      color: var(--text-color-light);
+    }
+
+    &--background {
+      background-color: var(--background-color);
+      color: var(--text-color);
+      border: var(--border-thin) solid var(--primary-color-disabled);
+    }
+  }
+
+  &__color-name {
+    display: block;
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-1);
+  }
+
+  &__color code {
+    font-size: var(--font-size-sm);
+    opacity: 0.8;
+  }
+
+  /* --- TIPOGRAFÍA --- */
+  &__font {
+    margin: 0 0 var(--spacing-2);
+    font-size: var(--font-size-xl);
+
+    &--primary {
+      font-family: var(--font-primary);
+    }
+
+    &--secondary {
+      font-family: var(--font-secondary);
+    }
+  }
+
+  &__type-scale {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+
+  &__type {
+    font-family: var(--font-primary);
+    color: var(--text-color);
+    margin: 0;
+    padding: var(--spacing-1) 0;
+    border-bottom: var(--border-thin) dashed var(--primary-color-disabled);
+
+    &--5xl { font-size: var(--font-size-5xl); }
+    &--4xl { font-size: var(--font-size-4xl); }
+    &--3xl { font-size: var(--font-size-3xl); }
+    &--2xl { font-size: var(--font-size-2xl); }
+    &--xl { font-size: var(--font-size-xl); }
+    &--lg { font-size: var(--font-size-lg); }
+    &--sm { font-size: var(--font-size-sm); }
+  }
+}
+
+/* Panel de pestañas */
+.tab-panel {
+  padding: var(--spacing-3);
+  background-color: var(--background-color-hover);
+  border-radius: var(--radius-lg);
+
+  p {
+    margin: 0;
+    font-family: var(--font-primary);
+    font-size: var(--font-size-xl);
+  }
+}
+

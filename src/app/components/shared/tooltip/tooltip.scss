@@ -1,0 +1,128 @@
+/* ==========================================================================
+   COMPONENTE: TOOLTIP
+   Muestra información contextual al hacer hover o focus
+   ========================================================================== */
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+
+  /* --- CONTENIDO DEL TOOLTIP --- */
+  &__content {
+    position: absolute;
+    z-index: 1000;
+
+    padding: var(--spacing-1) var(--spacing-2);
+    background-color: var(--primary-color-active);
+    color: var(--text-color-light);
+
+    font-family: var(--font-primary);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-tight);
+    white-space: nowrap;
+
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+
+    /* Estado inicial: oculto */
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.95);
+    transition: all var(--transition-fast) var(--transition-ease);
+
+    /* Flecha del tooltip */
+    &::before {
+      content: '';
+      position: absolute;
+      border: 6px solid transparent;
+    }
+
+    /* Estado visible */
+    &--visible {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+    }
+
+    /* ==========================================================================
+       POSICIONES
+       ========================================================================== */
+
+    /* Arriba */
+    &--top {
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) scale(0.95);
+      margin-bottom: 8px;
+
+      &::before {
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-top-color: var(--primary-color-active);
+      }
+
+      &.tooltip__content--visible {
+        transform: translateX(-50%) scale(1);
+      }
+    }
+
+    /* Abajo */
+    &--bottom {
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) scale(0.95);
+      margin-top: 8px;
+
+      &::before {
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-bottom-color: var(--primary-color-active);
+      }
+
+      &.tooltip__content--visible {
+        transform: translateX(-50%) scale(1);
+      }
+    }
+
+    /* Izquierda */
+    &--left {
+      right: 100%;
+      top: 50%;
+      transform: translateY(-50%) scale(0.95);
+      margin-right: 8px;
+
+      &::before {
+        left: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        border-left-color: var(--primary-color-active);
+      }
+
+      &.tooltip__content--visible {
+        transform: translateY(-50%) scale(1);
+      }
+    }
+
+    /* Derecha */
+    &--right {
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%) scale(0.95);
+      margin-left: 8px;
+
+      &::before {
+        right: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        border-right-color: var(--primary-color-active);
+      }
+
+      &.tooltip__content--visible {
+        transform: translateY(-50%) scale(1);
+      }
+    }
+  }
+}
+

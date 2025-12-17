@@ -1,0 +1,35 @@
+<div class="tabs">
+
+  <!-- Lista de pestañas (Tab List) -->
+  <div class="tabs__list" role="tablist">
+    @for (tab of tabs; track tab.id; let i = $index) {
+      <button
+        type="button"
+        role="tab"
+        class="tabs__tab"
+        [class.tabs__tab--active]="isActive(tab.id)"
+        [class.tabs__tab--disabled]="tab.disabled"
+        [attr.aria-selected]="isActive(tab.id)"
+        [attr.aria-controls]="'tabpanel-' + tab.id"
+        [attr.tabindex]="isActive(tab.id) ? 0 : -1"
+        [disabled]="tab.disabled"
+        [id]="'tab-' + tab.id"
+        (click)="selectTab(tab.id, $event)"
+        (keydown)="onKeyDown($event, i)">
+
+        @if (tab.icon) {
+          <span class="material-icons tabs__icon" aria-hidden="true">{{ tab.icon }}</span>
+        }
+
+        <span class="tabs__label">{{ tab.label }}</span>
+
+      </button>
+    }
+  </div>
+
+  <!-- Contenido de las pestañas (Tab Panels) -->
+  <div class="tabs__content">
+    <ng-content></ng-content>
+  </div>
+
+</div>

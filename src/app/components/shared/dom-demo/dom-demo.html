@@ -1,0 +1,120 @@
+<div class="dom-demo" #demoContainer>
+
+  <h3 class="dom-demo__title">Demostración: Manipulación del DOM</h3>
+
+  <!-- SECCIÓN 1: Renderer2.setStyle -->
+  <section class="dom-demo__section">
+    <h4 class="dom-demo__subtitle">1. Renderer2.setStyle() y setProperty()</h4>
+
+    <div class="dom-demo__box" #styleTarget>
+      Escribe algo...
+    </div>
+
+    <div class="dom-demo__controls">
+      <!-- TAREA 2: (click) event binding -->
+      <button
+        type="button"
+        class="dom-demo__btn"
+        (click)="changeBackgroundColor('var(--secondary-color)')">
+        Verde
+      </button>
+      <button
+        type="button"
+        class="dom-demo__btn"
+        (click)="changeBackgroundColor('var(--support-color)')">
+        Naranja
+      </button>
+      <button
+        type="button"
+        class="dom-demo__btn"
+        (click)="changeBackgroundColor('var(--primary-color)')">
+        Azul
+      </button>
+      <button
+        type="button"
+        class="dom-demo__btn"
+        (click)="toggleHighlight()">
+        Toggle Highlight
+      </button>
+    </div>
+
+    <!-- TAREA 2: (input) event binding -->
+    <input
+      type="text"
+      class="dom-demo__input"
+      placeholder="Escribe para cambiar el texto..."
+      (input)="onInputChange($event)">
+  </section>
+
+  <!-- SECCIÓN 2: createElement y appendChild -->
+  <section class="dom-demo__section">
+    <h4 class="dom-demo__subtitle">2. Renderer2.createElement() y appendChild()</h4>
+
+    <div class="dom-demo__dynamic" #dynamicContent>
+      <!-- Elementos dinámicos se añaden aquí -->
+    </div>
+
+    <div class="dom-demo__controls">
+      <button
+        type="button"
+        class="dom-demo__btn dom-demo__btn--success"
+        (click)="addDynamicElement()">
+        <span class="material-icons">add</span>
+        Añadir elemento
+      </button>
+      <button
+        type="button"
+        class="dom-demo__btn dom-demo__btn--danger"
+        (click)="removeLastElement()">
+        <span class="material-icons">remove</span>
+        Eliminar último
+      </button>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 3: preventDefault y stopPropagation -->
+  <section class="dom-demo__section">
+    <h4 class="dom-demo__subtitle">3. preventDefault() y stopPropagation()</h4>
+
+    <!-- TAREA 2: preventDefault en formulario -->
+    <form class="dom-demo__form" (submit)="onFormSubmit($event)">
+      <input type="text" placeholder="Campo de ejemplo" class="dom-demo__input">
+      <button type="submit" class="dom-demo__btn">
+        Enviar (preventDefault)
+      </button>
+    </form>
+
+    <!-- TAREA 2: stopPropagation -->
+    <div
+      class="dom-demo__outer"
+      (click)="onOuterClick()">
+      <span>Contenedor externo (click aquí)</span>
+      <button
+        type="button"
+        class="dom-demo__btn dom-demo__btn--inner"
+        (click)="onInnerClick($event)">
+        Botón interno (stopPropagation)
+      </button>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 4: Eventos de teclado -->
+  <section class="dom-demo__section">
+    <h4 class="dom-demo__subtitle">4. Eventos de teclado</h4>
+
+    <!-- TAREA 2: (keyup.enter) -->
+    <input
+      type="text"
+      class="dom-demo__input"
+      placeholder="Presiona Enter..."
+      (keyup.enter)="updateText('¡Enter presionado!')"
+      (focus)="updateText('Input con foco')"
+      (blur)="updateText('Input perdió el foco')">
+
+    <p class="dom-demo__note">
+      <code>(keyup.enter)</code>, <code>(focus)</code>, <code>(blur)</code>
+    </p>
+  </section>
+
+</div>
+

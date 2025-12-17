@@ -1,0 +1,12 @@
+<button
+  type="button"
+  class="theme-toggle"
+  [class.theme-toggle--dark]="theme() === 'dark'"
+  [attr.aria-label]="ariaLabel"
+  (click)="toggleTheme()">
+
+  <span class="material-icons theme-toggle__icon" aria-hidden="true">
+    {{ themeIcon }}
+  </span>
+
+</button>

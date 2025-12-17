@@ -323,5 +323,102 @@
       </div>
     </section>
 
+    <!-- ========================================================================
+         SECCIÓN: THEME SWITCHER (FASE 1)
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Theme Switcher</h2>
+      <p class="style-guide__section-desc">
+        Componente <code>&lt;app-theme-toggle&gt;</code> para alternar entre modo claro y oscuro.
+      </p>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Botón de cambio de tema</h3>
+        <div class="style-guide__row">
+          <app-theme-toggle></app-theme-toggle>
+          <p class="style-guide__note" style="margin-left: 16px;">
+            Haz clic para alternar entre modo claro y oscuro. La preferencia se guarda en localStorage.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: TABS (FASE 1)
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Tabs (Pestañas)</h2>
+      <p class="style-guide__section-desc">
+        Componente <code>&lt;app-tabs&gt;</code> para organizar contenido en pestañas.
+      </p>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Pestañas con iconos</h3>
+        <app-tabs [tabs]="demoTabs" [activeTabId]="activeTabId" (tabChange)="onTabChange($event)">
+          <div class="tab-panel" [hidden]="activeTabId !== 'info'" role="tabpanel" id="tabpanel-info">
+            <p>📚 <strong>Información:</strong> Contenido de la pestaña de información sobre dinosaurios.</p>
+          </div>
+          <div class="tab-panel" [hidden]="activeTabId !== 'gallery'" role="tabpanel" id="tabpanel-gallery">
+            <p>🖼️ <strong>Galería:</strong> Aquí irían las imágenes de dinosaurios.</p>
+          </div>
+          <div class="tab-panel" [hidden]="activeTabId !== 'settings'" role="tabpanel" id="tabpanel-settings">
+            <p>⚙️ <strong>Configuración:</strong> Panel de configuración del usuario.</p>
+          </div>
+        </app-tabs>
+        <p class="style-guide__note">
+          Navega con las teclas ← → o Tab para accesibilidad.
+        </p>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: TOOLTIPS (FASE 1)
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Tooltips</h2>
+      <p class="style-guide__section-desc">
+        Componente <code>&lt;app-tooltip&gt;</code> para mostrar información contextual.
+      </p>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Posiciones</h3>
+        <div class="style-guide__row" style="gap: 32px; padding: 24px;">
+          <app-tooltip text="Tooltip arriba" position="top">
+            <app-button variant="primary" size="sm">Top</app-button>
+          </app-tooltip>
+
+          <app-tooltip text="Tooltip abajo" position="bottom">
+            <app-button variant="primary" size="sm">Bottom</app-button>
+          </app-tooltip>
+
+          <app-tooltip text="Tooltip izquierda" position="left">
+            <app-button variant="primary" size="sm">Left</app-button>
+          </app-tooltip>
+
+          <app-tooltip text="Tooltip derecha" position="right">
+            <app-button variant="primary" size="sm">Right</app-button>
+          </app-tooltip>
+        </div>
+        <p class="style-guide__note">
+          Los tooltips aparecen con <code>(mouseenter)</code> y se ocultan con <code>(mouseleave)</code>.
+          También funcionan con <code>(focus)</code> para accesibilidad.
+        </p>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: DOM DEMO (FASE 1)
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Manipulación del DOM</h2>
+      <p class="style-guide__section-desc">
+        Demostración de manipulación segura del DOM usando <code>Renderer2</code>, <code>&#64;ViewChild</code> y <code>ElementRef</code>.
+      </p>
+
+      <div class="style-guide__subsection">
+        <app-dom-demo></app-dom-demo>
+      </div>
+    </section>
+
   </div>
 </main>

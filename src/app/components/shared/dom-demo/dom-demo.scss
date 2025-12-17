@@ -1,0 +1,181 @@
+/* ==========================================================================
+   COMPONENTE: DOM DEMO
+   Demostración de manipulación del DOM con Renderer2
+   ========================================================================== */
+
+.dom-demo {
+  padding: var(--spacing-4);
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius-xl);
+
+  &--initialized {
+    border: var(--border-medium) solid var(--secondary-color);
+  }
+
+  /* --- TÍTULOS --- */
+  &__title {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-3xl);
+    color: var(--primary-color-active);
+    margin: 0 0 var(--spacing-4);
+  }
+
+  &__subtitle {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-xl);
+    color: var(--primary-color);
+    margin: 0 0 var(--spacing-2);
+  }
+
+  /* --- SECCIONES --- */
+  &__section {
+    padding: var(--spacing-3);
+    margin-bottom: var(--spacing-4);
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-lg);
+  }
+
+  /* --- CAJA DE DEMOSTRACIÓN --- */
+  &__box {
+    padding: var(--spacing-4);
+    background-color: var(--primary-color-disabled);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-3);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-xl);
+    text-align: center;
+    transition: all var(--transition-fast) var(--transition-ease);
+
+    &--highlight {
+      box-shadow: 0 0 0 4px var(--support-color);
+      transform: scale(1.02);
+    }
+  }
+
+  /* --- CONTROLES --- */
+  &__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-3);
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    padding: var(--spacing-1) var(--spacing-3);
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border: none;
+    border-radius: var(--radius-lg);
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast) var(--transition-ease);
+
+    &:hover {
+      background-color: var(--primary-color-hover);
+      transform: translateY(-2px);
+    }
+
+    &--success {
+      background-color: var(--secondary-color);
+      &:hover { background-color: var(--secondary-color-hover); }
+    }
+
+    &--danger {
+      background-color: var(--support-color);
+      &:hover { background-color: var(--support-color-hover); }
+    }
+
+    &--inner {
+      margin-left: var(--spacing-2);
+    }
+
+    .material-icons {
+      font-size: 1.2rem;
+    }
+  }
+
+  /* --- INPUT --- */
+  &__input {
+    width: 100%;
+    padding: var(--spacing-2) var(--spacing-3);
+    border: var(--border-thin) solid var(--gray-scale);
+    border-radius: var(--radius-form-field);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-2);
+    transition: all var(--transition-fast) var(--transition-ease);
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px var(--primary-color-disabled);
+    }
+  }
+
+  /* --- CONTENEDOR DINÁMICO --- */
+  &__dynamic {
+    min-height: 60px;
+    padding: var(--spacing-2);
+    background-color: var(--background-color-hover);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-3);
+  }
+
+  &__dynamic-item {
+    animation: fadeIn 0.3s ease;
+  }
+
+  /* --- FORMULARIO --- */
+  &__form {
+    display: flex;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-3);
+  }
+
+  /* --- CONTENEDOR EXTERNO (stopPropagation demo) --- */
+  &__outer {
+    padding: var(--spacing-3);
+    background-color: var(--support-color-disabled);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color var(--transition-fast);
+
+    &:hover {
+      background-color: var(--support-color);
+    }
+  }
+
+  /* --- NOTA --- */
+  &__note {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-sm);
+    color: var(--text-color);
+    margin-top: var(--spacing-2);
+
+    code {
+      background-color: var(--primary-color-disabled);
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+    }
+  }
+}
+
+/* Animación para elementos dinámicos */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
