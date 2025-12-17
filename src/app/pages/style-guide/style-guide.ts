@@ -16,6 +16,11 @@ import { Tooltip } from '../../components/shared/tooltip/tooltip';
 import { DomDemo } from '../../components/shared/dom-demo/dom-demo';
 import { ThemeToggle } from '../../components/shared/theme-toggle/theme-toggle';
 
+// Componentes de Fase 3 (Formularios)
+import { ContactForm } from '../../components/shared/contact-form/contact-form';
+import { RegisterForm } from '../../components/shared/register-form/register-form';
+import { OrderForm } from '../../components/shared/order-form/order-form';
+
 // Servicios de Fase 2
 import { ToastService } from '../../shared/services/toast';
 import { LoadingService } from '../../shared/services/loading';
@@ -35,7 +40,10 @@ import { LoadingService } from '../../shared/services/loading';
     Tabs,
     Tooltip,
     DomDemo,
-    ThemeToggle
+    ThemeToggle,
+    ContactForm,
+    RegisterForm,
+    OrderForm
   ],
   templateUrl: './style-guide.html',
   styleUrl: './style-guide.scss',
@@ -47,6 +55,9 @@ export class StyleGuide {
 
   // Signal para estado de loading local (botón)
   isSaving = signal(false);
+
+  // Control de pestañas de formularios
+  activeFormTab = 'contact';
 
   // Opciones de ejemplo para el select
   selectOptions: SelectOption[] = [

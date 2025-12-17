@@ -29,6 +29,9 @@
   }
 
   .btn-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
     background-color: var(--secondary-color);
     color: var(--text-color-light);
     font-family: var(--font-secondary);
@@ -40,9 +43,131 @@
     box-shadow: var(--shadow-md);
     transition: transform var(--transition-fast), background-color var(--transition-fast);
 
-    &:hover {
+    &:hover:not(:disabled) {
       background-color: var(--secondary-color-hover);
       transform: scale(1.05);
     }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    &__spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid transparent;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
   }
+}
+
+/* ==========================================================================
+   CAMPO DE FORMULARIO (BEM)
+   ========================================================================== */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  margin-bottom: var(--spacing-3);
+
+  /* --- LABEL --- */
+  &__label {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-xl);
+    color: var(--text-color);
+    margin-left: var(--spacing-2);
+  }
+
+  &__required {
+    color: var(--support-color);
+    margin-left: 4px;
+  }
+
+  /* --- INPUT Y TEXTAREA --- */
+  &__input,
+  &__textarea {
+    width: 100%;
+    font-family: var(--font-primary);
+    font-size: var(--font-size-xl);
+    color: var(--text-color);
+    background-color: #F7F7F7;
+    border: var(--border-thin) solid transparent;
+    border-radius: var(--radius-form-field);
+    padding: 12px var(--spacing-3);
+    box-shadow: var(--shadow-sm);
+    outline: none;
+    transition: all var(--transition-fast) var(--transition-ease);
+
+    &::placeholder {
+      color: var(--gray-scale-dark);
+      opacity: 0.8;
+    }
+
+    &:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px var(--primary-color-disabled);
+      background-color: #FFFFFF;
+    }
+  }
+
+  &__textarea {
+    min-height: 120px;
+    resize: vertical;
+    line-height: var(--line-height-normal);
+  }
+
+  /* --- TEXTO DE AYUDA --- */
+  &__helper {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-sm);
+    color: var(--text-color);
+    margin-left: var(--spacing-2);
+    margin-top: 4px;
+  }
+
+  /* --- MENSAJE DE ERROR --- */
+  &__error {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-sm);
+    color: var(--support-color);
+    font-weight: var(--font-weight-bold);
+    margin-left: var(--spacing-2);
+    margin-top: 4px;
+  }
+
+  /* --- ESTADO DE ERROR --- */
+  &--error {
+    .form-field__input,
+    .form-field__textarea {
+      border-color: var(--support-color);
+      background-color: #FFF5F5;
+
+      &:focus {
+        box-shadow: 0 0 0 3px var(--support-color-disabled);
+      }
+    }
+
+    .form-field__label {
+      color: var(--support-color-active);
+    }
+  }
+
+  /* --- ESTADO PENDIENTE (async validation) --- */
+  &--pending {
+    .form-field__input,
+    .form-field__textarea {
+      border-color: var(--primary-color);
+      background-color: #F0F7FF;
+    }
+  }
+}
+
+/* Animación spinner */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

@@ -501,5 +501,72 @@
       </div>
     </section>
 
+    <!-- ========================================================================
+         SECCIÓN: FORMULARIOS AVANZADOS (FASE 3)
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Formularios Avanzados (Fase 3)</h2>
+      <p class="style-guide__section-desc">
+        Formularios con <code>ReactiveFormsModule</code>, validadores personalizados y <code>FormArray</code>.
+      </p>
+
+      <!-- Selector de formulario -->
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Selecciona un formulario</h3>
+        <div class="style-guide__row">
+          <app-button
+            [variant]="activeFormTab === 'contact' ? 'primary' : 'ghost'"
+            (clicked)="activeFormTab = 'contact'">
+            Contacto
+          </app-button>
+          <app-button
+            [variant]="activeFormTab === 'register' ? 'primary' : 'ghost'"
+            (clicked)="activeFormTab = 'register'">
+            Registro
+          </app-button>
+          <app-button
+            [variant]="activeFormTab === 'order' ? 'primary' : 'ghost'"
+            (clicked)="activeFormTab = 'order'">
+            Pedido (FormArray)
+          </app-button>
+        </div>
+      </div>
+
+      <!-- Formulario de Contacto -->
+      @if (activeFormTab === 'contact') {
+        <div class="style-guide__subsection">
+          <h3 class="style-guide__subsection-title">ContactForm <code>Reactive Forms básico</code></h3>
+          <p class="style-guide__note">
+            Validadores: <code>required</code>, <code>email</code>, <code>minLength(10)</code>
+          </p>
+          <app-contact-form></app-contact-form>
+        </div>
+      }
+
+      <!-- Formulario de Registro -->
+      @if (activeFormTab === 'register') {
+        <div class="style-guide__subsection">
+          <h3 class="style-guide__subsection-title">RegisterForm <code>Validadores avanzados</code></h3>
+          <p class="style-guide__note">
+            Incluye: <code>passwordStrength()</code>, <code>nifValidator()</code>, <code>matchPasswords()</code>,
+            validadores asíncronos con estado <code>pending</code>
+          </p>
+          <app-register-form></app-register-form>
+        </div>
+      }
+
+      <!-- Formulario de Pedido -->
+      @if (activeFormTab === 'order') {
+        <div class="style-guide__subsection">
+          <h3 class="style-guide__subsection-title">OrderForm <code>FormArray dinámico</code></h3>
+          <p class="style-guide__note">
+            Usa <code>FormArray</code> para añadir/eliminar items dinámicamente.
+            Cálculo de precio total reactivo.
+          </p>
+          <app-order-form></app-order-form>
+        </div>
+      }
+    </section>
+
   </div>
 </main>

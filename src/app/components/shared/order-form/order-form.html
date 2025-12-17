@@ -1,0 +1,178 @@
+<form
+  class="order-form"
+  [formGroup]="orderForm"
+  (ngSubmit)="onSubmit()">
+
+  <h2 class="order-form__title">🦕 Realizar Pedido</h2>
+
+  <!-- DATOS DEL CLIENTE -->
+  <fieldset class="order-form__section">
+    <legend class="order-form__legend">Datos de envío</legend>
+
+    <div class="order-form__row">
+      <!-- Nombre -->
+      <div class="form-field" [class.form-field--error]="hasError('nombreCliente')">
+        <label for="order-nombre" class="form-field__label">
+          Nombre <span class="form-field__required">*</span>
+        </label>
+        <input
+          type="text"
+          id="order-nombre"
+          formControlName="nombreCliente"
+          class="form-field__input"
+          placeholder="Tu nombre">
+        @if (hasError('nombreCliente')) {
+          <p class="form-field__error">{{ getErrorMessage('nombreCliente') }}</p>
+        }
+      </div>
+
+      <!-- Email -->
+      <div class="form-field" [class.form-field--error]="hasError('emailCliente')">
+        <label for="order-email" class="form-field__label">
+          Email <span class="form-field__required">*</span>
+        </label>
+        <input
+          type="email"
+          id="order-email"
+          formControlName="emailCliente"
+          class="form-field__input"
+          placeholder="tu@email.com">
+        @if (hasError('emailCliente')) {
+          <p class="form-field__error">{{ getErrorMessage('emailCliente') }}</p>
+        }
+      </div>
+    </div>
+
+    <!-- Dirección -->
+    <div class="form-field" [class.form-field--error]="hasError('direccion')">
+      <label for="order-direccion" class="form-field__label">
+        Dirección de envío <span class="form-field__required">*</span>
+      </label>
+      <input
+        type="text"
+        id="order-direccion"
+        formControlName="direccion"
+        class="form-field__input"
+        placeholder="Calle, número, ciudad, código postal">
+      @if (hasError('direccion')) {
+        <p class="form-field__error">{{ getErrorMessage('direccion') }}</p>
+      }
+    </div>
+  </fieldset>
+
+  <!-- ITEMS DEL PEDIDO (FormArray) -->
+  <fieldset class="order-form__section">
+    <legend class="order-form__legend">
+      Items del pedido
+      <span class="order-form__count">({{ items.length }} items)</span>
+    </legend>
+
+    <div class="order-form__items" formArrayName="items">
+      @for (item of items.controls; track $index; let i = $index) {
+        <div class="order-item" [formGroupName]="i">
+          <div class="order-item__number">{{ i + 1 }}</div>
+
+          <div class="order-item__fields">
+            <!-- Producto -->
+            <div class="form-field" [class.form-field--error]="hasItemError(i, 'producto')">
+              <label [for]="'producto-' + i" class="form-field__label">Producto</label>
+              <select
+                [id]="'producto-' + i"
+                formControlName="producto"
+                class="form-field__select"
+                (change)="onProductChange(i)">
+                <option value="">-- Selecciona --</option>
+                @for (product of availableProducts; track product.id) {
+                  <option [value]="product.id">{{ product.name }} ({{ product.price }}€)</option>
+                }
+              </select>
+            </div>
+
+            <!-- Cantidad -->
+            <div class="form-field form-field--small" [class.form-field--error]="hasItemError(i, 'cantidad')">
+              <label [for]="'cantidad-' + i" class="form-field__label">Cant.</label>
+              <input
+                type="number"
+                [id]="'cantidad-' + i"
+                formControlName="cantidad"
+                class="form-field__input"
+                min="1"
+                max="99">
+            </div>
+
+            <!-- Precio (readonly) -->
+            <div class="form-field form-field--small">
+              <label [for]="'precio-' + i" class="form-field__label">Precio</label>
+              <input
+                type="number"
+                [id]="'precio-' + i"
+                formControlName="precio"
+                class="form-field__input form-field__input--readonly"
+                readonly>
+            </div>
+
+            <!-- Subtotal -->
+            <div class="order-item__subtotal">
+              <span class="order-item__subtotal-label">Subtotal:</span>
+              <span class="order-item__subtotal-value">{{ getItemSubtotal(i) | number:'1.2-2' }}€</span>
+            </div>
+          </div>
+
+          <!-- Botón eliminar -->
+          <button
+            type="button"
+            class="order-item__remove"
+            (click)="removeItem(i)"
+            [disabled]="items.length <= 1"
+            aria-label="Eliminar item">
+            <span class="material-icons">delete</span>
+          </button>
+        </div>
+      }
+    </div>
+
+    <!-- Botón añadir item -->
+    <button type="button" class="order-form__add-btn" (click)="addItem()">
+      <span class="material-icons">add_circle</span>
+      Añadir otro producto
+    </button>
+  </fieldset>
+
+  <!-- NOTAS -->
+  <fieldset class="order-form__section">
+    <legend class="order-form__legend">Notas adicionales</legend>
+    <div class="form-field">
+      <textarea
+        id="order-notas"
+        formControlName="notas"
+        class="form-field__textarea"
+        rows="3"
+        placeholder="Instrucciones especiales de entrega..."></textarea>
+    </div>
+  </fieldset>
+
+  <!-- RESUMEN Y TOTAL -->
+  <div class="order-form__summary">
+    <div class="order-form__total">
+      <span class="order-form__total-label">Total del pedido:</span>
+      <span class="order-form__total-value">{{ totalPrice | number:'1.2-2' }}€</span>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="order-form__actions">
+    <button
+      type="submit"
+      class="btn-submit btn-submit--primary"
+      [disabled]="orderForm.invalid || isSubmitting || items.length === 0">
+      @if (isSubmitting) {
+        <span class="btn-submit__spinner"></span>
+        Procesando...
+      } @else {
+        <span class="material-icons">shopping_cart</span>
+        Confirmar Pedido
+      }
+    </button>
+  </div>
+
+</form>
