@@ -1,6 +1,7 @@
 # EducaDino
 
 Proyecto final sobre AppWeb educativa
+Desplegado en: https://trevictus.github.io/EducaDino/
 
 ---
 
