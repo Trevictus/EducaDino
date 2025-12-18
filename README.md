@@ -34,14 +34,6 @@ npm start
 
 ---
 
-## Frontend
-
-> **Notas pendientes:**
-> - `_variables.scss` → variable de borde sobre botón perfil, es una estrella.
-> - `_mixins.scss` → revisar los mixins
-
----
-
 ## FASE 1: MANIPULACIÓN DEL DOM Y EVENTOS
 
 ### Arquitectura de eventos
