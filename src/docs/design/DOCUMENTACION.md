@@ -266,7 +266,234 @@ Gestiona la creación de Media Queries siguiendo **Desktop-First**. Utiliza brea
 
 ---
 
-## 1.6 ViewEncapsulation en Angular
+## 1.6 Sistema de Layout y Presentación
+
+Para organizar la información de manera ordenada, el proyecto implementa un sistema de contenedores, grids y capas que estructuran el contenido de forma jerárquica.
+
+### Contenedores
+
+Los contenedores son estructuras que envuelven el contenido, centrándolo y limitando su ancho máximo para asegurar legibilidad en pantallas grandes:
+
+```scss
+// 04-objects/_layout.scss
+
+.l-container {
+  width: 100%;
+  max-width: var(--breakpoint-xl);   /* Limita el ancho máximo */
+  margin-right: auto;                /* Centra horizontalmente */
+  margin-left: auto;
+  padding-right: var(--spacing-4);   /* Espacio interno lateral */
+  padding-left: var(--spacing-4);
+
+  /* En pantallas grandes, más espaciado */
+  @media (min-width: 1280px) {
+    padding-right: var(--spacing-8);
+    padding-left: var(--spacing-8);
+  }
+}
+```
+
+### Sistema Grid
+
+Se utiliza CSS Grid para disponer los elementos en filas y columnas de forma automática. La configuración `auto-fit` permite que las tarjetas se reorganicen según el ancho disponible:
+
+```scss
+.l-grid {
+  display: grid;
+  gap: var(--spacing-4);
+}
+
+/* Grid adaptativa para tarjetas */
+.l-grid--auto-fit {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+```
+
+Este sistema crea automáticamente:
+- **1 columna** en móviles (< 640px)
+- **2 columnas** en tablets (640px - 1024px)
+- **3 o más columnas** en escritorio (> 1024px)
+
+### Sistema Flexbox
+
+Para disposiciones lineales y alineación de elementos, se utilizan clases utilitarias de Flexbox:
+
+```scss
+.l-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
+}
+
+.l-flex--center {
+  justify-content: center;
+  align-items: center;
+}
+
+.l-flex--between {
+  justify-content: space-between;
+  align-items: center;
+}
+```
+
+### Capas y z-index
+
+Los elementos flotantes como modales, toasts y el header utilizan un sistema de capas mediante `z-index` para asegurar la correcta superposición:
+
+| Elemento | z-index | Descripción |
+|----------|---------|-------------|
+| Contenido base | 1 | Tarjetas, secciones |
+| Header sticky | 100 | Navegación fija |
+| Modal overlay | 1000 | Fondo oscuro del modal |
+| Modal content | 1001 | Contenido del modal |
+| Toast | 9999 | Notificaciones siempre visibles |
+
+---
+
+## 1.7 Estilos Base y Redefinición de Elementos HTML
+
+Una de las ventajas de usar hojas de estilos externas es la capacidad de modificar y redefinir la apariencia por defecto de las etiquetas HTML. Esto se realiza en la capa `03-elements/_base.scss`.
+
+### Reset de Navegador
+
+Primero, se eliminan los estilos predeterminados del navegador para partir de una base consistente:
+
+```scss
+// 02-generic/_reset.scss
+
+/* Modelo de caja universal */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Eliminar márgenes predeterminados */
+body, h1, h2, h3, h4, h5, h6, p, figure, blockquote {
+  margin: 0;
+}
+
+/* Imágenes responsive por defecto */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Heredar fuentes en formularios */
+input, button, textarea, select {
+  font: inherit;
+}
+```
+
+### Redefinición de Etiquetas
+
+Después del reset, se aplican los nuevos estilos que redefinen la apariencia de cada etiqueta HTML, estableciendo la identidad visual del proyecto:
+
+```scss
+// 03-elements/_base.scss
+
+/* Cuerpo del documento */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--font-primary);       /* Baloo 2 */
+  font-size: var(--font-size-xl);         /* 16px */
+  line-height: var(--line-height-normal); /* 1.5 */
+}
+
+/* Encabezados con tipografía secundaria */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-secondary);     /* Fredoka One */
+  color: var(--text-color);
+  margin-bottom: var(--spacing-3);
+  line-height: var(--line-height-tight);
+}
+
+/* Escala tipográfica redefinida */
+h1 { font-size: var(--font-size-5xl); }   /* 48px */
+h2 { font-size: var(--font-size-4xl); }   /* 36px */
+h3 { font-size: var(--font-size-3xl); }   /* 24px */
+h4 { font-size: var(--font-size-2xl); }   /* 20px */
+
+/* Párrafos con ancho máximo para legibilidad */
+p {
+  margin-bottom: var(--spacing-2);
+  max-width: 65ch;   /* Límite de caracteres por línea */
+}
+
+/* Negritas destacadas */
+b, strong {
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-color-active);
+}
+
+/* Citas con estilo distintivo */
+blockquote {
+  font-family: var(--font-secondary);
+  border-left: var(--border-thick) solid var(--support-color);
+  background-color: var(--background-color-hover);
+  padding: var(--spacing-3);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+}
+```
+
+Esta redefinición garantiza que cualquier etiqueta HTML usada en el proyecto adopte automáticamente la estética de EducaDino sin necesidad de añadir clases adicionales.
+
+---
+
+## 1.8 Propiedades CSS Clave
+
+A continuación se detallan las propiedades CSS más utilizadas en el proyecto, agrupadas por categoría funcional.
+
+### Propiedades de Modelo de Caja
+
+| Propiedad | Uso en el proyecto | Ejemplo |
+|-----------|-------------------|---------|
+| `padding` | Espaciado interno en botones, tarjetas y contenedores | `padding: var(--spacing-2) var(--spacing-4)` |
+| `margin` | Separación entre elementos y centrado horizontal | `margin: 0 auto` |
+| `border-radius` | Bordes redondeados para suavidad visual | `border-radius: var(--radius-xl)` |
+| `box-shadow` | Profundidad y elevación de elementos | `box-shadow: var(--shadow-md)` |
+| `border` | Contorno de inputs y botones | `border: var(--border-thin) solid transparent` |
+
+### Propiedades de Posicionamiento
+
+| Propiedad | Uso en el proyecto | Ejemplo |
+|-----------|-------------------|---------|
+| `display: flex` | Alineación de elementos en header, footer y botones | `display: flex; gap: var(--spacing-2)` |
+| `display: grid` | Distribución de tarjetas en cuadrículas | `grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))` |
+| `position: fixed` | Elementos flotantes como toast y header sticky | `position: fixed; top: 0; z-index: 100` |
+| `position: absolute` | Puntos interactivos sobre el mapa | `position: absolute; top: 20%; left: 30%` |
+
+### Propiedades de Tipografía
+
+| Propiedad | Uso en el proyecto | Ejemplo |
+|-----------|-------------------|---------|
+| `font-family` | Distinción entre títulos y cuerpo de texto | `font-family: var(--font-secondary)` |
+| `font-size` | Escala tipográfica consistente | `font-size: var(--font-size-3xl)` |
+| `font-weight` | Énfasis en elementos importantes | `font-weight: var(--font-weight-bold)` |
+| `line-height` | Legibilidad en bloques de texto | `line-height: var(--line-height-normal)` |
+| `text-align` | Alineación de títulos y contenido | `text-align: center` |
+
+### Propiedades de Color y Fondo
+
+| Propiedad | Uso en el proyecto | Ejemplo |
+|-----------|-------------------|---------|
+| `background-color` | Fondos de secciones y componentes | `background-color: var(--primary-color)` |
+| `color` | Color de texto según contexto | `color: var(--text-color-light)` |
+| `border-color` | Bordes en estados de focus y error | `border-color: var(--support-color)` |
+| `opacity` | Estados deshabilitados | `opacity: 0.5` |
+
+### Propiedades de Transición y Animación
+
+| Propiedad | Uso en el proyecto | Ejemplo |
+|-----------|-------------------|---------|
+| `transition` | Suavizado en hover y cambios de estado | `transition: all var(--transition-fast) ease` |
+| `transform` | Elevación de botones y tarjetas al hover | `transform: translateY(-2px)` |
+| `animation` | Entrada de toasts y modales | `animation: toastSlideIn 0.3s ease-out` |
+
+---
+
+## 1.9 ViewEncapsulation en Angular
 
 **Emulated:** `ViewEncapsulation.Emulated`.
 
@@ -371,6 +598,256 @@ Los formularios se reutilizan, cumpliendo con los estándares.
 
 @if (errorText) {
   <p class="form-group__error">{{ errorText }}</p>
+}
+```
+
+---
+
+# Sección 3: Sistema de Componentes UI
+
+## 3.1 Catálogo de Componentes
+
+### 1. Header (`app-header`)
+**Propósito:** Barra de navegación principal con logo, enlaces y acceso al perfil de usuario.
+
+**Opciones (@Input):** Ninguna configurable externamente.
+
+```html
+<app-header></app-header>
+```
+
+---
+
+### 2. Footer (`app-footer`)
+**Propósito:** Pie de página con información legal, enlaces secundarios y redes sociales.
+
+**Opciones (@Input):** Ninguna configurable externamente.
+
+```html
+<app-footer></app-footer>
+```
+
+---
+
+### 3. Card (`app-card`)
+**Propósito:** Tarjeta reutilizable para mostrar curiosidades de dinosaurios con imagen, título, descripción y botón de favorito.
+
+**Opciones (@Input):**
+| Input | Tipo | Descripción |
+|-------|------|-------------|
+| `category` | `string` | Categoría de la curiosidad |
+| `imageSrc` | `string` | Ruta de la imagen |
+| `imageAlt` | `string` | Texto alternativo de la imagen |
+| `title` | `string` | Título de la curiosidad |
+| `description` | `string` | Texto descriptivo |
+
+```html
+<app-card
+  category="Alimentación"
+  imageSrc="assets/images/trex.png"
+  imageAlt="Tyrannosaurus Rex"
+  title="No eran para pelear"
+  description="Los cuernos del Triceratops servían para atraer pareja.">
+</app-card>
+```
+
+---
+
+### 4. Button (`app-button`)
+**Propósito:** Botón reutilizable con diferentes variantes visuales.
+
+**Opciones (@Input):**
+| Input | Tipo | Valores | Descripción |
+|-------|------|---------|-------------|
+| `variant` | `string` | `'primary'`, `'secondary'`, `'support'` | Estilo visual del botón |
+| `type` | `string` | `'button'`, `'submit'` | Tipo HTML del botón |
+| `disabled` | `boolean` | `true`, `false` | Estado deshabilitado |
+
+```html
+<app-button variant="primary" type="submit">Enviar</app-button>
+<app-button variant="support" (click)="cancelar()">Cancelar</app-button>
+```
+
+---
+
+### 5. Form Input (`app-form-input`)
+**Propósito:** Campo de formulario encapsulado con label, validación y mensajes de error.
+
+**Opciones (@Input):**
+| Input | Tipo | Descripción |
+|-------|------|-------------|
+| `inputId` | `string` | ID único para asociar label e input |
+| `label` | `string` | Texto del label |
+| `type` | `string` | Tipo de input (`text`, `email`, etc.) |
+| `name` | `string` | Nombre del campo |
+| `required` | `boolean` | Campo obligatorio |
+| `errorText` | `string` | Mensaje de error a mostrar |
+
+```html
+<app-form-input
+  inputId="email"
+  label="Correo electrónico"
+  type="email"
+  name="email"
+  [required]="true"
+  errorText="El correo no es válido">
+</app-form-input>
+```
+
+---
+
+### 6. Contact Form (`app-contact-form`)
+**Propósito:** Formulario de contacto completo con campos de nombre, email, asunto y mensaje.
+
+**Opciones (@Input):** Ninguna configurable externamente.
+
+```html
+<app-contact-form></app-contact-form>
+```
+
+---
+
+### 7. Toast (`app-toast`)
+**Propósito:** Notificación emergente para mostrar mensajes de éxito, error o información al usuario.
+
+**Opciones (@Input):**
+| Input | Tipo | Valores | Descripción |
+|-------|------|---------|-------------|
+| `message` | `string` | — | Texto del mensaje |
+| `type` | `string` | `'success'`, `'error'`, `'info'` | Estilo visual de la notificación |
+| `visible` | `boolean` | `true`, `false` | Controla la visibilidad |
+
+```html
+<app-toast
+  message="¡Mensaje enviado correctamente!"
+  type="success"
+  [visible]="showToast">
+</app-toast>
+```
+
+---
+
+### 8. Modal (`app-modal`)
+**Propósito:** Ventana modal para confirmaciones o mostrar contenido superpuesto.
+
+**Opciones (@Input):**
+| Input | Tipo | Descripción |
+|-------|------|-------------|
+| `isOpen` | `boolean` | Controla si el modal está abierto |
+| `title` | `string` | Título del modal |
+
+**Opciones (@Output):**
+| Output | Descripción |
+|--------|-------------|
+| `close` | Evento emitido al cerrar el modal |
+
+```html
+<app-modal [isOpen]="modalAbierto" title="Confirmar acción" (close)="cerrarModal()">
+  <p>¿Estás seguro de que deseas continuar?</p>
+  <app-button variant="secondary" (click)="confirmar()">Sí</app-button>
+  <app-button variant="support" (click)="cerrarModal()">No</app-button>
+</app-modal>
+```
+
+---
+
+## 3.2 Nomenclatura BEM en el Proyecto
+
+### Bloque y Elemento (`bloque__elemento`)
+
+El bloque representa un componente independiente, y el elemento es una parte interna que solo tiene sentido dentro del bloque.
+
+**Ejemplo de `_card.scss`:**
+
+```scss
+.dino-card {                    /* Bloque */
+  display: flex;
+  flex-direction: column;
+
+  &__category {                 /* Elemento: categoría */
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-3xl);
+  }
+
+  &__media {                    /* Elemento: imagen */
+    width: 100%;
+    height: 200px;
+  }
+
+  &__title {                    /* Elemento: título */
+    font-size: var(--font-size-2xl);
+  }
+
+  &__footer {                   /* Elemento: pie de tarjeta */
+    display: flex;
+    justify-content: space-between;
+  }
+}
+```
+
+---
+
+### Modificador (`bloque--modificador`)
+
+Los modificadores alteran la apariencia o comportamiento de un bloque o elemento.
+
+**Ejemplo de `_buttons.scss`:**
+
+```scss
+.btn {                          /* Bloque */
+  padding: var(--spacing-2) var(--spacing-4);
+  border-radius: var(--radius-lg);
+
+  &--primary {                  /* Modificador: estilo primario */
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+  }
+
+  &--secondary {                /* Modificador: estilo secundario */
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+  }
+
+  &--support {                  /* Modificador: estilo de soporte */
+    background-color: var(--support-color);
+    color: var(--text-color);
+  }
+}
+```
+
+---
+
+### Estado (`.is-*` / `.has-*`)
+
+Las clases de estado indican condiciones dinámicas que cambian según la interacción del usuario.
+
+**Ejemplo de `_card.scss`:**
+
+```scss
+.dino-card__icon {
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+
+  &.is-liked {                  /* Estado: marcado como favorito */
+    color: var(--support-color);
+  }
+}
+```
+
+**Ejemplo de `_form-input.scss`:**
+
+```scss
+.form-group__input {
+  border: 2px solid transparent;
+
+  &:focus {
+    border-color: var(--primary-color);
+  }
+
+  &.has-error {                 /* Estado: campo con error */
+    border-color: var(--support-color);
+  }
 }
 ```
 
