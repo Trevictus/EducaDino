@@ -4,11 +4,11 @@ import { Contact } from './pages/contact/contact';
 import { StyleGuide } from './pages/style-guide/style-guide';
 
 export const routes: Routes = [
-  // 1. Ruta raíz ('') carga Home
-  { path: '', component: Home },
+  // 1. Ruta raíz ('') redirige a Style Guide
+  { path: '', redirectTo: 'style-guide', pathMatch: 'full' },
 
-  // 2. Ruta explícita '/home' (opcional, buena práctica)
-  { path: 'home', redirectTo: '', pathMatch: 'full' },
+  // 2. Ruta Home (accesible desde el logotipo del header)
+  { path: 'home', component: Home },
 
   // 3. Ruta Contacto
   { path: 'contacto', component: Contact },
@@ -16,6 +16,6 @@ export const routes: Routes = [
   // 4. Ruta Style Guide (documentación de componentes)
   { path: 'style-guide', component: StyleGuide },
 
-  // 5. Wildcard: cualquier ruta desconocida redirige a Home
-  { path: '**', redirectTo: '' }
+  // 5. Wildcard: cualquier ruta desconocida redirige a Style Guide
+  { path: '**', redirectTo: 'style-guide' }
 ];
