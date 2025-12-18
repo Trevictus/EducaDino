@@ -1,3 +1,10 @@
+# EducaDino
+
+Proyecto final sobre AppWeb educativa
+Desplegado en: https://trevictus.github.io/EducaDino/
+
+---
+
 # Sección 1: Arquitectura CSS y Comunicación Visual
 
 Esta sección documenta las decisiones de diseño, la estructura del código y las metodologías implementadas en el proyecto para asegurar escalabilidad, mantenimiento y coherencia visual.

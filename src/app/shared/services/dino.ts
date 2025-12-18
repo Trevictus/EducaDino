@@ -45,7 +45,7 @@ export class DinoService {
       name: 'Tyrannosaurus Rex',
       category: 'Curiosidad',
       description: 'El T-Rex podía ejercer una fuerza de mordida de hasta 6 toneladas, suficiente para triturar huesos.',
-      image: '/img/t-rex.png',
+      image: 'img/t-rex.png',
       period: 'Cretácico',
       diet: 'carnivore',
       liked: false
@@ -55,7 +55,7 @@ export class DinoService {
       name: 'Velociraptor',
       category: 'Dato',
       description: 'Contrario a lo mostrado en películas, el Velociraptor real era del tamaño de un pavo.',
-      image: '/img/velocirraptor.png',
+      image: 'img/velocirraptor.png',
       period: 'Cretácico',
       diet: 'carnivore',
       liked: false
@@ -65,7 +65,7 @@ export class DinoService {
       name: 'Triceratops',
       category: 'Historia',
       description: 'El Triceratops usaba sus tres cuernos tanto para defensa como para exhibición durante el cortejo.',
-      image: '/img/triceratops.png',
+      image: 'img/triceratops.png',
       period: 'Cretácico',
       diet: 'herbivore',
       liked: false
@@ -75,7 +75,7 @@ export class DinoService {
       name: 'Quetzalcoatlus',
       category: 'Curiosidad',
       description: 'Con una envergadura de hasta 11 metros, era el animal volador más grande que haya existido.',
-      image: '/img/quetzalcoatl.png',
+      image: 'img/quetzalcoatl.png',
       period: 'Cretácico',
       diet: 'carnivore',
       liked: false
@@ -164,14 +164,14 @@ export class DinoService {
         id: '1',
         title: 'Brazos del T-Rex',
         description: 'Los brazos del T-Rex, aunque pequeños, podían levantar hasta 200 kg cada uno.',
-        image: '/img/t-rex.png',
+        image: 'img/t-rex.png',
         category: 'curiosidad'
       },
       {
         id: '2',
         title: 'Velocidad del Velociraptor',
         description: 'El Velociraptor podía correr hasta 64 km/h en ráfagas cortas.',
-        image: '/img/velocirraptor.png',
+        image: 'img/velocirraptor.png',
         category: 'dato'
       }
     ];
