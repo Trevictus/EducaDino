@@ -1,0 +1,189 @@
+/* ==========================================================================
+   COMPONENTE: TOAST
+   Notificaciones globales de la aplicación
+   ========================================================================== */
+
+/* --- CONTENEDOR FIJO --- */
+.toast-container {
+  position: fixed;
+  top: var(--spacing-3);
+  right: var(--spacing-3);
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+
+  max-width: 400px;
+  width: calc(100% - var(--spacing-6));
+
+  pointer-events: none;
+
+  /* Responsive: en móvil, centrado arriba */
+  @media (max-width: 768px) {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    max-width: 90%;
+  }
+}
+
+/* --- TOAST INDIVIDUAL --- */
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-2);
+
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+
+  pointer-events: auto;
+
+  /* Animación de entrada */
+  animation: toastSlideIn 0.3s ease-out;
+
+  /* --- ICONO --- */
+  &__icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* --- CONTENIDO --- */
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    display: block;
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-lg);
+    margin-bottom: 2px;
+  }
+
+  &__message {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-normal);
+    margin: 0;
+  }
+
+  /* --- BOTÓN CERRAR --- */
+  &__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: all var(--transition-fast) var(--transition-ease);
+    flex-shrink: 0;
+
+    .material-icons {
+      font-size: 1.25rem;
+    }
+
+    &:hover {
+      opacity: 1;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    &:focus {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+    }
+  }
+
+  /* ==========================================================================
+     VARIANTES DE TIPO
+     ========================================================================== */
+
+  /* --- SUCCESS (Verde) --- */
+  &--success {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+
+    .toast__icon {
+      color: var(--secondary-color-active);
+    }
+
+    .toast__close {
+      color: var(--text-color);
+    }
+  }
+
+  /* --- ERROR (Naranja/Rojo) --- */
+  &--error {
+    background-color: var(--support-color);
+    color: var(--text-color-light);
+
+    .toast__icon {
+      color: var(--text-color-light);
+    }
+
+    .toast__close {
+      color: var(--text-color-light);
+    }
+  }
+
+  /* --- WARNING (Naranja claro) --- */
+  &--warning {
+    background-color: var(--support-color-disabled);
+    color: var(--text-color);
+
+    .toast__icon {
+      color: var(--support-color-active);
+    }
+
+    .toast__close {
+      color: var(--support-color-active);
+    }
+  }
+
+  /* --- INFO (Verde oscuro) --- */
+  &--info {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+
+    .toast__icon {
+      color: var(--text-color-light);
+    }
+
+    .toast__close {
+      color: var(--text-color-light);
+    }
+  }
+}
+
+/* ==========================================================================
+   ANIMACIONES
+   ========================================================================== */
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animación de salida (se aplica vía JS si es necesario) */
+@keyframes toastSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+

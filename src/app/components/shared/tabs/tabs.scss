@@ -1,0 +1,95 @@
+/* ==========================================================================
+   COMPONENTE: TABS
+   Sistema de pestañas accesible con navegación por teclado
+   ========================================================================== */
+
+.tabs {
+  width: 100%;
+
+  /* --- LISTA DE PESTAÑAS --- */
+  &__list {
+    display: flex;
+    gap: var(--spacing-1);
+    border-bottom: var(--border-medium) solid var(--primary-color-disabled);
+    padding-bottom: 0;
+    margin-bottom: var(--spacing-3);
+    overflow-x: auto;
+
+    /* Ocultar scrollbar pero mantener funcionalidad */
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  /* --- PESTAÑA INDIVIDUAL --- */
+  &__tab {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-1);
+
+    padding: var(--spacing-2) var(--spacing-3);
+    background: none;
+    border: none;
+    border-bottom: var(--border-medium) solid transparent;
+    margin-bottom: calc(-1 * var(--border-medium));
+
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-lg);
+    color: var(--text-color);
+    cursor: pointer;
+    white-space: nowrap;
+
+    transition: all var(--transition-fast) var(--transition-ease);
+
+    /* Estado hover */
+    &:hover:not(:disabled) {
+      color: var(--primary-color);
+      border-bottom-color: var(--primary-color-disabled);
+    }
+
+    /* Estado focus */
+    &:focus {
+      outline: none;
+      background-color: var(--primary-color-disabled);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+    }
+
+    /* Estado activo */
+    &--active {
+      color: var(--primary-color);
+      border-bottom-color: var(--primary-color);
+      font-weight: var(--font-weight-semibold);
+
+      &:hover {
+        border-bottom-color: var(--primary-color);
+      }
+    }
+
+    /* Estado deshabilitado */
+    &--disabled,
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      color: var(--gray-scale-dark);
+    }
+  }
+
+  /* --- ICONO --- */
+  &__icon {
+    font-size: 1.25rem;
+  }
+
+  /* --- CONTENIDO --- */
+  &__content {
+    padding: var(--spacing-2) 0;
+  }
+}
+
+/* Panel de contenido individual (para usar con ng-content) */
+.tab-panel {
+  &[hidden] {
+    display: none;
+  }
+}
+

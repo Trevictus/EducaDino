@@ -1,0 +1,56 @@
+/* ==========================================================================
+   COMPONENTE: THEME TOGGLE
+   Botón para alternar entre modo claro y oscuro
+   ========================================================================== */
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast) var(--transition-ease);
+
+  &:hover {
+    background-color: var(--primary-color-hover);
+    transform: scale(1.1);
+  }
+
+  &:focus {
+    outline: 2px solid var(--secondary-color);
+    outline-offset: 2px;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  /* --- ICONO --- */
+  &__icon {
+    color: var(--text-color-light);
+    font-size: 1.5rem;
+    transition: transform var(--transition-base) var(--transition-ease);
+  }
+
+  /* --- ESTADO DARK --- */
+  &--dark {
+    background-color: var(--secondary-color);
+
+    &:hover {
+      background-color: var(--secondary-color-hover);
+    }
+
+    .theme-toggle__icon {
+      transform: rotate(180deg);
+    }
+  }
+}
+

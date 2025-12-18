@@ -1,0 +1,16 @@
+<div class="tooltip" #tooltipContainer>
+
+  <!-- Contenido envuelto por el tooltip -->
+  <ng-content></ng-content>
+
+  <!-- Caja del tooltip -->
+  @if (text) {
+    <div
+      [class]="tooltipClasses"
+      role="tooltip"
+      [attr.aria-hidden]="!isVisible">
+      {{ text }}
+    </div>
+  }
+
+</div>

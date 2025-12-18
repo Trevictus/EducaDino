@@ -4,7 +4,6 @@
     <!-- HEADER -->
     <header class="style-guide__header">
       <h1 class="style-guide__title">🦕 EducaDino Style Guide</h1>
-      <p class="style-guide__subtitle">Documentación visual de todos los componentes UI</p>
     </header>
 
     <!-- ========================================================================
@@ -321,6 +320,252 @@
           <p class="style-guide__type style-guide__type--sm">12px - Letra pequeña</p>
         </div>
       </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: THEME SWITCHER (FASE 1)
+         ======================================================================== -->
+    <h1 class="">Desarrollo web en entorno cliente</h1>
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Theme Switcher</h2>
+      <p class="style-guide__section-desc">
+        Componente <code>&lt;app-theme-toggle&gt;</code> para alternar entre modo claro y oscuro.
+      </p>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Botón de cambio de tema</h3>
+        <div class="style-guide__row">
+          <app-theme-toggle></app-theme-toggle>
+          <p class="style-guide__note" style="margin-left: 16px;">
+            Haz clic para alternar entre modo claro y oscuro. La preferencia se guarda en localStorage.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: TABS (FASE 1)
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Tabs (Pestañas)</h2>
+      <p class="style-guide__section-desc">
+        Componente <code>&lt;app-tabs&gt;</code> para organizar contenido en pestañas.
+      </p>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Pestañas con iconos</h3>
+        <app-tabs [tabs]="demoTabs" [activeTabId]="activeTabId" (tabChange)="onTabChange($event)">
+          <div class="tab-panel" [hidden]="activeTabId !== 'info'" role="tabpanel" id="tabpanel-info">
+            <p>📚 <strong>Información:</strong> Contenido de la pestaña de información sobre dinosaurios.</p>
+          </div>
+          <div class="tab-panel" [hidden]="activeTabId !== 'gallery'" role="tabpanel" id="tabpanel-gallery">
+            <p>🖼️ <strong>Galería:</strong> Aquí irían las imágenes de dinosaurios.</p>
+          </div>
+          <div class="tab-panel" [hidden]="activeTabId !== 'settings'" role="tabpanel" id="tabpanel-settings">
+            <p>⚙️ <strong>Configuración:</strong> Panel de configuración del usuario.</p>
+          </div>
+        </app-tabs>
+        <p class="style-guide__note">
+          Navega con las teclas ← → o Tab para accesibilidad.
+        </p>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: TOOLTIPS (FASE 1)
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Tooltips</h2>
+      <p class="style-guide__section-desc">
+        Componente <code>&lt;app-tooltip&gt;</code> para mostrar información contextual.
+      </p>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Posiciones</h3>
+        <div class="style-guide__row" style="gap: 32px; padding: 24px;">
+          <app-tooltip text="Tooltip arriba" position="top">
+            <app-button variant="primary" size="sm">Top</app-button>
+          </app-tooltip>
+
+          <app-tooltip text="Tooltip abajo" position="bottom">
+            <app-button variant="primary" size="sm">Bottom</app-button>
+          </app-tooltip>
+
+          <app-tooltip text="Tooltip izquierda" position="left">
+            <app-button variant="primary" size="sm">Left</app-button>
+          </app-tooltip>
+
+          <app-tooltip text="Tooltip derecha" position="right">
+            <app-button variant="primary" size="sm">Right</app-button>
+          </app-tooltip>
+        </div>
+        <p class="style-guide__note">
+          Los tooltips aparecen con <code>(mouseenter)</code> y se ocultan con <code>(mouseleave)</code>.
+          También funcionan con <code>(focus)</code> para accesibilidad.
+        </p>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: DOM DEMO (FASE 1)
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Manipulación del DOM</h2>
+      <p class="style-guide__section-desc">
+        Demostración de manipulación segura del DOM usando <code>Renderer2</code>, <code>&#64;ViewChild</code> y <code>ElementRef</code>.
+      </p>
+
+      <div class="style-guide__subsection">
+        <app-dom-demo></app-dom-demo>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: TOASTS (FASE 2)
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Toasts (Notificaciones)</h2>
+      <p class="style-guide__section-desc">
+        Sistema de notificaciones globales usando <code>ToastService</code>.
+      </p>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Tipos de Toast</h3>
+        <div class="style-guide__row">
+          <app-button variant="secondary" (clicked)="showSuccessToast()">
+            <span class="material-icons">check_circle</span>
+            Success
+          </app-button>
+          <app-button variant="danger" (clicked)="showErrorToast()">
+            <span class="material-icons">error</span>
+            Error
+          </app-button>
+          <app-button variant="ghost" (clicked)="showWarningToast()">
+            <span class="material-icons">warning</span>
+            Warning
+          </app-button>
+          <app-button variant="primary" (clicked)="showInfoToast()">
+            <span class="material-icons">info</span>
+            Info
+          </app-button>
+        </div>
+        <p class="style-guide__note">
+          Los toasts aparecen arriba a la derecha y se cierran automáticamente.
+          Puedes cerrarlos manualmente con el botón X.
+        </p>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: LOADING (FASE 2)
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Loading States</h2>
+      <p class="style-guide__section-desc">
+        Sistema de estados de carga usando <code>LoadingService</code>.
+      </p>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Loading Global</h3>
+        <div class="style-guide__row">
+          <app-button variant="primary" (clicked)="simulateLoading()">
+            <span class="material-icons">sync</span>
+            Simular Loading (2s)
+          </app-button>
+        </div>
+        <p class="style-guide__note">
+          El overlay de loading usa un contador de peticiones.
+          Solo se oculta cuando TODAS las peticiones terminan.
+        </p>
+      </div>
+
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Loading Local (Botón)</h3>
+        <div class="style-guide__row">
+          <app-button
+            variant="secondary"
+            [disabled]="isSaving()"
+            (clicked)="simulateSave()">
+            @if (isSaving()) {
+              <span class="material-icons" style="animation: spin 1s linear infinite;">sync</span>
+              Guardando...
+            } @else {
+              <span class="material-icons">save</span>
+              Guardar
+            }
+          </app-button>
+        </div>
+        <p class="style-guide__note">
+          Usa <code>signal()</code> para estados de carga locales en botones.
+        </p>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN: FORMULARIOS AVANZADOS (FASE 3)
+         ======================================================================== -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Formularios Avanzados (Fase 3)</h2>
+      <p class="style-guide__section-desc">
+        Formularios con <code>ReactiveFormsModule</code>, validadores personalizados y <code>FormArray</code>.
+      </p>
+
+      <!-- Selector de formulario -->
+      <div class="style-guide__subsection">
+        <h3 class="style-guide__subsection-title">Selecciona un formulario</h3>
+        <div class="style-guide__row">
+          <app-button
+            [variant]="activeFormTab === 'contact' ? 'primary' : 'ghost'"
+            (clicked)="activeFormTab = 'contact'">
+            Contacto
+          </app-button>
+          <app-button
+            [variant]="activeFormTab === 'register' ? 'primary' : 'ghost'"
+            (clicked)="activeFormTab = 'register'">
+            Registro
+          </app-button>
+          <app-button
+            [variant]="activeFormTab === 'order' ? 'primary' : 'ghost'"
+            (clicked)="activeFormTab = 'order'">
+            Pedido (FormArray)
+          </app-button>
+        </div>
+      </div>
+
+      <!-- Formulario de Contacto -->
+      @if (activeFormTab === 'contact') {
+        <div class="style-guide__subsection">
+          <h3 class="style-guide__subsection-title">ContactForm <code>Reactive Forms básico</code></h3>
+          <p class="style-guide__note">
+            Validadores: <code>required</code>, <code>email</code>, <code>minLength(10)</code>
+          </p>
+          <app-contact-form></app-contact-form>
+        </div>
+      }
+
+      <!-- Formulario de Registro -->
+      @if (activeFormTab === 'register') {
+        <div class="style-guide__subsection">
+          <h3 class="style-guide__subsection-title">RegisterForm <code>Validadores avanzados</code></h3>
+          <p class="style-guide__note">
+            Incluye: <code>passwordStrength()</code>, <code>nifValidator()</code>, <code>matchPasswords()</code>,
+            validadores asíncronos con estado <code>pending</code>
+          </p>
+          <app-register-form></app-register-form>
+        </div>
+      }
+
+      <!-- Formulario de Pedido -->
+      @if (activeFormTab === 'order') {
+        <div class="style-guide__subsection">
+          <h3 class="style-guide__subsection-title">OrderForm <code>FormArray dinámico</code></h3>
+          <p class="style-guide__note">
+            Usa <code>FormArray</code> para añadir/eliminar items dinámicamente.
+            Cálculo de precio total reactivo.
+          </p>
+          <app-order-form></app-order-form>
+        </div>
+      }
     </section>
 
   </div>
