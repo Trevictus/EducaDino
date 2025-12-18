@@ -4,6 +4,36 @@ Proyecto final sobre AppWeb educativa
 
 ---
 
+# Guía de Configuración y Ejecución del Proyecto
+
+Sigue los siguientes pasos para descargar, instalar y ejecutar el proyecto en tu entorno local.
+
+## 1. Descargar el repositorio
+Clona el repositorio desde GitHub utilizando la terminal o descárgalo como archivo ZIP.
+
+```bash
+git clone <URL_DEL_REPOSITORIO>
+```
+
+## 2. Abrir con WebStorm
+Abre el proyecto con WebStorm.
+
+## 3. Instalar dependencias
+Abre la terminal desde el **directorio raíz** del proyecto y ejecuta:
+
+```bash
+npm install
+```
+
+## 4. Iniciar el proyecto
+Con la terminal abierta en el directorio raíz, ejecuta el siguiente comando para levantarlo en el puerto 4200:
+
+```bash
+npm start
+```
+
+---
+
 ## Frontend
 
 > **Notas pendientes:**
