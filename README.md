@@ -13,7 +13,7 @@ Sigue los siguientes pasos para descargar, instalar y ejecutar el proyecto en tu
 Clona el repositorio desde GitHub utilizando la terminal o descárgalo como archivo ZIP.
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
+git clone https://github.com/Trevictus/EducaDino.git
 ```
 
 ## 2. Abrir con WebStorm
