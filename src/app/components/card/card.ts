@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-card',
@@ -14,10 +14,17 @@ export class Card {
   @Input() description: string = '';
   @Input() image: string = '';
 
+  // Output: Emite evento cuando se presiona "Siguiente curiosidad"
+  @Output() nextCuriosity = new EventEmitter<void>();
+
   // Estado del botón corazón
   isLiked: boolean = false;
 
   toggleLike() {
     this.isLiked = !this.isLiked;
+  }
+
+  onNextClick() {
+    this.nextCuriosity.emit();
   }
 }

@@ -29,6 +29,16 @@
       object-fit: cover;
     }
 
+    /* Contenedor del punto y tooltip */
+    .map-point-wrapper {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      z-index: 10;
+    }
+
     /* Puntos interactivos sobre el mapa */
     .map-point {
       position: absolute;
@@ -39,11 +49,70 @@
       border-radius: 50%;
       cursor: pointer;
       transition: transform var(--transition-fast), background-color var(--transition-fast);
+      top: 0;
+      left: 0;
 
       &:hover {
         transform: scale(1.5);
         background-color: var(--support-color); /* Naranja al hover */
       }
+    }
+
+    /* Tooltip que aparece al hacer hover */
+    .map-tooltip {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: var(--spacing-3) var(--spacing-4);
+      border-radius: 8px;
+      min-width: 250px;
+      max-width: 300px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      z-index: 20;
+      animation: fadeInTooltip 0.3s ease-in-out;
+      pointer-events: none;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 8px solid rgba(0, 0, 0, 0.9);
+      }
+
+      &__title {
+        font-family: var(--font-secondary);
+        font-size: var(--font-size-lg);
+        font-weight: bold;
+        margin: 0 0 var(--spacing-2) 0;
+        color: var(--support-color);
+      }
+
+      &__text {
+        font-family: var(--font-primary);
+        font-size: var(--font-size-sm);
+        margin: 0;
+        line-height: var(--line-height-relaxed);
+      }
+    }
+  }
+
+  @keyframes fadeInTooltip {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
   }
 
@@ -116,8 +185,9 @@
     &::-webkit-scrollbar {
       display: none;
     }
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 
     .card-wrapper {
       flex: 0 0 300px; /* Ancho fijo de tarjeta para carrusel */

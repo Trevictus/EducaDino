@@ -1,0 +1,27 @@
+/* === IMPORTACIONES DE ESTILOS === */
+
+/* 00-Settings: Variables y configuración */
+@import '00-settings/_fonts.scss';       /* Fuentes con font-display swap */
+@import '00-settings/_variables.scss';   /* Variables de color, tamaño, etc. */
+@import '00-settings/_css-variables.scss'; /* Variables CSS */
+
+/* 01-Tools: Mixins y funciones */
+@import '01-tools/_mixins.scss';
+
+/* 02-Generic: Reset y elementos base */
+@import '02-generic/_reset.scss';
+
+/* 03-Elements: Estilos base de elementos */
+@import '03-elements/_base.scss';
+
+/* 04-Objects: Clases de layout y patrones reutilizables */
+@import '04-objects/_layout.scss';
+
+/* 05-Components: Componentes específicos */
+@import '05-components/_buttons.scss';
+@import '05-components/_card.scss';
+@import '05-components/_header.scss';
+
+/* 06-Utilities: Clases de utilidad */
+@import '06-utilities/_helpers.scss';
+

@@ -2,6 +2,13 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Card } from '../../components/card/card';
 
+interface MapDiscovery {
+  region: string;
+  dinosaur: string;
+  discovery: string;
+  position: { top: string; left: string };
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -12,6 +19,37 @@ import { Card } from '../../components/card/card';
 export class Home {
   // Referencia al contenedor para el scroll
   @ViewChild('cardsContainer') cardsContainer!: ElementRef;
+
+  // Información sobre hallazgos de dinosaurios por región
+  discoveries: MapDiscovery[] = [
+    {
+      region: 'Norteamérica',
+      dinosaur: 'Tiranosaurio Rex',
+      discovery: 'El T-Rex fue descubierto en Montana, USA. El mayor depredador terrestre con mandíbulas de 180 kg de fuerza.',
+      position: { top: '35%', left: '15%' }
+    },
+    {
+      region: 'Sudamérica',
+      dinosaur: 'Argentinosaurus',
+      discovery: 'El Argentinosaurus hallado en Argentina es el animal terrestre más grande jamás conocido, pesando hasta 100 toneladas.',
+      position: { top: '73%', left: '25%' }
+    },
+    {
+      region: 'Europa',
+      dinosaur: 'Iguanodonte',
+      discovery: 'Descubierto en Inglaterra, fue uno de los primeros dinosaurios identificados científicamente en Europa.',
+      position: { top: '25%', left: '43%' }
+    },
+    {
+      region: 'Australia',
+      dinosaur: 'Quetzalcoatlus',
+      discovery: 'El Quetzalcoatlus fue hallado en Australia. La mayor criatura voladora con envergadura de hasta 11 metros.',
+      position: { top: '72%', left: '92%' }
+    }
+  ];
+
+  // Control de tooltip visible
+  activeTooltip: MapDiscovery | null = null;
 
   // RUTAS ACTUALIZADAS A /img/
   trends = [
@@ -47,6 +85,8 @@ export class Home {
     }
   ];
 
+
+
   // Lógica de los botones del carrusel
   scrollLeft() {
     this.cardsContainer.nativeElement.scrollBy({ left: -320, behavior: 'smooth' });
@@ -54,5 +94,15 @@ export class Home {
 
   scrollRight() {
     this.cardsContainer.nativeElement.scrollBy({ left: 320, behavior: 'smooth' });
+  }
+
+  // Mostrar tooltip al hacer hover
+  showTooltip(discovery: MapDiscovery) {
+    this.activeTooltip = discovery;
+  }
+
+  // Ocultar tooltip
+  hideTooltip() {
+    this.activeTooltip = null;
   }
 }

@@ -6,10 +6,22 @@
 
         <img src="img/world-map.png" alt="Mapa mundial interactivo" class="map-image">
 
-        <div class="map-point" style="top: 30%; left: 20%;" title="Norteamérica"></div>
-        <div class="map-point" style="top: 60%; left: 35%;" title="Sudamérica"></div>
-        <div class="map-point" style="top: 25%; left: 50%;" title="Europa"></div>
-        <div class="map-point" style="top: 70%; left: 80%;" title="Australia"></div>
+        @for (discovery of discoveries; track discovery.region) {
+          <div class="map-point-wrapper" [style.top]="discovery.position.top" [style.left]="discovery.position.left">
+            <div
+              class="map-point"
+              [title]="discovery.region"
+              (mouseenter)="showTooltip(discovery)"
+              (mouseleave)="hideTooltip()">
+            </div>
+            @if (activeTooltip === discovery) {
+              <div class="map-tooltip">
+                <h3 class="map-tooltip__title">{{ discovery.dinosaur }}</h3>
+                <p class="map-tooltip__text">{{ discovery.discovery }}</p>
+              </div>
+            }
+          </div>
+        }
       </div>
     </div>
 

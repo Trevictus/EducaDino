@@ -1,0 +1,17 @@
+<section class="curiosities">
+
+  <h1 class="curiosities__title">Curiosidades</h1>
+
+  <div class="curiosities__container">
+    <app-card
+      *ngFor="let curiosity of displayedCuriosities; let i = index"
+      [category]="curiosity.category"
+      [title]="curiosity.title"
+      [description]="curiosity.description"
+      [image]="curiosity.image"
+      (nextCuriosity)="onNextCuriosity(i)">
+    </app-card>
+  </div>
+
+</section>
+

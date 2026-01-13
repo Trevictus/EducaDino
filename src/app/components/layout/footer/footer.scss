@@ -1,51 +1,79 @@
 .footer {
   background-color: var(--background-color);
-  padding: var(--spacing-8) 0;
   border-top: 4px solid var(--secondary-color);
+  margin-top: var(--spacing-8);
 
-  /* Reducir padding en tablets y móvil */
-  @media (max-width: 768px) {
-    padding: var(--spacing-4) 0;
-  }
-
-  &__grid {
+  &__container {
     display: grid;
-    /* Responsive: 1 col en móvil, 2 en tablets, 4 en escritorio */
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--spacing-6);
+    padding: var(--spacing-6) 0 var(--spacing-3);
 
-    /* 2 columnas en tablets */
+    /* Tablets: 2 columnas */
     @media (max-width: 1024px) {
       grid-template-columns: repeat(2, 1fr);
-      gap: var(--spacing-4);
+      gap: var(--spacing-5);
+      padding: var(--spacing-5) 0 var(--spacing-2);
     }
 
-    /* 1 columna en móvil */
+    /* Móvil: 1 columna */
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
-      gap: var(--spacing-3);
+      gap: var(--spacing-4);
+      padding: var(--spacing-4) 0 var(--spacing-2);
     }
   }
 
-  &__col {
+  &__section {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-2);
+    gap: var(--spacing-3);
 
     /* Centrar contenido en móvil */
     @media (max-width: 768px) {
       text-align: center;
+      align-items: center;
+    }
+  }
+
+  &__section--brand {
+    gap: var(--spacing-1);
+  }
+
+  &__section--brand {
+    /* En tablets, la sección de branding ocupa 1 columna */
+    @media (max-width: 1024px) {
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 768px) {
+      grid-column: auto;
     }
   }
 
   &__logo {
     max-width: 140px;
-    margin-bottom: var(--spacing-2);
+    height: auto;
+    object-fit: contain;
 
-    /* Logo más pequeño en móvil */
+    /* Logo más pequeño en tablets y móvil */
+    @media (max-width: 1024px) {
+      max-width: 120px;
+    }
+
     @media (max-width: 768px) {
-      max-width: 80px;
-      margin: 0 auto var(--spacing-2);
+      max-width: 100px;
+    }
+  }
+
+  &__brand-text {
+    font-size: var(--font-size-sm);
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.4;
+
+    @media (max-width: 768px) {
+      font-size: var(--font-size-xs);
     }
   }
 
@@ -60,11 +88,16 @@
     box-shadow: var(--shadow-md);
     border-radius: var(--radius-button-top-left) var(--radius-button-top-right) var(--radius-button-bottom-right) var(--radius-button-bottom-left);
     align-self: flex-start;
-    transition: background-color var(--transition-fast);
-    font-size: var(--font-size-lg);
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-base);
+    border: none;
+    cursor: pointer;
+    display: inline-block;
 
     &:hover {
       background-color: var(--primary-color-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
     }
 
     /* Centrar y ajustar en móvil */
@@ -75,57 +108,124 @@
     }
   }
 
-  /* Filas (Etiqueta + Píldora) */
-  &__row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--spacing-2);
+  /* Títulos de sección */
+  &__section-title {
+    font-family: var(--font-secondary);
+    color: var(--text-color);
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    margin: 0;
+    padding-bottom: var(--spacing-2);
+    border-bottom: 2px solid var(--secondary-color);
 
-    /* Stack vertical en móvil */
     @media (max-width: 768px) {
-      flex-direction: column;
-      justify-content: center;
-      gap: var(--spacing-1);
+      font-size: var(--font-size-base);
+      padding-bottom: var(--spacing-1);
     }
+  }
+
+  /* Ítems de información */
+  &__info-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+      justify-content: center;
+      gap: var(--spacing-2);
+    }
+  }
+
+  &__info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 
   &__label {
     font-family: var(--font-secondary);
     color: var(--text-color);
     font-weight: bold;
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
 
-    /* Texto más pequeño en móvil */
     @media (max-width: 768px) {
-      font-size: var(--font-size-sm);
+      font-size: var(--font-size-xs);
     }
   }
 
-  /* Botones de datos */
-  &__pill {
-    background-color: var(--primary-color);
-    color: var(--text-color-light);
-    font-family: var(--font-secondary);
+  &__value {
+    color: var(--text-color);
     font-size: var(--font-size-sm);
-    padding: 6px 14px;
-    border-radius: var(--radius-button-top-left) var(--radius-button-top-right) var(--radius-button-bottom-right) var(--radius-button-bottom-left);
-    white-space: nowrap;
 
-    /* Píldoras más pequeñas en móvil */
     @media (max-width: 768px) {
-      font-size: var(--font-size-sm);
-      padding: 4px 10px;
-      white-space: normal;
+      font-size: var(--font-size-xs);
+    }
+  }
+
+  /* Lista de enlaces */
+  &__link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+
+    @media (max-width: 768px) {
+      gap: var(--spacing-1);
+    }
+  }
+
+  &__link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+    transition: all var(--transition-fast);
+    position: relative;
+    padding-bottom: 4px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary-color);
+      transition: width var(--transition-fast);
     }
 
-    &--link {
-      text-decoration: none;
-      cursor: pointer;
-      transition: background-color var(--transition-fast);
-      &:hover {
-        background-color: var(--support-color);
+    &:hover {
+      color: var(--secondary-color);
+
+      &::after {
+        width: 100%;
       }
+    }
+
+    @media (max-width: 768px) {
+      font-size: var(--font-size-xs);
+    }
+  }
+
+  /* Sección inferior con copyright */
+  &__bottom {
+    border-top: 1px solid var(--secondary-color);
+    padding: var(--spacing-4) 0;
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+
+  &__copyright {
+    color: var(--text-color);
+    font-size: var(--font-size-xs);
+    margin: 0;
+    text-align: center;
+    opacity: 0.8;
+
+    @media (max-width: 768px) {
+      font-size: var(--font-size-xs);
     }
   }
 }
