@@ -42,7 +42,7 @@
     /* TIPOGRAFÍA INTERNA */
     font-family: var(--font-primary);
     font-size: var(--font-size-xl);
-    color: var(--text-color);
+    color: #3A4243;
 
     /* FORMA Y BORDES */
     border-radius: var(--radius-form-field);
@@ -121,6 +121,26 @@
     font-weight: var(--font-weight-bold);
     margin-left: var(--spacing-2);
     margin-top: 4px;
+  }
+}
+
+/* ==========================================================================
+   TEMA OSCURO - OVERRIDES PARA SELECTS
+   ========================================================================== */
+
+.theme-dark {
+  .form-group__select {
+    color: #3A4243 !important;
+    background-color: #F7F7F7;
+
+    &:focus {
+      background-color: #FFFFFF;
+    }
+
+    option {
+      color: #3A4243;
+      background-color: #F7F7F7;
+    }
   }
 }
 

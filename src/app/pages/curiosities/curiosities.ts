@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Card } from '../../components/card/card';
+import {Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Card} from '../../components/card/card';
 
 interface Curiosity {
   id: number;
@@ -125,8 +125,7 @@ export class Curiosities implements OnInit {
       .filter((id): id is number => id !== null);
 
     // Obtener una curiosidad que no coincida con las otras 2
-    const randomCuriosity = this.getRandomCuriosityWithoutDuplicates(otherIds);
-    this.displayedCuriosities[index] = randomCuriosity;
+    this.displayedCuriosities[index] = this.getRandomCuriosityWithoutDuplicates(otherIds);
   }
 }
 

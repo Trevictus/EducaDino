@@ -1,6 +1,7 @@
 .contact-page {
   /* Espaciado superior e inferior */
   padding: var(--spacing-6) 0;
+  background-color: var(--background-color-disabled);
 
   /* Rejilla de 3 columnas (Imagen - Formulario - Imagen) */
   &__grid {
@@ -13,16 +14,13 @@
   /* Título */
   &__title {
     font-family: var(--font-secondary);
-    font-size: var(--font-size-4xl);
-    color: var(--text-color);
+    font-size: var(--font-size-5xl);
+    color: var(--primary-color-active);
     text-align: center;
-    margin-bottom: var(--spacing-6);
-
-    /* Subrayado */
     text-decoration: underline;
-    text-decoration-color: var(--text-color);
-    text-decoration-thickness: var(--border-progress);
-    text-underline-offset: 8px;
+    line-height: var(--line-height-tight);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-2);
   }
 
   /* Imágenes */
@@ -139,3 +137,4 @@
     display: none;
   }
 }
+

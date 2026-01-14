@@ -98,7 +98,7 @@
 
       &__text {
         font-family: var(--font-primary);
-        font-size: var(--font-size-sm);
+        font-size: var(--font-size-xl);
         margin: 0;
         line-height: var(--line-height-relaxed);
       }
@@ -123,12 +123,14 @@
     text-align: center;
 
     &__title {
+      color: var(--primary-color-active);
       font-family: var(--font-secondary);
       font-size: var(--font-size-5xl);
       margin-bottom: var(--spacing-3);
     }
 
     &__desc {
+      color: var(--primary-color-active);
       font-family: var(--font-secondary);
       font-size: var(--font-size-3xl);
       max-width: 800px;
@@ -137,6 +139,7 @@
     }
 
     &__sub {
+      color: var(--primary-color-active);
       font-family: var(--font-primary);
       font-size: var(--font-size-2xl);
       max-width: 800px;
@@ -155,10 +158,10 @@
   .trends-title {
     font-family: var(--font-secondary);
     font-size: var(--font-size-4xl);
-    color: var(--text-color);
+    color: var(--primary-color-active);
     text-align: center;
     text-decoration: underline;
-    text-decoration-color: var(--text-color);
+    text-decoration-color: var(--primary-color-active);
     text-underline-offset: 8px;
     margin-bottom: var(--spacing-6);
   }
@@ -175,8 +178,9 @@
   .cards-container {
     display: flex;
     gap: var(--spacing-4);
-    overflow: hidden; /* Oculta las tarjetas fuera del viewport */
-    padding: var(--spacing-4);
+    overflow-y: visible;
+    overflow-x: hidden; /* Oculta las tarjetas fuera del viewport */
+    padding: var(--spacing-4) var(--spacing-4) calc(var(--spacing-4) + 20px) var(--spacing-4); /* Padding vertical aumentado */
     scroll-behavior: smooth;
     width: 990px; /* 3 tarjetas x 300px + 2 gaps x 16px = 960px */
     max-width: 100%;
@@ -191,7 +195,6 @@
 
     .card-wrapper {
       flex: 0 0 300px; /* Ancho fijo de tarjeta para carrusel */
-      height: 550px; /* Altura fija de 550px */
       display: flex;
       flex-direction: column;
 

@@ -5,16 +5,18 @@
   gap: var(--spacing-6);
   padding: var(--spacing-6);
   min-height: 100vh;
-  background-color: #F5FADC;
+  background-color: var(--background-color-disabled);
 
   &__title {
     font-family: var(--font-secondary);
     font-size: var(--font-size-5xl);
     color: var(--primary-color-active);
     text-align: center;
-    margin-top: var(--spacing-4);
+
     line-height: var(--line-height-tight);
     font-weight: var(--font-weight-bold);
+    text-decoration: underline;
+    margin-bottom: var(--spacing-2);
   }
 
   &__container {

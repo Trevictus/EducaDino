@@ -42,10 +42,14 @@
 
   &__description {
     font-family: var(--font-primary);
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-xl);
     color: var(--primary-color);
     margin-bottom: var(--spacing-4);
-    flex-grow: 1;
+    min-height: 90px;
+    max-height: 90px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
   }
 
   &__footer {
@@ -59,9 +63,9 @@
   /* Botón con esquina recta arriba-izquierda */
   &__btn {
     background-color: var(--primary-color);
-    color: var(--text-color-light);
+    color: var(--text-color-hover);
     font-family: var(--font-secondary);
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xl);
     padding: 8px 16px;
     border: none;
     cursor: pointer;
@@ -74,7 +78,7 @@
   }
 
   &__icon {
-    color: rgba(0,0,0,0.2);
+    color: var(--text-color-hover);
     font-size: 2rem;
     cursor: pointer;
     user-select: none;
@@ -83,7 +87,7 @@
     &:hover { transform: scale(1.1); }
 
     &.is-liked {
-      color: var(--support-color); /* Naranja */
+      color: var(--support-color);
     }
   }
 }

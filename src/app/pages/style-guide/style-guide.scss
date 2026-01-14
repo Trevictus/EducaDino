@@ -19,7 +19,11 @@
     font-family: var(--font-secondary);
     font-size: var(--font-size-5xl);
     color: var(--primary-color-active);
-    margin: 0 0 var(--spacing-2);
+    text-align: center;
+    text-decoration: underline;
+    line-height: var(--line-height-tight);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-2);
   }
 
   &__subtitle {

@@ -8,10 +8,14 @@
     <!-- Navegación Desktop -->
     <nav class="header__nav">
 
-      <div class="header__search">
-        <span class="material-icons"></span>
-        <input type="text" placeholder="Buscar">
-      </div>
+      <button class="header__search" aria-label="Buscar en el sitio" type="button">
+        <span class="material-icons">search</span>
+        <input
+          #searchInput
+          type="text"
+          placeholder="Buscar"
+          (keyup.enter)="onSearch(searchInput.value)">
+      </button>
 
       <ul class="header__menu">
         <li><a routerLink="/minijuegos" class="header__link">Minijuegos</a></li>
