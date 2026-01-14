@@ -1,0 +1,78 @@
+<section class="products">
+  <header class="products__header">
+    <h1 class="products__title">🦕 Nuestros Productos</h1>
+    <p class="products__subtitle">Descubre nuestra colección de productos educativos sobre dinosaurios</p>
+  </header>
+
+  <!-- Mensaje de error del state -->
+  @if (errorMessage) {
+    <div class="products__alert products__alert--error">
+      <span>{{ errorMessage }}</span>
+      <button class="products__alert-close" (click)="dismissError()">✕</button>
+    </div>
+  }
+
+  <!-- Estado de carga -->
+  @if (loading) {
+    <div class="products__loading">
+      <span class="products__loading-icon">🔄</span>
+      <p>Cargando productos...</p>
+    </div>
+  }
+
+  <!-- Lista de productos -->
+  @if (!loading && products.length > 0) {
+    <div class="products__grid">
+      @for (product of products; track product.id) {
+        <article class="products__card">
+          <div class="products__card-image">
+            <img [src]="product.image" [alt]="product.name" />
+            @if (product.featured) {
+              <span class="products__card-badge">⭐ Destacado</span>
+            }
+          </div>
+          <div class="products__card-content">
+            <span class="products__card-category">{{ product.category }}</span>
+            <h3 class="products__card-title">{{ product.name }}</h3>
+            <p class="products__card-description">{{ product.description }}</p>
+            <div class="products__card-footer">
+              <span class="products__card-price">{{ product.price | currency:'EUR' }}</span>
+              <div class="products__card-actions">
+                <!-- Navegación con routerLink -->
+                <a
+                  [routerLink]="['/productos', product.id]"
+                  class="products__card-btn products__card-btn--primary"
+                >
+                  Ver detalle
+                </a>
+                <!-- Navegación programática con state -->
+                <button
+                  class="products__card-btn products__card-btn--secondary"
+                  (click)="navigateWithState(product)"
+                >
+                  Ver con datos
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  }
+
+  <!-- Estado vacío -->
+  @if (!loading && products.length === 0) {
+    <div class="products__empty">
+      <span class="products__empty-icon">📦</span>
+      <p>No hay productos disponibles</p>
+    </div>
+  }
+
+  <!-- Acciones adicionales -->
+  <footer class="products__footer">
+    <a routerLink="/productos/nuevo" class="products__btn products__btn--primary">
+      ➕ Añadir Producto
+    </a>
+  </footer>
+</section>
+

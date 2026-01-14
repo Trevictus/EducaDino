@@ -3,6 +3,7 @@ import { Home } from './pages/home/home';
 import { Contact } from './pages/contact/contact';
 import { StyleGuide } from './pages/style-guide/style-guide';
 import { Curiosities } from './pages/curiosities/curiosities';
+import { Ordenes } from './pages/ordenes/ordenes';
 
 export const routes: Routes = [
   // 1. Ruta raíz ('') redirige a Style Guide
@@ -17,7 +18,10 @@ export const routes: Routes = [
   // 4. Ruta Curiosidades
   { path: 'curiosidades', component: Curiosities },
 
-  // 5. Ruta Style Guide (documentación de componentes)
+  // 5. Ruta Órdenes (categorización de dinosaurios)
+  { path: 'ordenes', component: Ordenes },
+
+  // 6. Ruta Style Guide (documentación de componentes)
   { path: 'style-guide', component: StyleGuide },
 
   // 6. Wildcard: cualquier ruta desconocida redirige a Style Guide

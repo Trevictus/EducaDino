@@ -1,0 +1,27 @@
+<section class="not-found">
+  <div class="not-found__content">
+    <div class="not-found__icon">🦖</div>
+    <h1 class="not-found__title">404</h1>
+    <h2 class="not-found__subtitle">¡Ups! Esta página se extinguió</h2>
+    <p class="not-found__description">
+      Parece que el dinosaurio que buscas ya no existe o nunca existió.
+      Quizás se fue a explorar el período Jurásico.
+    </p>
+
+    <div class="not-found__suggestions">
+      <p class="not-found__suggestions-title">¿A dónde quieres ir?</p>
+      <nav class="not-found__nav">
+        @for (suggestion of suggestions; track suggestion.path) {
+          <a
+            [routerLink]="suggestion.path"
+            class="not-found__link"
+          >
+            <span class="not-found__link-icon">{{ suggestion.icon }}</span>
+            <span class="not-found__link-label">{{ suggestion.label }}</span>
+          </a>
+        }
+      </nav>
+    </div>
+  </div>
+</section>
+

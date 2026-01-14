@@ -1,0 +1,53 @@
+<section class="about">
+  <header class="about__header">
+    <h1 class="about__title">🦕 Sobre EducaDino</h1>
+    <p class="about__subtitle">Descubre quiénes somos y nuestra pasión por los dinosaurios</p>
+  </header>
+
+  <div class="about__content">
+    <article class="about__intro">
+      <div class="about__text">
+        <h2>Nuestra Misión</h2>
+        <p>
+          En <strong>EducaDino</strong>, nos dedicamos a despertar la curiosidad y el amor
+          por la paleontología en niños y adultos. Creemos que aprender sobre los dinosaurios
+          es una puerta de entrada al mundo de la ciencia, la historia natural y el pensamiento crítico.
+        </p>
+        <p>
+          Desde 2024, hemos creado experiencias educativas únicas que combinan diversión
+          y conocimiento científico riguroso.
+        </p>
+      </div>
+      <div class="about__image">
+        <img src="img/logotipo-EducaDino.png" alt="Logo EducaDino" />
+      </div>
+    </article>
+
+    <section class="about__features">
+      <h2 class="about__features-title">¿Por qué elegirnos?</h2>
+      <div class="about__features-grid">
+        @for (feature of features; track feature.title) {
+          <article class="about__feature-card">
+            <span class="about__feature-icon">{{ feature.icon }}</span>
+            <h3 class="about__feature-title">{{ feature.title }}</h3>
+            <p class="about__feature-description">{{ feature.description }}</p>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section class="about__cta">
+      <h2>¿Listo para explorar?</h2>
+      <p>Descubre nuestra colección de productos educativos y empieza tu aventura jurásica.</p>
+      <div class="about__cta-buttons">
+        <a routerLink="/productos" class="about__btn about__btn--primary">
+          Ver Productos
+        </a>
+        <a routerLink="/contacto" class="about__btn about__btn--secondary">
+          Contactar
+        </a>
+      </div>
+    </section>
+  </div>
+</section>
+

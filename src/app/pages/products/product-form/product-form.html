@@ -1,0 +1,189 @@
+<section class="product-form">
+  <header class="product-form__header">
+    <h1 class="product-form__title">➕ Nuevo Producto</h1>
+    <p class="product-form__subtitle">Añade un nuevo producto al catálogo de EducaDino</p>
+  </header>
+
+  <!-- Mensajes de estado -->
+  @if (successMessage) {
+    <div class="product-form__alert product-form__alert--success">
+      ✅ {{ successMessage }}
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="product-form__alert product-form__alert--error">
+      ❌ {{ errorMessage }}
+    </div>
+  }
+
+  <form class="product-form__form" (ngSubmit)="onSubmit()">
+    <div class="product-form__grid">
+      <!-- Nombre -->
+      <div class="product-form__field product-form__field--full">
+        <label for="name" class="product-form__label">
+          Nombre del producto <span class="product-form__required">*</span>
+        </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          [(ngModel)]="formData.name"
+          (ngModelChange)="onFieldChange()"
+          class="product-form__input"
+          placeholder="Ej: Kit Excavación T-Rex"
+          required
+        />
+      </div>
+
+      <!-- Descripción -->
+      <div class="product-form__field product-form__field--full">
+        <label for="description" class="product-form__label">
+          Descripción <span class="product-form__required">*</span>
+        </label>
+        <textarea
+          id="description"
+          name="description"
+          [(ngModel)]="formData.description"
+          (ngModelChange)="onFieldChange()"
+          class="product-form__textarea"
+          placeholder="Describe el producto..."
+          rows="4"
+          required
+        ></textarea>
+      </div>
+
+      <!-- Precio -->
+      <div class="product-form__field">
+        <label for="price" class="product-form__label">
+          Precio (€) <span class="product-form__required">*</span>
+        </label>
+        <input
+          type="number"
+          id="price"
+          name="price"
+          [(ngModel)]="formData.price"
+          (ngModelChange)="onFieldChange()"
+          class="product-form__input"
+          min="0"
+          step="0.01"
+          required
+        />
+      </div>
+
+      <!-- Stock -->
+      <div class="product-form__field">
+        <label for="stock" class="product-form__label">Stock</label>
+        <input
+          type="number"
+          id="stock"
+          name="stock"
+          [(ngModel)]="formData.stock"
+          (ngModelChange)="onFieldChange()"
+          class="product-form__input"
+          min="0"
+        />
+      </div>
+
+      <!-- Categoría -->
+      <div class="product-form__field">
+        <label for="category" class="product-form__label">
+          Categoría <span class="product-form__required">*</span>
+        </label>
+        <select
+          id="category"
+          name="category"
+          [(ngModel)]="formData.category"
+          (ngModelChange)="onFieldChange()"
+          class="product-form__select"
+          required
+        >
+          <option value="" disabled>Selecciona una categoría</option>
+          @for (category of categories; track category) {
+            <option [value]="category">{{ category }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Imagen -->
+      <div class="product-form__field">
+        <label for="image" class="product-form__label">Imagen</label>
+        <select
+          id="image"
+          name="image"
+          [(ngModel)]="formData.image"
+          (ngModelChange)="onFieldChange()"
+          class="product-form__select"
+        >
+          @for (img of availableImages; track img.value) {
+            <option [value]="img.value">{{ img.label }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Destacado -->
+      <div class="product-form__field product-form__field--checkbox">
+        <label class="product-form__checkbox-label">
+          <input
+            type="checkbox"
+            name="featured"
+            [(ngModel)]="formData.featured"
+            (ngModelChange)="onFieldChange()"
+            class="product-form__checkbox"
+          />
+          <span>⭐ Marcar como producto destacado</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Vista previa -->
+    <aside class="product-form__preview">
+      <h3>Vista previa</h3>
+      <div class="product-form__preview-card">
+        <img [src]="formData.image" alt="Preview" />
+        <div class="product-form__preview-info">
+          <span class="product-form__preview-category">{{ formData.category || 'Categoría' }}</span>
+          <h4>{{ formData.name || 'Nombre del producto' }}</h4>
+          <p>{{ formData.price | currency:'EUR' }}</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Acciones -->
+    <div class="product-form__actions">
+      <button
+        type="submit"
+        class="product-form__btn product-form__btn--primary"
+        [disabled]="isSubmitting"
+      >
+        @if (isSubmitting) {
+          Guardando...
+        } @else {
+          💾 Guardar Producto
+        }
+      </button>
+      <button
+        type="button"
+        class="product-form__btn product-form__btn--secondary"
+        (click)="resetForm()"
+        [disabled]="isSubmitting"
+      >
+        🔄 Limpiar
+      </button>
+      <a
+        routerLink="/productos"
+        class="product-form__btn product-form__btn--outline"
+      >
+        ← Cancelar
+      </a>
+    </div>
+
+    <!-- Indicador de cambios -->
+    @if (isFormDirty) {
+      <p class="product-form__dirty-indicator">
+        ⚠️ Tienes cambios sin guardar
+      </p>
+    }
+  </form>
+</section>
+

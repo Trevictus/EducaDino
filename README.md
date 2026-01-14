@@ -191,3 +191,193 @@ removeItem(index: number): void {
 | `ContactForm`  | `shared/contact-form/` | Refactorizado a Reactive Forms con validaciones    |
 | `RegisterForm` | `shared/register-form/`| Validadores custom, async y cross-field            |
 | `OrderForm`    | `shared/order-form/`   | FormArray dinámico con cálculo de precio total     |
+
+---
+
+## FASE 4: SISTEMA DE RUTAS Y NAVEGACIÓN
+
+### Mapa de Rutas de la Aplicación
+
+```
+/                           → Redirige a /home
+├── /home                   → Página de Inicio
+├── /productos              → Lista de Productos (Lazy Loading)
+│   ├── /productos/nuevo    → Formulario nuevo producto (Guard: pendingChanges)
+│   └── /productos/:id      → Detalle de producto (Resolver: productResolver)
+├── /about                  → Sobre Nosotros (Lazy Loading Standalone)
+├── /contacto               → Página de Contacto
+├── /curiosidades           → Curiosidades de Dinosaurios
+├── /style-guide            → Guía de Estilos
+├── /login                  → Inicio de Sesión (Lazy Loading Standalone)
+├── /admin                  → Panel Admin (Guard: authGuard, Lazy Loading Módulo)
+│   ├── /admin/dashboard    → Dashboard (Lazy Loading)
+│   ├── /admin/productos    → Gestión de Productos (Lazy Loading)
+│   │   └── /admin/productos/:id/editar → Editar (Guard: pendingChanges)
+│   └── /admin/usuarios     → Gestión de Usuarios (Lazy Loading)
+└── /**                     → Página 404 (NotFound)
+```
+
+### Estrategia de Lazy Loading
+
+La aplicación implementa **Lazy Loading** para optimizar el rendimiento inicial:
+
+```typescript
+// 1. Lazy Loading de Componentes Standalone
+{
+  path: 'about',
+  loadComponent: () => import('./pages/about/about').then(m => m.About)
+}
+
+// 2. Lazy Loading de Módulo de Rutas (Admin)
+{
+  path: 'admin',
+  loadChildren: () => import('./pages/admin/admin.routes').then(m => m.ADMIN_ROUTES)
+}
+
+// 3. Preloading Strategy - Precarga todos los módulos en segundo plano
+provideRouter(
+  routes,
+  withPreloading(PreloadAllModules),
+  withComponentInputBinding()
+)
+```
+
+| Tipo de Carga | Descripción | Ejemplo |
+|:--------------|:------------|:--------|
+| **Eager** | Se carga con la app inicial | Home, Contact, Curiosities |
+| **Lazy Standalone** | Se carga al navegar a la ruta | About, Login, Productos |
+| **Lazy Children** | Carga un módulo completo de rutas | Admin (dashboard, productos, usuarios) |
+
+### Guards Implementados
+
+#### 1. AuthGuard (CanActivateFn)
+Protege rutas que requieren autenticación.
+
+```typescript
+// Ubicación: src/app/guards/auth.guard.ts
+export const authGuard: CanActivateFn = (route, state) => {
+  const router = inject(Router);
+  const isLoggedIn = false; // Simular autenticación
+
+  if (isLoggedIn) return true;
+
+  // Redirigir a login con URL de retorno
+  return router.createUrlTree(['/login'], {
+    queryParams: { returnUrl: state.url }
+  });
+};
+```
+
+**Uso:** Aplicado a `/admin` para proteger el panel de administración.
+
+#### 2. PendingChangesGuard (CanDeactivateFn)
+Previene la pérdida de datos en formularios sin guardar.
+
+```typescript
+// Ubicación: src/app/guards/pending-changes.guard.ts
+export interface CanComponentDeactivate {
+  canDeactivate(): boolean;
+}
+
+export const pendingChangesGuard: CanDeactivateFn<CanComponentDeactivate> = (component) => {
+  if (component.canDeactivate && !component.canDeactivate()) {
+    return confirm('¿Estás seguro? Tienes cambios sin guardar.');
+  }
+  return true;
+};
+```
+
+**Uso:** Aplicado a `/productos/nuevo` y `/admin/productos/:id/editar`.
+
+### Resolver Implementado
+
+#### ProductResolver (ResolveFn)
+Precarga datos del producto antes de mostrar la vista.
+
+```typescript
+// Ubicación: src/app/resolvers/product.resolver.ts
+export const productResolver: ResolveFn<Product | null> = (route) => {
+  const productService = inject(ProductService);
+  const router = inject(Router);
+  const productId = route.paramMap.get('id');
+
+  return productService.getProductById(productId).pipe(
+    catchError((error) => {
+      // Redirigir con error en el state
+      router.navigate(['/productos'], {
+        state: { error: `Producto "${productId}" no encontrado` }
+      });
+      return of(null);
+    })
+  );
+};
+```
+
+### Navegación Programática
+
+```typescript
+// 1. Navegación con parámetros de ruta
+this.router.navigate(['/productos', productId]);
+
+// 2. Navegación con queryParams (merge mantiene los existentes)
+this.router.navigate(['/productos'], {
+  queryParams: { category: 'figuras', page: 1 },
+  queryParamsHandling: 'merge'
+});
+
+// 3. Navegación con state (datos ocultos, no en URL)
+this.router.navigate(['/productos', productId], {
+  state: {
+    fromList: true,
+    previousProduct: product,
+    timestamp: Date.now()
+  }
+});
+
+// Recuperar state en destino
+const state = history.state;
+if (state?.fromList) {
+  console.log('Navegación desde lista');
+}
+```
+
+### Breadcrumbs Dinámicos
+
+El sistema de breadcrumbs se construye automáticamente basándose en la propiedad `data.breadcrumb` de cada ruta:
+
+```typescript
+// Configuración en rutas
+{
+  path: 'productos',
+  data: { breadcrumb: 'Productos' },
+  children: [
+    { path: ':id', data: { breadcrumb: 'Detalle' } }
+  ]
+}
+
+// BreadcrumbService escucha NavigationEnd
+this.router.events
+  .pipe(filter(event => event instanceof NavigationEnd))
+  .subscribe(() => this.generateBreadcrumbs());
+```
+
+**Componente:** `src/app/components/shared/breadcrumb/`
+
+### Archivos Creados en Fase 4
+
+| Archivo | Ubicación | Descripción |
+|:--------|:----------|:------------|
+| `auth.guard.ts` | `guards/` | Guard de autenticación |
+| `pending-changes.guard.ts` | `guards/` | Guard para formularios |
+| `product.resolver.ts` | `resolvers/` | Resolver de productos |
+| `product.service.ts` | `services/` | Servicio de productos |
+| `breadcrumb.service.ts` | `services/` | Servicio de breadcrumbs |
+| `breadcrumb/` | `components/shared/` | Componente visual |
+| `product-list/` | `pages/products/` | Lista de productos |
+| `product-detail/` | `pages/products/` | Detalle de producto |
+| `product-form/` | `pages/products/` | Formulario de producto |
+| `about/` | `pages/` | Página About |
+| `login/` | `pages/` | Página de Login |
+| `not-found/` | `pages/` | Página 404 |
+| `admin/` | `pages/` | Módulo de administración |
+

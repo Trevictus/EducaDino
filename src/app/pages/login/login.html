@@ -1,0 +1,58 @@
+<section class="login">
+  <div class="login__container">
+    <div class="login__header">
+      <span class="login__icon">🦕</span>
+      <h1 class="login__title">Iniciar Sesión</h1>
+      <p class="login__subtitle">Accede a tu cuenta de EducaDino</p>
+    </div>
+
+    @if (errorMessage) {
+      <div class="login__error">
+        {{ errorMessage }}
+      </div>
+    }
+
+    @if (returnUrl !== '/home') {
+      <div class="login__info">
+        Debes iniciar sesión para acceder a: <strong>{{ returnUrl }}</strong>
+      </div>
+    }
+
+    <form class="login__form" (ngSubmit)="onSubmit()">
+      <div class="login__field">
+        <label for="username" class="login__label">Usuario</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          [(ngModel)]="username"
+          class="login__input"
+          placeholder="Ingresa tu usuario"
+          required
+        />
+      </div>
+
+      <div class="login__field">
+        <label for="password" class="login__label">Contraseña</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="password"
+          class="login__input"
+          placeholder="Ingresa tu contraseña"
+          required
+        />
+      </div>
+
+      <button type="submit" class="login__btn">
+        Iniciar Sesión
+      </button>
+    </form>
+
+    <p class="login__footer">
+      <a routerLink="/home">← Volver al inicio</a>
+    </p>
+  </div>
+</section>
+

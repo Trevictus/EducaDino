@@ -10,6 +10,9 @@ import { Footer } from './components/layout/footer/footer';
 import { ToastComponent } from './components/shared/toast/toast';
 import { LoadingOverlay } from './components/shared/loading-overlay/loading-overlay';
 
+// 3. IMPORTAR COMPONENTE DE NAVEGACIÓN (FASE 4)
+import { BreadcrumbComponent } from './components/shared/breadcrumb/breadcrumb';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -19,7 +22,8 @@ import { LoadingOverlay } from './components/shared/loading-overlay/loading-over
     Main,
     Footer,
     ToastComponent,
-    LoadingOverlay
+    LoadingOverlay,
+    BreadcrumbComponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
