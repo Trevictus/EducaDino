@@ -1,0 +1,80 @@
+<section class="ordenes">
+  <h1 class="ordenes__title">Órdenes Taxonómicos</h1>
+
+  <div class="ordenes__content">
+    <!-- Menú desplegable -->
+    <aside class="ordenes__menu">
+      <!-- Órdenes principales -->
+      <div class="menu-item" *ngFor="let order of orders">
+        <!-- Orden principal -->
+        <div class="menu-item__header" (click)="toggleOrder(order)">
+          <span class="menu-item__name" (click)="selectOrder($event, order)">{{ order.name }}</span>
+          <span class="menu-item__arrow material-icons" [class.expanded]="order.expanded">
+            arrow_drop_up
+          </span>
+        </div>
+
+        <!-- Subórdenes -->
+        <div class="menu-item__suborders" *ngIf="order.expanded">
+          <div class="submenu-item" *ngFor="let suborder of order.suborders">
+            <div class="submenu-item__header" (click)="toggleSuborder($event, suborder)">
+              <span class="submenu-item__name" (click)="selectSuborder($event, suborder)">{{ suborder.name }}</span>
+              <span class="submenu-item__arrow material-icons" [class.expanded]="suborder.expanded">
+                arrow_drop_up
+              </span>
+            </div>
+
+            <!-- Tipos de dinosaurios (familias) -->
+            <div class="submenu-item__types" *ngIf="suborder.expanded">
+              <div class="type-item" *ngFor="let type of suborder.types">
+                <div class="type-item__header" (click)="toggleType($event, type)">
+                  <span class="type-item__name" (click)="selectType($event, type)">{{ type.name }}</span>
+                  <span class="type-item__arrow material-icons" [class.expanded]="type.expanded">
+                    arrow_drop_up
+                  </span>
+                </div>
+
+                <!-- Especies de dinosaurios -->
+                <div class="type-item__dinosaurs" *ngIf="type.expanded">
+                  <div
+                    class="dinosaur-item"
+                    *ngFor="let dinosaur of type.dinosaurs"
+                    (click)="selectDinosaur($event, dinosaur)">
+                    {{ dinosaur.name }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Imagen central -->
+    <div class="ordenes__image-container">
+      <img
+        *ngIf="selectedItem.image"
+        [src]="selectedItem.image"
+        [alt]="selectedItem.title"
+        class="ordenes__image">
+      <div *ngIf="!selectedItem.image" class="ordenes__image-placeholder">
+        <!-- Espacio para imagen -->
+      </div>
+    </div>
+
+    <!-- Panel de información -->
+    <article class="ordenes__info">
+      <header class="ordenes__info-header">
+        <h2 class="ordenes__info-title">{{ selectedItem.title }}</h2>
+        <span
+          class="ordenes__icon material-icons"
+          [class.is-liked]="isLiked"
+          (click)="toggleLike()">
+          favorite
+        </span>
+      </header>
+      <p class="ordenes__info-description">{{ selectedItem.description }}</p>
+    </article>
+  </div>
+</section>
+

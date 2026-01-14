@@ -1,58 +1,160 @@
+<!-- ══════════════════════════════════════════════════════════════════
+     ProductList - Componente de Lista de Productos
+
+     FASE 5 - Gestión de Estados con Signals (Requisito 5.5):
+     - Spinner de carga (Loading)
+     - Mensaje de error con botón de reintentar (Error)
+     - Mensaje "No hay resultados" (Empty)
+     - Toast/Mensaje de éxito tras borrar/crear (Success)
+     ══════════════════════════════════════════════════════════════════ -->
+
 <section class="products">
+  <!-- Header de la sección -->
   <header class="products__header">
     <h1 class="products__title">🦕 Nuestros Productos</h1>
     <p class="products__subtitle">Descubre nuestra colección de productos educativos sobre dinosaurios</p>
   </header>
 
-  <!-- Mensaje de error del state -->
-  @if (errorMessage) {
-    <div class="products__alert products__alert--error">
-      <span>{{ errorMessage }}</span>
-      <button class="products__alert-close" (click)="dismissError()">✕</button>
+  <!-- ═══════════════════════════════════════════════════════════════
+       TOAST DE ÉXITO (Success State)
+       ═══════════════════════════════════════════════════════════════ -->
+  @if (hasSuccess()) {
+    <div class="products__toast products__toast--success" role="alert">
+      <span class="products__toast-icon">✅</span>
+      <span class="products__toast-message">{{ state().successMessage }}</span>
+      <button
+        class="products__toast-close"
+        (click)="dismissSuccess()"
+        aria-label="Cerrar mensaje"
+      >
+        ✕
+      </button>
     </div>
   }
 
-  <!-- Estado de carga -->
-  @if (loading) {
-    <div class="products__loading">
-      <span class="products__loading-icon">🔄</span>
-      <p>Cargando productos...</p>
+  <!-- ═══════════════════════════════════════════════════════════════
+       MENSAJE DE ERROR (Error State) con botón reintentar
+       ═══════════════════════════════════════════════════════════════ -->
+  @if (hasError()) {
+    <div class="products__alert products__alert--error" role="alert">
+      <div class="products__alert-content">
+        <span class="products__alert-icon">⚠️</span>
+        <div class="products__alert-text">
+          <strong>Error al cargar productos</strong>
+          <p>{{ state().error }}</p>
+        </div>
+      </div>
+      <div class="products__alert-actions">
+        <button
+          class="products__btn products__btn--secondary"
+          (click)="retryLoad()"
+        >
+          🔄 Reintentar
+        </button>
+        <button
+          class="products__alert-close"
+          (click)="dismissError()"
+          aria-label="Cerrar error"
+        >
+          ✕
+        </button>
+      </div>
     </div>
   }
 
-  <!-- Lista de productos -->
-  @if (!loading && products.length > 0) {
+  <!-- ═══════════════════════════════════════════════════════════════
+       FILTROS POR CATEGORÍA
+       ═══════════════════════════════════════════════════════════════ -->
+  @if (!isLoading() && hasProducts()) {
+    <nav class="products__filters" aria-label="Filtrar por categoría">
+      <span class="products__filters-label">Filtrar:</span>
+      <button
+        class="products__filter-btn"
+        [class.products__filter-btn--active]="!currentCategory()"
+        (click)="clearCategoryFilter()"
+      >
+        Todos
+      </button>
+      @for (category of getCategories(); track category) {
+        <button
+          class="products__filter-btn"
+          [class.products__filter-btn--active]="currentCategory() === category"
+          (click)="filterByCategory(category)"
+        >
+          {{ category }}
+        </button>
+      }
+    </nav>
+  }
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       ESTADO DE CARGA (Loading State) - Spinner
+       ═══════════════════════════════════════════════════════════════ -->
+  @if (isLoading()) {
+    <div class="products__loading" role="status" aria-live="polite">
+      <div class="products__spinner">
+        <div class="products__spinner-ring"></div>
+        <span class="products__spinner-icon">🦖</span>
+      </div>
+      <p class="products__loading-text">Cargando productos...</p>
+    </div>
+  }
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       LISTA DE PRODUCTOS (Data State)
+       ═══════════════════════════════════════════════════════════════ -->
+  @if (!isLoading() && !hasError() && hasProducts()) {
     <div class="products__grid">
-      @for (product of products; track product.id) {
+      @for (product of filteredProducts(); track product.id) {
         <article class="products__card">
+          <!-- Imagen del producto -->
           <div class="products__card-image">
-            <img [src]="product.image" [alt]="product.name" />
+            <img [src]="product.image" [alt]="product.name" loading="lazy" />
             @if (product.featured) {
               <span class="products__card-badge">⭐ Destacado</span>
             }
           </div>
+
+          <!-- Contenido del producto -->
           <div class="products__card-content">
             <span class="products__card-category">{{ product.category }}</span>
             <h3 class="products__card-title">{{ product.name }}</h3>
             <p class="products__card-description">{{ product.description }}</p>
+
+            <!-- Footer con precio y acciones -->
             <div class="products__card-footer">
               <span class="products__card-price">{{ product.price | currency:'EUR' }}</span>
-              <div class="products__card-actions">
-                <!-- Navegación con routerLink -->
-                <a
-                  [routerLink]="['/productos', product.id]"
-                  class="products__card-btn products__card-btn--primary"
-                >
-                  Ver detalle
-                </a>
-                <!-- Navegación programática con state -->
-                <button
-                  class="products__card-btn products__card-btn--secondary"
-                  (click)="navigateWithState(product)"
-                >
-                  Ver con datos
-                </button>
+              <div class="products__card-stock" [class.products__card-stock--low]="product.stock < 5">
+                Stock: {{ product.stock }}
               </div>
+            </div>
+
+            <!-- Acciones del producto -->
+            <div class="products__card-actions">
+              <!-- Navegación con routerLink -->
+              <a
+                [routerLink]="['/productos', product.id]"
+                class="products__card-btn products__card-btn--primary"
+              >
+                👁️ Ver detalle
+              </a>
+
+              <!-- Navegación programática con goToDetail (Requisito 4.2) -->
+              <button
+                class="products__card-btn products__card-btn--secondary"
+                (click)="navigateWithState(product)"
+              >
+                📦 Ver con datos
+              </button>
+
+              <!-- Eliminar producto -->
+              <button
+                class="products__card-btn products__card-btn--danger"
+                (click)="deleteProduct(product)"
+                aria-label="Eliminar {{ product.name }}"
+              >
+                🗑️
+              </button>
             </div>
           </div>
         </article>
@@ -60,19 +162,50 @@
     </div>
   }
 
-  <!-- Estado vacío -->
-  @if (!loading && products.length === 0) {
-    <div class="products__empty">
-      <span class="products__empty-icon">📦</span>
-      <p>No hay productos disponibles</p>
+  <!-- ═══════════════════════════════════════════════════════════════
+       ESTADO VACÍO (Empty State)
+       ═══════════════════════════════════════════════════════════════ -->
+  @if (isEmpty()) {
+    <div class="products__empty" role="status">
+      <div class="products__empty-icon">📦</div>
+      <h3 class="products__empty-title">No hay productos disponibles</h3>
+      <p class="products__empty-text">
+        @if (currentCategory()) {
+          No encontramos productos en la categoría "{{ currentCategory() }}".
+          <button class="products__link" (click)="clearCategoryFilter()">
+            Ver todos los productos
+          </button>
+        } @else {
+          Aún no hay productos registrados. ¡Sé el primero en añadir uno!
+        }
+      </p>
+      <button
+        class="products__btn products__btn--primary"
+        (click)="goToNewProduct()"
+      >
+        ➕ Añadir primer producto
+      </button>
     </div>
   }
 
-  <!-- Acciones adicionales -->
-  <footer class="products__footer">
-    <a routerLink="/productos/nuevo" class="products__btn products__btn--primary">
-      ➕ Añadir Producto
-    </a>
-  </footer>
+  <!-- ═══════════════════════════════════════════════════════════════
+       FOOTER CON ACCIONES
+       ═══════════════════════════════════════════════════════════════ -->
+  @if (!isLoading() && !hasError()) {
+    <footer class="products__footer">
+      <button
+        class="products__btn products__btn--primary"
+        (click)="goToNewProduct()"
+      >
+        ➕ Añadir Producto
+      </button>
+      <button
+        class="products__btn products__btn--secondary"
+        (click)="retryLoad()"
+      >
+        🔄 Actualizar lista
+      </button>
+    </footer>
+  }
 </section>
 

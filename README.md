@@ -381,3 +381,305 @@ this.router.events
 | `not-found/` | `pages/` | Página 404 |
 | `admin/` | `pages/` | Módulo de administración |
 
+---
+
+## FASE 5: HTTP CLIENT Y SERVICIOS
+
+### Arquitectura HTTP
+
+La aplicación implementa una arquitectura robusta para comunicación HTTP con el servidor:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      ARQUITECTURA HTTP (FASE 5)                         │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│  ┌───────────┐    ┌──────────────────┐    ┌──────────────────┐         │
+│  │ Componente│ -> │ ProductService   │ -> │ ApiService       │ ──┐     │
+│  │ (Lista)   │    │ (Lógica negocio) │    │ (HTTP wrapper)   │   │     │
+│  └───────────┘    └──────────────────┘    └──────────────────┘   │     │
+│       ↑                                                           │     │
+│       │              ┌────────────────────────────────────────────┘     │
+│       │              ↓                                                  │
+│       │         ┌─────────────────────────────────────────────┐        │
+│       │         │           INTERCEPTORES                      │        │
+│       │         ├─────────────────────────────────────────────┤        │
+│       │         │ 1. authInterceptor    → Headers Auth        │        │
+│       │         │ 2. loggingInterceptor → Console logging     │        │
+│       │         │ 3. errorInterceptor   → Manejo errores      │        │
+│       │         └─────────────────────────────────────────────┘        │
+│       │                        │                                        │
+│       │                        ↓                                        │
+│       │                  ┌──────────┐                                  │
+│       └──────────────────│   API    │                                  │
+│         (Observable)     │  REST    │                                  │
+│                          └──────────┘                                  │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Configuración de HttpClient
+
+```typescript
+// app.config.ts
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(
+      withFetch(),                          // Usa Fetch API nativa
+      withInterceptors([
+        authInterceptor,                    // 1. Headers de autenticación
+        loggingInterceptor,                 // 2. Logging (solo dev)
+        errorInterceptor                    // 3. Manejo global de errores
+      ])
+    )
+  ]
+};
+```
+
+### Interceptores Funcionales
+
+#### 1. Auth Interceptor
+Añade headers de autenticación a todas las peticiones hacia la API.
+
+```typescript
+// core/interceptors/auth.interceptor.ts
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const isApiRequest = req.url.startsWith(environment.apiUrl);
+  
+  if (!isApiRequest) return next(req);
+
+  const token = localStorage.getItem(environment.tokenKey);
+  
+  const modifiedReq = req.clone({
+    setHeaders: {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      'X-App-Client': `${environment.appName}/${environment.appVersion}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+  });
+
+  return next(modifiedReq);
+};
+```
+
+#### 2. Logging Interceptor
+Registra información de peticiones/respuestas (solo en desarrollo).
+
+```typescript
+// core/interceptors/logging.interceptor.ts
+export const loggingInterceptor: HttpInterceptorFn = (req, next) => {
+  if (!environment.enableLogging) return next(req);
+
+  const startTime = performance.now();
+  
+  console.log(`[HTTP] → ${req.method} ${req.url}`);
+
+  return next(req).pipe(
+    tap(event => {
+      if (event instanceof HttpResponse) {
+        const elapsed = Math.round(performance.now() - startTime);
+        console.log(`[HTTP] ← ${req.method} ${req.url} (${event.status}) - ${elapsed}ms`);
+      }
+    })
+  );
+};
+```
+
+#### 3. Error Interceptor
+Captura y transforma errores HTTP globalmente.
+
+```typescript
+// core/interceptors/error.interceptor.ts
+const ERROR_MESSAGES: Record<number, string> = {
+  400: 'La solicitud contiene datos inválidos.',
+  401: 'Tu sesión ha expirado. Inicia sesión nuevamente.',
+  403: 'No tienes permisos para realizar esta acción.',
+  404: 'El recurso solicitado no fue encontrado.',
+  500: 'Error en el servidor. Intenta más tarde.',
+};
+
+export const errorInterceptor: HttpInterceptorFn = (req, next) => {
+  const router = inject(Router);
+
+  return next(req).pipe(
+    catchError((error: HttpErrorResponse) => {
+      const errorInfo: HttpErrorInfo = {
+        code: error.status,
+        message: error.message,
+        friendlyMessage: ERROR_MESSAGES[error.status] || 'Error desconocido',
+        timestamp: new Date(),
+        url: req.url,
+      };
+
+      // Redirigir a login si 401
+      if (error.status === 401) {
+        router.navigate(['/login']);
+      }
+
+      return throwError(() => errorInfo);
+    })
+  );
+};
+```
+
+### ApiService (Servicio Base)
+
+Wrapper genérico sobre HttpClient que centraliza la comunicación HTTP.
+
+```typescript
+// core/services/api.service.ts
+@Injectable({ providedIn: 'root' })
+export class ApiService {
+  private readonly http = inject(HttpClient);
+  private readonly baseUrl = environment.apiUrl;
+
+  get<T>(endpoint: string, options?: ApiRequestOptions): Observable<T> {
+    return this.http.get<T>(this.buildUrl(endpoint), this.buildOptions(options))
+      .pipe(catchError(this.handleError));
+  }
+
+  post<T>(endpoint: string, body: unknown, options?: ApiRequestOptions): Observable<T> {
+    return this.http.post<T>(this.buildUrl(endpoint), body, this.buildOptions(options))
+      .pipe(catchError(this.handleError));
+  }
+
+  put<T>(endpoint: string, body: unknown, options?: ApiRequestOptions): Observable<T> { ... }
+  patch<T>(endpoint: string, body: unknown, options?: ApiRequestOptions): Observable<T> { ... }
+  delete<T>(endpoint: string, options?: ApiRequestOptions): Observable<T> { ... }
+
+  // Subida de archivos con FormData
+  uploadFile<T>(endpoint: string, file: File, fieldName = 'file'): Observable<T> {
+    const formData = new FormData();
+    formData.append(fieldName, file, file.name);
+    return this.http.post<T>(this.buildUrl(endpoint), formData);
+  }
+}
+```
+
+### ProductService (CRUD Completo)
+
+Implementa todas las operaciones CRUD con tipado estricto y operadores RxJS.
+
+| Método | HTTP | Endpoint | Descripción |
+|:-------|:-----|:---------|:------------|
+| `getProducts()` | GET | `/products` | Lista todos los productos |
+| `getProductById(id)` | GET | `/products/:id` | Obtiene un producto por ID |
+| `getFeaturedProducts()` | GET | `/products/featured` | Productos destacados |
+| `search(params)` | GET | `/products/search` | Búsqueda con paginación y filtros |
+| `getProductsByCategory(cat)` | GET | `/products?category=cat` | Filtra por categoría |
+| `createProduct(dto)` | POST | `/products` | Crea un producto (JSON) |
+| `updateProduct(id, dto)` | PUT | `/products/:id` | Actualiza un producto |
+| `deleteProduct(id)` | DELETE | `/products/:id` | Elimina un producto |
+| `uploadImage(id, file)` | POST | `/products/:id/image` | Sube imagen (FormData) |
+
+#### Operadores RxJS Utilizados
+
+```typescript
+// Ejemplo de getProducts() con operadores
+getProducts(): Observable<Product[]> {
+  return this.api.get<Product[]>(this.endpoint).pipe(
+    retry(2),                                    // Reintenta 2 veces en caso de error
+    map(products => this.transformProducts(products)),  // Transforma datos
+    tap(products => this.productsCache.set(products)),  // Actualiza caché local
+    catchError(error => this.handleError('getProducts', error))
+  );
+}
+
+// Búsqueda con HttpParams
+search(params: ProductSearchParams): Observable<PaginatedResponse<Product>> {
+  const httpParams = this.buildSearchParams(params);
+  return this.api.get<PaginatedResponse<Product>>(`${this.endpoint}/search`, {
+    params: httpParams
+  });
+}
+```
+
+### Gestión de Estados con Signals
+
+El componente `ProductListComponent` implementa gestión de estados reactiva:
+
+```typescript
+// Estado del componente
+interface ProductListState {
+  loading: boolean;
+  error: string | null;
+  data: Product[];
+  successMessage: string | null;
+}
+
+// Signal principal
+readonly state = signal<ProductListState>({
+  loading: true,
+  error: null,
+  data: [],
+  successMessage: null
+});
+
+// Computed signals para UI
+readonly hasProducts = computed(() => this.state().data.length > 0);
+readonly isEmpty = computed(() => !this.state().loading && !this.state().error && this.state().data.length === 0);
+readonly hasError = computed(() => !!this.state().error);
+readonly isLoading = computed(() => this.state().loading);
+readonly hasSuccess = computed(() => !!this.state().successMessage);
+```
+
+#### Estados de UI Implementados
+
+| Estado | Descripción | UI |
+|:-------|:------------|:---|
+| **Loading** | Cargando datos | Spinner animado con dinosaurio |
+| **Error** | Error en petición | Alerta roja + botón reintentar |
+| **Empty** | Sin productos | Mensaje + botón añadir |
+| **Success** | Operación exitosa | Toast verde auto-dismiss |
+| **Data** | Productos cargados | Grid de cards |
+
+### Tabla de Endpoints API
+
+| Método | URL | Descripción | Body |
+|:-------|:----|:------------|:-----|
+| GET | `/api/products` | Lista productos | - |
+| GET | `/api/products/:id` | Detalle producto | - |
+| GET | `/api/products/featured` | Productos destacados | - |
+| GET | `/api/products/search?category=x&page=1` | Búsqueda paginada | - |
+| POST | `/api/products` | Crear producto | JSON: CreateProductDto |
+| PUT | `/api/products/:id` | Actualizar producto | JSON: UpdateProductDto |
+| DELETE | `/api/products/:id` | Eliminar producto | - |
+| POST | `/api/products/:id/image` | Subir imagen | FormData: file |
+
+### Archivos Creados en Fase 5
+
+| Archivo | Ubicación | Descripción |
+|:--------|:----------|:------------|
+| `api.service.ts` | `core/services/` | Servicio HTTP base |
+| `auth.interceptor.ts` | `core/interceptors/` | Interceptor de autenticación |
+| `error.interceptor.ts` | `core/interceptors/` | Interceptor de errores |
+| `logging.interceptor.ts` | `core/interceptors/` | Interceptor de logging |
+| `product.service.ts` | `services/` | Servicio CRUD de productos |
+| `product.dto.ts` | `models/` | DTOs e interfaces de producto |
+| `environment.ts` | `environments/` | Variables de entorno (dev) |
+| `environment.prod.ts` | `environments/` | Variables de entorno (prod) |
+
+---
+
+## Tabla Resumen de Rutas
+
+| Path | Lazy | Guard | Resolver | Breadcrumb |
+|:-----|:-----|:------|:---------|:-----------|
+| `/home` | ❌ | - | - | Inicio |
+| `/about` | ✅ | - | - | Sobre Nosotros |
+| `/contacto` | ❌ | - | - | Contacto |
+| `/curiosidades` | ❌ | - | - | Curiosidades |
+| `/ordenes` | ❌ | - | - | Órdenes |
+| `/style-guide` | ❌ | - | - | Guía de Estilos |
+| `/productos` | ✅ | - | - | Productos |
+| `/productos/nuevo` | ✅ | pendingChangesGuard | - | Nuevo Producto |
+| `/productos/:id` | ✅ | - | productResolver | Producto :id |
+| `/admin` | ✅ | authGuard | - | Administración |
+| `/admin/dashboard` | ✅ | authGuard | - | Dashboard |
+| `/admin/productos` | ✅ | authGuard | - | Gestión Productos |
+| `/admin/productos/:id/editar` | ✅ | authGuard + pendingChangesGuard | - | Editar |
+| `/admin/usuarios` | ✅ | authGuard | - | Usuarios |
+| `/login` | ✅ | - | - | Iniciar Sesión |
+| `/**` | ✅ | - | - | Página no encontrada |
+

@@ -17,8 +17,8 @@ export interface Product {
   image: string;
   stock: number;
   featured?: boolean;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 /**

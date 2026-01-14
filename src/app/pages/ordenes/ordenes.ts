@@ -42,6 +42,15 @@ interface SelectedItem {
   breadcrumb?: string;
 }
 
+/**
+ * Ordenes - Página de clasificación taxonómica de dinosaurios
+ *
+ * Esta página muestra la clasificación taxonómica de los dinosaurios
+ * dividida en órdenes (Saurischia, Ornithischia), subórdenes, familias y especies.
+ *
+ * Nota: "Órdenes" hace referencia a la taxonomía biológica de los dinosaurios,
+ * NO a pedidos comerciales (orders en inglés).
+ */
 @Component({
   selector: 'app-ordenes',
   standalone: true,
@@ -59,7 +68,7 @@ export class Ordenes {
     image: ''
   };
 
-  // Estructura de datos de órdenes
+  // Estructura de datos de órdenes taxonómicos
   orders: Order[] = [
     {
       id: 'saurischia',
