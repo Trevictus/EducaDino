@@ -1,0 +1,235 @@
+<section class="product-list">
+  <header class="product-list__header">
+    <h2 class="product-list__title">🦖 Catálogo de Productos</h2>
+
+    <!-- Formulario de búsqueda -->
+    <form class="product-list__search" (ngSubmit)="onSearch()">
+      <div class="product-list__search-field">
+        <span class="material-icons">search</span>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          name="search"
+          placeholder="Buscar productos..."
+          class="product-list__input"
+        />
+      </div>
+
+      <select
+        [(ngModel)]="selectedCategory"
+        name="category"
+        class="product-list__select"
+      >
+        <option value="">Todas las categorías</option>
+        @for (category of categories; track category) {
+          <option [value]="category">{{ category }}</option>
+        }
+      </select>
+
+      <button type="submit" class="product-list__btn product-list__btn--primary">
+        Buscar
+      </button>
+
+      <button
+        type="button"
+        class="product-list__btn product-list__btn--secondary"
+        (click)="clearFilters()"
+      >
+        Limpiar
+      </button>
+    </form>
+  </header>
+
+  <!-- ============================================
+       ESTADO: LOADING
+       ============================================ -->
+  @if (state().loading) {
+    <div class="product-list__loading" role="status" aria-live="polite">
+      <div class="product-list__spinner">
+        <div class="product-list__spinner-circle"></div>
+      </div>
+      <p class="product-list__loading-text">Cargando productos...</p>
+      <span class="product-list__loading-emoji" aria-hidden="true">🦕</span>
+    </div>
+  }
+
+  <!-- ============================================
+       ESTADO: ERROR
+       ============================================ -->
+  @if (hasError() && !state().loading) {
+    <div class="product-list__error">
+      <app-alert
+        type="error"
+        [title]="'Error al cargar productos'"
+        [dismissible]="true"
+        (closed)="clearError()"
+      >
+        {{ errorMessage() }}
+      </app-alert>
+
+      <div class="product-list__error-actions">
+        <button
+          type="button"
+          class="product-list__btn product-list__btn--primary"
+          (click)="retry()"
+        >
+          <span class="material-icons">refresh</span>
+          Reintentar
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- ============================================
+       ESTADO: EMPTY (Sin resultados)
+       ============================================ -->
+  @if (state().empty && !state().loading && !hasError()) {
+    <div class="product-list__empty">
+      <div class="product-list__empty-icon">
+        <span class="material-icons">inventory_2</span>
+      </div>
+      <h3 class="product-list__empty-title">No se encontraron productos</h3>
+      <p class="product-list__empty-text">
+        @if (searchTerm || selectedCategory) {
+          No hay productos que coincidan con tu búsqueda.
+          <br />
+          Intenta con otros términos o categoría.
+        } @else {
+          Aún no hay productos disponibles en el catálogo.
+        }
+      </p>
+      <button
+        type="button"
+        class="product-list__btn product-list__btn--secondary"
+        (click)="clearFilters()"
+      >
+        Ver todos los productos
+      </button>
+    </div>
+  }
+
+  <!-- ============================================
+       ESTADO: SUCCESS (Lista de productos)
+       ============================================ -->
+  @if (hasProducts() && !state().loading && !hasError()) {
+    <!-- Info de resultados -->
+    <div class="product-list__info">
+      <span class="product-list__count">
+        {{ pagination().totalItems }} productos encontrados
+      </span>
+
+      <!-- Controles de ordenamiento -->
+      <div class="product-list__sort">
+        <span>Ordenar por:</span>
+        <button
+          type="button"
+          class="product-list__sort-btn"
+          [class.active]="searchParams().sortBy === 'name'"
+          (click)="sortBy('name')"
+        >
+          Nombre
+          <span class="material-icons">{{ getSortIcon('name') }}</span>
+        </button>
+        <button
+          type="button"
+          class="product-list__sort-btn"
+          [class.active]="searchParams().sortBy === 'price'"
+          (click)="sortBy('price')"
+        >
+          Precio
+          <span class="material-icons">{{ getSortIcon('price') }}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Grid de productos -->
+    <div class="product-list__grid">
+      @for (product of sortedProducts(); track product.id) {
+        <article
+          class="product-card"
+          (click)="onProductClick(product)"
+          tabindex="0"
+          role="button"
+          [attr.aria-label]="'Ver ' + product.name"
+        >
+          <div class="product-card__image-wrapper">
+            <img
+              [src]="product.image"
+              [alt]="product.name"
+              class="product-card__image"
+              loading="lazy"
+            />
+            @if (product.featured) {
+              <span class="product-card__badge">⭐ Destacado</span>
+            }
+          </div>
+
+          <div class="product-card__content">
+            <h3 class="product-card__title">{{ product.name }}</h3>
+            <p class="product-card__category">{{ product.category }}</p>
+            <p class="product-card__description">{{ product.description }}</p>
+
+            <div class="product-card__footer">
+              <span class="product-card__price">{{ product.price | currency: 'EUR' }}</span>
+              <span
+                class="product-card__stock"
+                [class.product-card__stock--low]="product.stock < 10"
+              >
+                {{ product.stock }} en stock
+              </span>
+            </div>
+
+            <div class="product-card__actions">
+              <button
+                type="button"
+                class="product-card__action-btn"
+                (click)="onEditProduct(product, $event)"
+                aria-label="Editar producto"
+              >
+                <span class="material-icons">edit</span>
+              </button>
+              <button
+                type="button"
+                class="product-card__action-btn product-card__action-btn--danger"
+                (click)="onDeleteProduct(product, $event)"
+                aria-label="Eliminar producto"
+              >
+                <span class="material-icons">delete</span>
+              </button>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+
+    <!-- Paginación -->
+    @if (pagination().totalPages > 1) {
+      <nav class="product-list__pagination" aria-label="Paginación de productos">
+        <button
+          type="button"
+          class="product-list__page-btn"
+          [disabled]="!pagination().hasPreviousPage"
+          (click)="previousPage()"
+          aria-label="Página anterior"
+        >
+          <span class="material-icons">chevron_left</span>
+        </button>
+
+        <span class="product-list__page-info">
+          Página {{ pagination().currentPage }} de {{ pagination().totalPages }}
+        </span>
+
+        <button
+          type="button"
+          class="product-list__page-btn"
+          [disabled]="!pagination().hasNextPage"
+          (click)="nextPage()"
+          aria-label="Página siguiente"
+        >
+          <span class="material-icons">chevron_right</span>
+        </button>
+      </nav>
+    }
+  }
+</section>
+
