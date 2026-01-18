@@ -1,64 +1,47 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <!-- Meta tags essentials -->
+    <!-- === META TAGS ESENCIALES === -->
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="EducaDino - Plataforma educativa interactiva para aprender sobre dinosaurios con minijuegos, curiosidades y contenido didáctico." />
+    <meta name="theme-color" content="#2c3e50" />
 
-    <!-- Título y descripción -->
-    <title>EducaDino - Aprende sobre Dinosaurios de Forma Interactiva</title>
-    <meta
-      name="description"
-      content="EducaDino es una plataforma educativa interactiva para aprender curiosidades fascinantes sobre dinosaurios. Explora un mapa mundial, lee artículos educativos y participa en minijuegos."
-    />
-    <meta name="theme-color" content="#D6E18D" />
+    <!-- === INFORMACIÓN GENERAL === -->
+    <title>EducaDino - Aprende sobre Dinosaurios</title>
+    <base href="/EducaDino/" />
 
-    <!-- Favicon -->
+    <!-- === FAVICON === -->
     <link rel="icon" type="image/x-icon" href="./favicon.ico" />
-    <link
-      rel="apple-touch-icon"
-      href="../public/favicon.ico"
-    />
+    <link rel="apple-touch-icon" href="./favicon.ico" />
 
-    <!-- Tipografías externas -->
+    <!-- === FUENTES EXTERNAS === -->
+    <!-- Material Icons: Iconografía moderna -->
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
       rel="stylesheet"
     />
+    <!-- Google Fonts: Baloo 2 (body) y Fredoka One (headings) -->
     <link
       href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Fredoka+One&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Estilos globales compilados -->
-    <link rel="stylesheet" href="./styles-STTJ2WRS.css" />
-
-    <!-- Base href para Angular Router -->
-    <base href="/EducaDino/" />
+    <!-- === ESTILOS COMPILADOS === -->
+    <!-- Archivo CSS compilado desde styles.scss con arquitectura ITCSS -->
+    <link rel="stylesheet" href="./styles.css" />
   </head>
 
   <body>
-    <!-- Contenedor raíz de la aplicación Angular -->
+    <!-- === RAÍZ DE LA APLICACIÓN ANGULAR === -->
+    <!-- Los componentes se renderizarán dentro de este elemento -->
     <app-root role="application" aria-label="Aplicación EducaDino"></app-root>
 
-    <!-- Scripts de la aplicación compilada -->
-    <script src="./main-RA2LS532.js" defer></script>
-
-    <!-- Fallback noscript para navegadores sin JavaScript -->
-    <noscript>
-      <p style="
-        font-family: 'Baloo 2', sans-serif;
-        text-align: center;
-        padding: 2rem;
-        color: #3A737D;
-      ">
-        Esta aplicación requiere JavaScript habilitado para funcionar correctamente.
-        Por favor, habilita JavaScript en tu navegador.
-      </p>
-    </noscript>
+    <!-- === SCRIPT DE LA APLICACIÓN === -->
+    <!-- Bundle principal compilado por Angular CLI -->
+    <script src="./main.js" type="module"></script>
   </body>
 </html>

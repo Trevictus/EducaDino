@@ -1073,12 +1073,14 @@ El proyecto responde a tres contextos principales de uso:
 - Buttons y elementos táctiles con suficiente espacio (mínimo 44px de altura).
 - Navegación simplificada o colapsable.
 
-**Ejemplo de ruptura:**
+**Ejemplo:**
 - Tarjetas de curiosidades: 1 columna
 - Formularios: Campos apilados verticalmente
 - Headers: Menú hamburguesa
 
-*[Vista Mobile](../images/vista-mobile.png)*
+*![VistaMovil.png](../images/VistaMovil.png)*  
+*![VistaMovil2.png](../images/VistaMovil2.png)*
+*![VistaMovil3.png](../images/VistaMovil3.png)*
 
 ### Vista Tablet (768px - 1024px)
 
@@ -1088,12 +1090,13 @@ El proyecto responde a tres contextos principales de uso:
 - Navegación en línea con botones más grandes.
 - Buen balance entre contenido y espacio en blanco.
 
-**Ejemplo de ruptura:**
+**Ejemplo:**
 - Tarjetas de curiosidades: 2 columnas
 - Formularios: Campos en cuadrículas de 2 columnas (cuando procede)
 - Layouts tipo "sidebar + contenido principal"
 
-*[Vista Tablet](../images/vista-tablet.png)*
+*[VistaTablet](../images/vista-tablet.png)*
+*[VistaTablet2](../images/vista-tablet.png)*
 
 ### Vista Desktop (> 1024px)
 
@@ -1101,14 +1104,16 @@ El proyecto responde a tres contextos principales de uso:
 - Tres o más columnas para máximo aprovechamiento del espacio.
 - Tamaños de fuente más grandes para confortabilidad de lectura.
 - Spacing generoso para evitar aglomeración.
-- Navegación completa con todos los opciones visibles.
+- Navegación completa con todos las opciones visibles.
 
-**Ejemplo de ruptura:**
+**Ejemplo:**
 - Tarjetas de curiosidades: 3 columnas (grid auto-fit)
 - Formularios: Campos en cuadrículas de 2-3 columnas
 - Layouts complejos con múltiples sidebars
 
-*[Vista Desktop](../images/vista-desktop.png)*
+*![VistaDesktop.png](../images/VistaDesktop.png)*
+*![VistaDesktop2.png](../images/VistaDesktop2.png)*
+*![VistaDesktop3.png](../images/VistaDesktop3.png)*
 
 ---
 
@@ -1147,22 +1152,6 @@ Algunos componentes tienen necesidades específicas de responsive y usan media q
   }
 }
 ```
-
----
-
-## 4.8 Testing Responsive
-
-Para validar que el diseño responde correctamente:
-
-1. **Herramientas del navegador:** Usar DevTools de Chrome/Firefox con modo responsive para probar todos los breakpoints.
-2. **Dispositivos reales:** Probar en smartphones, tablets y monitores externos.
-3. **Viewports críticos:** Verificar especialmente en 320px (móvil pequeño), 768px (tablet) y 1280px (desktop).
-
-**Recomendación:** Verificar que:
-- No haya scrolling horizontal en ningún breakpoint.
-- El texto sea legible sin necesidad de zoom.
-- Los botones sean tocables (mínimo 44px en dispositivos táctiles).
-- Las imágenes se adapten sin deformarse (usar `object-fit: cover`).
 
 ---
 
