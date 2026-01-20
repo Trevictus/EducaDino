@@ -1,0 +1,162 @@
+.minigames-page {
+  background-color: var(--background-color-disabled);
+  padding: var(--spacing-6) 0;
+  min-height: calc(100vh - 200px);
+
+  &__wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-4);
+  }
+}
+
+/* --- ENCABEZADO --- */
+.minigames-header {
+  text-align: center;
+  margin-bottom: var(--spacing-8);
+
+  &__title {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-5xl);
+    color: var(--primary-color-active);
+    text-align: center;
+    text-decoration: underline;
+    line-height: var(--line-height-tight);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-2);
+  }
+
+  &__description {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-2xl);
+    color: var(--text-color);
+    line-height: var(--line-height-normal);
+
+    .theme-dark & {
+      color: var(--primary-color-active);
+    }
+  }
+}
+
+/* --- SELECTOR DE EDAD --- */
+.age-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--spacing-8);
+
+  &__label {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-3xl);
+    color: var(--primary-color-active);
+    text-align: center;
+    margin-bottom: var(--spacing-4);
+  }
+
+  &__buttons {
+    display: flex;
+    gap: var(--spacing-3);
+    flex-wrap: wrap;
+    justify-content: center;
+
+    @media (max-width: var(--breakpoint-md)) {
+      flex-direction: column;
+      gap: var(--spacing-2);
+      width: 100%;
+    }
+  }
+}
+
+/* --- BOTÓN DE EDAD --- */
+.age-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-4);
+  min-width: 140px;
+  border: 3px solid var(--primary-color);
+  border-radius: var(--radius-button-top-left) var(--radius-button-top-right) var(--radius-button-bottom-right) var(--radius-button-bottom-left);
+  background-color: var(--background-color-hover);
+  cursor: pointer;
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-2xl);
+  color: var(--text-color);
+  font-weight: var(--font-weight-bold);
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-md);
+
+  .theme-dark & {
+    color: var(--text-color-light);
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    background-color: var(--background-color);
+  }
+
+  &__emoji {
+    font-size: 3rem;
+  }
+
+  &__text {
+    font-size: var(--font-size-xl);
+  }
+
+  &--active {
+    border-color: var(--support-color);
+    background-color: var(--support-color-disabled);
+    box-shadow: var(--shadow-xl);
+    transform: scale(1.05);
+
+    &:hover {
+      background-color: var(--support-color-disabled);
+    }
+  }
+
+  @media (max-width: var(--breakpoint-md)) {
+    min-width: 100%;
+    padding: var(--spacing-3);
+
+    &__emoji {
+      font-size: 2rem;
+    }
+
+    &__text {
+      font-size: var(--font-size-lg);
+    }
+  }
+}
+
+/* --- CONTENEDOR DE JUEGOS --- */
+.games-container {
+  animation: fadeIn 0.5s ease;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.game-section {
+  background-color: white;
+  border-radius: 16px;
+  padding: var(--spacing-6);
+  box-shadow: var(--shadow-lg);
+
+  .theme-dark & {
+    background-color: var(--background-color-active);
+  }
+
+  @media (max-width: var(--breakpoint-md)) {
+    padding: var(--spacing-4);
+    border-radius: 12px;
+  }
+}

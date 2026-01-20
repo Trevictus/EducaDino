@@ -1,0 +1,105 @@
+<div class="shadow-game">
+  @if (!gameStarted()) {
+    <!-- Pantalla de inicio -->
+    <div class="game-intro">
+      <div class="intro-content">
+        <h2 class="game-title"> Adivina la Sombra </h2>
+        <p class="game-description">
+          Mira la silueta del dinosaurio y elige la respuesta correcta. ¡Es muy fácil!
+        </p>
+        <div class="intro-features">
+          <div class="feature">
+            <span class="feature-icon">👀</span>
+            <span class="feature-text">Observa bien la sombra</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">🎯</span>
+            <span class="feature-text">Elige la respuesta correcta</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">⭐</span>
+            <span class="feature-text">Completa todas las preguntas</span>
+          </div>
+        </div>
+        <button class="btn-start" (click)="startGame()">
+          ¡Empezar!
+        </button>
+      </div>
+    </div>
+  }
+
+  @if (gameStarted()) {
+    <!-- Juego en progreso -->
+    <div class="game-playing">
+      <!-- Barra de progreso -->
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="(currentQuestion() + 1) / totalQuestions * 100"></div>
+      </div>
+      <div class="progress-text">
+        Pregunta {{ currentQuestion() + 1 }} de {{ totalQuestions }}
+      </div>
+
+      <!-- Pregunta -->
+      <div class="question-content">
+        <h3 class="question-title">¿Qué dinosaurio es este?</h3>
+
+        <!-- Imagen de sombra -->
+        <div class="shadow-container">
+          <div class="shadow-image">
+            <img
+              [src]="currentQuestionData.shadowImage"
+              [alt]="currentQuestionData.correctAnswer"
+              class="shadow-img-silueta">
+          </div>
+        </div>
+
+        <!-- Opciones de respuesta -->
+        <div class="options-grid">
+          @for (option of currentQuestionData.options; track option) {
+            <button
+              class="option-btn"
+              [class.option-btn--selected]="selectedAnswer() === option"
+              [class.option-btn--correct]="showResult() && option === currentQuestionData.correctAnswer"
+              [class.option-btn--incorrect]="showResult() && selectedAnswer() === option && option !== currentQuestionData.correctAnswer"
+              [disabled]="showResult()"
+              (click)="selectAnswer(option)">
+              {{ option }}
+            </button>
+          }
+        </div>
+
+        <!-- Resultado -->
+        @if (showResult()) {
+          <div class="result-feedback" [class.feedback--correct]="isCorrect()">
+            @if (isCorrect()) {
+              <div class="feedback-content">
+                <span class="feedback-emoji">🎉</span>
+                <span class="feedback-text">¡Correcto! ¡Muy bien!</span>
+              </div>
+            }
+            @if (!isCorrect()) {
+              <div class="feedback-content">
+                <span class="feedback-emoji">💡</span>
+                <span class="feedback-text">
+                  La respuesta correcta es: <strong>{{ currentQuestionData.correctAnswer }}</strong>
+                </span>
+              </div>
+            }
+          </div>
+
+          <!-- Botón siguiente -->
+          @if (currentQuestion() < totalQuestions - 1) {
+            <button class="btn-next" (click)="nextQuestion()">
+              Siguiente →
+            </button>
+          }
+          @if (currentQuestion() === totalQuestions - 1) {
+            <button class="btn-next" (click)="nextQuestion()">
+              Ver Resultados
+            </button>
+          }
+        }
+      </div>
+    </div>
+  }
+</div>

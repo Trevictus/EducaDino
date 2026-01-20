@@ -1,0 +1,61 @@
+<main class="minigames-page">
+  <div class="l-container minigames-page__wrapper">
+
+    <!-- Encabezado -->
+    <header class="minigames-header">
+      <h1 class="minigames-header__title">Minijuegos</h1>
+    </header>
+
+    <!-- Selector de edad -->
+    <div class="age-selector">
+      <h2 class="age-selector__label">Selecciona tu grupo de edad:</h2>
+      <div class="age-selector__buttons">
+        <button
+          class="age-btn"
+          [class.age-btn--active]="selectedAge() === 'kids'"
+          (click)="selectAge('kids')">
+          <span class="age-btn__emoji">🦖</span>
+          <span class="age-btn__text">6-8 años</span>
+        </button>
+        <button
+          class="age-btn"
+          [class.age-btn--active]="selectedAge() === 'pre-teens'"
+          (click)="selectAge('pre-teens')">
+          <span class="age-btn__emoji">🦕</span>
+          <span class="age-btn__text">8-10 años</span>
+        </button>
+        <button
+          class="age-btn"
+          [class.age-btn--active]="selectedAge() === 'teens'"
+          (click)="selectAge('teens')">
+          <span class="age-btn__emoji">🦁</span>
+          <span class="age-btn__text">10-12 años</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Contenedor de juegos -->
+    <div class="games-container">
+      <!-- Juego 6-8 años: Adivina la Sombra -->
+      @if (selectedAge() === 'kids') {
+        <section class="game-section">
+          <app-shadow-guess></app-shadow-guess>
+        </section>
+      }
+
+      <!-- Juego 8-10 años: ¿Qué come este Dino? -->
+      @if (selectedAge() === 'pre-teens') {
+        <section class="game-section">
+          <app-dino-food></app-dino-food>
+        </section>
+      }
+
+      <!-- Juego 10-12 años: Cronología Jurásica -->
+      @if (selectedAge() === 'teens') {
+        <section class="game-section">
+          <app-jurassic-chronology></app-jurassic-chronology>
+        </section>
+      }
+    </div>
+  </div>
+</main>

@@ -27,13 +27,15 @@
     width: 100%;
     justify-items: center;
 
-    @media (max-width: var(--breakpoint-lg)) {
+
+    @media (max-width: 1024px) { // breakpoint-lg
       grid-template-columns: repeat(2, minmax(300px, 1fr));
     }
 
-    @media (max-width: var(--breakpoint-md)) {
+    @media (max-width: 768px) { // breakpoint-md
       grid-template-columns: 1fr;
     }
+
   }
 }
 

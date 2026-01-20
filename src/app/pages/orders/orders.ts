@@ -56,7 +56,7 @@ export class Orders {
   selectedItem: SelectedItem = {
     title: 'Clasificación',
     description: 'Los dinosaurios se dividen en dos grandes grupos: saurisquios y ornitisquios. Los saurisquios tenían caderas como los lagartos e incluían carnívoros como el T. rex y herbívoros gigantes como el Brachiosaurus. Algunos de ellos se convirtieron en aves. Los ornitisquios tenían caderas parecidas a las aves y todos comían plantas, como el Triceratops o el Stegosaurus. Dentro de estos grupos hay muchas familias distintas, según su forma, tamaño y cómo vivían.',
-    image: ''
+    image: 'assets/images/Taxonomia1200px.avif'
   };
 
   // Estructura de datos de órdenes
@@ -65,7 +65,7 @@ export class Orders {
       id: 'saurischia',
       name: 'Saurischia',
       description: 'Los saurisquios son uno de los dos grandes órdenes de dinosaurios. Se caracterizan por tener una estructura de cadera similar a la de los lagartos modernos, con el hueso púbico apuntando hacia adelante. Este grupo incluye a los terópodos (carnívoros bípedos como el T. rex) y a los sauropodomorfos (herbívoros de cuello largo como el Brachiosaurus). Curiosamente, las aves modernas descienden de este grupo.',
-      image: '',
+      image: 'assets/images/Saurischios1200px.avif',
       expanded: false,
       suborders: [
         {
@@ -254,7 +254,7 @@ export class Orders {
       id: 'ornithischia',
       name: 'Ornithischia',
       description: 'Los ornitisquios son el segundo gran orden de dinosaurios. A pesar de que su nombre significa "cadera de ave", no están relacionados con las aves modernas. Todos eran herbívoros y desarrollaron diversas adaptaciones como cuernos, crestas, armaduras y picos para alimentarse de plantas.',
-      image: '',
+      image: 'assets/images/Ornithischios1200px.avif',
       expanded: false,
       suborders: [
         {

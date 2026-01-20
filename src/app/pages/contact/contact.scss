@@ -101,18 +101,14 @@
   .btn-submit {
     display: block;
     margin: 0 auto; /* Centrado */
-
-    /* Color Verde Agua (Secundario) como en tu diseño */
-    background-color: var(--secondary-color);
-    color: #FFFFFF;
-
+    background-color: var(--primary-color-active);
+    color: var(--text-color-light);
     font-family: var(--font-secondary);
     font-size: var(--font-size-2xl);
     font-weight: bold;
 
     padding: 10px 50px;
-    border: none;
-    border-radius: 50px; /* Píldora */
+    border-radius: var(--radius-button-top-left) var(--radius-button-top-right) var(--radius-button-bottom-right) var(--radius-button-bottom-left);
     cursor: pointer;
     box-shadow: var(--shadow-md);
     transition: transform var(--transition-fast);
