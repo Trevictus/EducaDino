@@ -1,0 +1,323 @@
+.dino-food-game {
+  width: 100%;
+}
+
+.game-intro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 500px;
+  padding: 0;
+
+  .intro-content {
+    text-align: center;
+    max-width: 500px;
+  }
+  .game-title {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-5xl);
+    color: var(--primary-color-active);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-3);
+
+  }
+  .game-description {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-2xl);
+    color: var(--primary-color-active);
+    line-height: var(--line-height-normal);
+    margin-bottom: var(--spacing-4);
+    font-weight: var(--font-weight-bold);
+
+
+    .theme-dark & {
+      color: var(--primary-color-active);
+    }
+  }
+  .intro-features {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-4);
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      font-size: var(--font-size-2xl);
+      color: var(--primary-color-active);
+      font-weight: var(--font-weight-bold);
+
+
+      .theme-dark & {
+        color: var(--primary-color-active);
+      }
+
+      .feature-icon {
+        font-size: 2rem;
+      }
+    }
+  }
+  .btn-start {
+    padding: var(--spacing-3) var(--spacing-6);
+    font-size: var(--font-size-2xl);
+    font-family: var(--font-secondary);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-color-light);
+    background-color: var(--primary-color-active);
+    border: none;
+    border-radius: var(--radius-button-top-left) var(--radius-button-top-right) var(--radius-button-bottom-right) var(--radius-button-bottom-left);
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: var(--secondary-color-active);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+  }
+}
+
+.game-playing {
+  padding: var(--spacing-4);
+  .progress-bar {
+    width: 100%;
+    height: 12px;
+    background-color: var(--gray-scale-light);
+    border-radius: 100px;
+    overflow: hidden;
+    margin-bottom: var(--spacing-2);
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--support-color), var(--secondary-color));
+      transition: width 0.5s ease;
+    }
+  }
+  .progress-text {
+    text-align: center;
+    font-family: var(--font-primary);
+    font-size: var(--font-size-lg);
+    color: var(--support-color);
+    margin-bottom: var(--spacing-4);
+
+    .theme-dark & {
+      color: var(--primary-color-active);
+    }
+  }
+}
+
+.question-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-4);
+  .question-title {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-4xl);
+    color: var(--primary-color-active);
+    text-align: center;
+    font-weight: var(--font-weight-bold);
+
+    .theme-dark & {
+      color: var(--secondary-color);
+    }
+  }
+  .dino-container {
+    width: 100%;
+    max-width: 350px;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--background-color-hover), var(--background-color));
+    border-radius: 16px;
+    padding: var(--spacing-4);
+    .dino-image {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+  }
+  .food-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4);
+    width: 100%;
+    max-width: 500px;
+    .food-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-2);
+      padding: 0;
+      border: 3px solid var(--primary-color);
+      border-radius: 12px;
+      background-color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-md);
+      font-family: var(--font-secondary);
+      font-weight: var(--font-weight-bold);
+
+      .theme-dark & {
+        background-color: var(--background-color-active);
+        border-color: var(--primary-color-active);
+      }
+
+      &:hover:not(:disabled) {
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-lg);
+
+        .theme-dark & {
+          background-color: var(--background-color-active);
+          border-color: var(--primary-color-active);
+        }
+      }
+      &:disabled {
+        cursor: not-allowed;
+      }
+      .food-emoji {
+        font-size: 3rem;
+      }
+      .food-label {
+        font-size: var(--font-size-lg);
+        text-align: center;
+        color: var(--support-color);
+        line-height: var(--line-height-tight);
+
+        .theme-dark & {
+          color: var(--primary-color-active);
+        }
+      }
+      &--herbivore {
+        border-color: #65b741;
+        &:hover:not(:disabled) {
+          background-color: #e8f5e9;
+          border-color: #2e7d32;
+        }
+        &--correct {
+          background-color: #c8e6c9;
+          border-color: #2e7d32;
+          .food-label { color: #1b5e20; }
+        }
+        &--incorrect {
+          background-color: #ffcdd2;
+          border-color: #c62828;
+          .food-label { color: #b71c1c; }
+        }
+      }
+      &--carnivore {
+        border-color: #ef4444;
+        &:hover:not(:disabled) {
+          background-color: #ffe0e0;
+          border-color: #991b1b;
+        }
+        &--correct {
+          background-color: #fecaca;
+          border-color: #991b1b;
+          .food-label { color: #7f1d1d; }
+        }
+        &--incorrect {
+          background-color: #c8e6c9;
+          border-color: #2e7d32;
+          .food-label { color: #1b5e20; }
+        }
+      }
+    }
+  }
+  .result-feedback {
+    width: 100%;
+    padding: var(--spacing-3);
+    border-radius: 12px;
+    text-align: center;
+    background-color: #fef3c7;
+    border: 3px solid #eab308;
+
+    .theme-dark & {
+      background-color: var(--background-color-hover);
+      border-color: var(--primary-color-active);
+    }
+
+    .feedback-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-2);
+      font-family: var(--font-secondary);
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: #854d0e;
+
+      .theme-dark & {
+        color: var(--primary-color-active);
+      }
+
+      .feedback-emoji { font-size: 2rem; }
+    }
+  }
+  .fun-fact {
+    width: 100%;
+    max-width: 500px;
+    padding: var(--spacing-3);
+    background-color: var(--background-color-hover);
+    border-left: 4px solid var(--secondary-color);
+    border-radius: 8px;
+    display: flex;
+    gap: var(--spacing-2);
+    .fact-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .fact-text {
+      font-family: var(--font-primary);
+      font-size: var(--font-size-lg);
+      color: var(--text-color);
+      line-height: var(--line-height-normal);
+      margin: 0;
+      text-align: left;
+    }
+  }
+  .btn-next {
+    padding: var(--spacing-3) var(--spacing-6);
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-color-light);
+    background-color: var(--primary-color-active);
+    border: none;
+    border-radius: var(--radius-button-top-left) var(--radius-button-top-right) var(--radius-button-bottom-right) var(--radius-button-bottom-left);
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: var(--secondary-color-active);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+  }
+}
+
+@media (max-width: var(--breakpoint-sm)) {
+  .game-intro {
+    min-height: 400px;
+    .game-title { font-size: var(--font-size-4xl); }
+    .game-description { font-size: var(--font-size-xl); }
+    .btn-start {
+      padding: var(--spacing-2) var(--spacing-4);
+      font-size: var(--font-size-xl);
+    }
+  }
+  .question-content {
+    .question-title { font-size: var(--font-size-3xl); }
+    .dino-container { max-width: 280px; }
+    .food-options {
+      grid-template-columns: 1fr;
+      max-width: 100%;
+
+      .food-btn {
+        padding: 0;
+        .food-emoji { font-size: 2.5rem; }
+        .food-label { font-size: var(--font-size-base); }
+      }
+    }
+    .fun-fact { max-width: 100%; }
+  }
+}

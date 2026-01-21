@@ -1,0 +1,121 @@
+<div class="chronology-game">
+  @if (!gameStarted()) {
+    <!-- Pantalla de inicio -->
+    <div class="game-intro">
+      <div class="intro-content">
+        <h2 class="game-title"> Cronología Jurásica </h2>
+        <p class="game-description">
+          Demuestra tus conocimientos sobre los períodos de la Era Mesozoica: Triásico, Jurásico y Cretácico
+        </p>
+        <div class="timeline-preview">
+          <div class="timeline-item">
+            <div class="timeline-period">Triásico</div>
+            <div class="timeline-time">252-201 M.a.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-period">Jurásico</div>
+            <div class="timeline-time">201-145 M.a.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-period">Cretácico</div>
+            <div class="timeline-time">145-66 M.a.</div>
+          </div>
+        </div>
+        <div class="intro-features">
+          <div class="feature">
+            <span class="feature-icon">📚</span>
+            <span class="feature-text">8 preguntas desafiantes</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">🧠</span>
+            <span class="feature-text">Pon a prueba tu conocimiento</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">🏆</span>
+            <span class="feature-text">Obtén tu puntuación final</span>
+          </div>
+        </div>
+        <button class="btn-start" (click)="startGame()">
+          ¡Comienza el Quiz!
+        </button>
+      </div>
+    </div>
+  }
+
+  @if (gameStarted()) {
+    <!-- Juego en progreso -->
+    <div class="game-playing">
+      <!-- Barra de progreso -->
+      <div class="progress-section">
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="(currentQuestion() + 1) / totalQuestions * 100"></div>
+        </div>
+        <div class="progress-info">
+          <span class="progress-text">Pregunta {{ currentQuestion() + 1 }} de {{ totalQuestions }}</span>
+          <span class="score-text">Puntuación: {{ score() }}</span>
+        </div>
+      </div>
+
+      <!-- Pregunta -->
+      <div class="question-content">
+        <h3 class="question-title">{{ currentQuestionData.question }}</h3>
+
+        <!-- Opciones de respuesta -->
+        <div class="options-container">
+          @for (option of currentQuestionData.options; track option) {
+            <button
+              class="option-btn"
+              [class.option-btn--selected]="selectedAnswer() === option"
+              [class.option-btn--correct]="showResult() && option === currentQuestionData.correctAnswer"
+              [class.option-btn--incorrect]="showResult() && selectedAnswer() === option && option !== currentQuestionData.correctAnswer"
+              [disabled]="showResult()"
+              (click)="selectAnswer(option)">
+              <span class="option-letter">
+                @if (currentQuestionData.options[0] === option) { A }
+                @if (currentQuestionData.options[1] === option) { B }
+                @if (currentQuestionData.options[2] === option) { C }
+              </span>
+              <span class="option-text">{{ option }}</span>
+            </button>
+          }
+        </div>
+
+        <!-- Resultado -->
+        @if (showResult()) {
+          <div class="result-section">
+            @if (isCorrect()) {
+              <div class="result-feedback feedback--correct">
+                <span class="feedback-emoji">✨</span>
+                <span class="feedback-text">¡Respuesta Correcta!</span>
+              </div>
+            }
+            @if (!isCorrect()) {
+              <div class="result-feedback feedback--incorrect">
+                <span class="feedback-emoji">🤔</span>
+                <span class="feedback-text">Respuesta Incorrecta</span>
+              </div>
+            }
+
+            <!-- Explicación -->
+            <div class="explanation-box">
+              <h4 class="explanation-title">📖 Información:</h4>
+              <p class="explanation-text">{{ currentQuestionData.explanation }}</p>
+            </div>
+
+            <!-- Botón siguiente -->
+            @if (currentQuestion() < totalQuestions - 1) {
+              <button class="btn-next" (click)="nextQuestion()">
+                Siguiente Pregunta →
+              </button>
+            }
+            @if (currentQuestion() === totalQuestions - 1) {
+              <button class="btn-next" (click)="nextQuestion()">
+                Ver Resultados Finales
+              </button>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

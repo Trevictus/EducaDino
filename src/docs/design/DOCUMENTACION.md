@@ -853,6 +853,308 @@ Las clases de estado indican condiciones dinámicas que cambian según la intera
 
 ---
 
+# Sección 4: Estrategia Responsive
+
+La estrategia responsive del proyecto EducaDino se enfoca **Desktop-First** invertido hacia **Mobile-First**, utilizando una escala de breakpoints estandarizada similar a Tailwind CSS. Esta estrategia garantiza que la aplicación ofrezca una experiencia de usuario óptima en dispositivos de todos los tamaños: desde smartphones hasta monitores de alta resolución.
+
+---
+
+## 4.1 Breakpoints Definidos
+
+Los breakpoints del proyecto están organizados en 5 puntos de ruptura principales, definidos en `00-settings/_variables.scss`:
+
+| Nombre | Ancho (px) | Dispositivo | Casos de uso |
+|--------|-----------|-----------|------------|
+| `sm` | 640px | Móviles grandes | Finales de rangos móvil (iPhone 12, etc.) |
+| `md` | 768px | Tablets | iPad y tablets pequeñas |
+| `lg` | 1024px | Laptops | Computadoras portátiles estándar |
+| `xl` | 1280px | Pantallas grandes | Monitores de escritorio |
+| `2xl` | 1536px | Monitores anchos | Pantallas ultra-wide |
+
+```scss
+// 00-settings/_variables.scss
+
+/*Breakpoint genérico basado en la escala moderna del estilo tailwind*/
+:root {
+  --breakpoint-sm: 640px;   /*Móviles grandes*/
+  --breakpoint-md: 768px;   /*Tablets*/
+  --breakpoint-lg: 1024px;  /*Laptops*/
+  --breakpoint-xl: 1280px;  /*Pantallas grandes*/
+  --breakpoint-2xl: 1536px; /*Monitores anchos*/
+}
+```
+
+**Justificación de la elección:**
+
+La escala de breakpoints se basa en el estándar moderno de Tailwind CSS, que ha demostrado ser efectivo para cubrir la mayoría de dispositivos actuales. Estos puntos de ruptura reflejan los tamaños reales de pantalla más comunes, permitiendo:
+
+- **Transiciones suaves:** Cada breakpoint marca un cambio significativo en el contexto de uso del dispositivo (pequeño a medio, medio a grande, etc.).
+- **Compatibilidad:** Cubre desde dispositivos móviles antiguos (iPhone 5S: 640px) hasta monitores 4K (1536px+).
+- **Escalabilidad:** La escala es suficientemente granular para ajustar detalles sin ser excesivamente compleja.
+
+---
+
+## 4.2 Enfoque Desktop-First a Mobile-First
+
+Aunque el proyecto implementa media queries con `max-width` (Desktop-First), la filosofía general es **Mobile-First**: los estilos base están optimizados para funcionar correctamente en dispositivos móviles, y luego se añaden mejoras progresivas para pantallas mayores.
+
+### Estrategia de Media Queries: `max-width`
+
+El proyecto utiliza la metodología **Desktop-First invertida**, donde se definen estilos base para la experiencia de escritorio y luego se adaptan con media queries `(max-width)` para dispositivos más pequeños. Esto se logra mediante el **mixin `respond-to-max`**:
+
+```scss
+// 01-tools/_mixins.scss
+
+@mixin respond-to-max($breakpoint) {
+  $breakpoints: (
+    'sm': 640px,
+    'md': 768px,
+    'lg': 1024px,
+    'xl': 1280px,
+    '2xl': 1536px
+  );
+
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (max-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "El breakpoint '#{$breakpoint}' no es válido. Usa: sm, md, lg, xl, 2xl.";
+  }
+}
+```
+
+### Ejemplo Práctico: Tarjeta de Dinosaurio
+
+El componente `.dino-card` demuestra esta estrategia:
+
+```scss
+// 05-components/_card.scss
+
+.dino-card__category {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-3xl);  /* Estilo base: 24px */
+  color: var(--primary-color-active);
+  text-align: center;
+  margin: 0;
+
+  /* Reducción progresiva del tamaño en pantallas más pequeñas */
+  @media (max-width: 1024px) {
+    font-size: var(--font-size-2xl);  /* 20px */
+  }
+
+  @media (max-width: 768px) {
+    font-size: var(--font-size-2xl);  /* 20px */
+  }
+}
+
+.dino-card__description {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-lg);    /* Estilo base: 14px */
+  color: var(--primary-color-active);
+  margin: 0;
+  
+  /* En tablets y móviles, se reduce aún más */
+  @media (max-width: 1024px) {
+    font-size: var(--font-size-sm);   /* 12px */
+  }
+
+  @media (max-width: 768px) {
+    font-size: var(--font-size-sm);   /* 12px */
+  }
+}
+```
+
+**Ventajas de este enfoque:**
+
+1. **Accesibilidad móvil prioritaria:** Los estilos base garantizan que el contenido sea legible y funcional en dispositivos móviles.
+2. **Escalabilidad:** Mejoras visuales se añaden de forma incremental para pantallas mayores sin romper la experiencia base.
+3. **Rendimiento:** Los navegadores móviles no procesan estilos innecesarios para desktop, reduciendo el overhead.
+
+---
+
+## 4.3 Sistema de Grid Adaptativo
+
+El proyecto utiliza CSS Grid con la propiedad `auto-fit` para crear diseños que se adaptan automáticamente al ancho disponible:
+
+```scss
+// 04-objects/_layout.scss
+
+.l-grid--auto-fit {
+  display: grid;
+  gap: var(--spacing-4);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+```
+
+**Comportamiento automático:**
+
+| Rango de Pantalla | Resultado |
+|-------------------|-----------|
+| < 280px (ancho muy pequeño) | 1 columna |
+| 280px - 560px | 1 columna (móvil) |
+| 560px - 840px | 2 columnas (tablet pequeña) |
+| 840px - 1120px | 3 columnas (tablet grande/laptop pequeña) |
+| > 1120px | 4 columnas (desktop) |
+
+Esta solución permite que las tarjetas se reorganicen de forma **completamente fluida** sin necesidad de media queries adicionales, proporcionando una experiencia óptima en cualquier resolución.
+
+---
+
+## 4.4 Contenedores Fluidos
+
+Los contenedores del proyecto se comportan de forma fluida en diferentes tamaños de pantalla:
+
+```scss
+// 04-objects/_layout.scss
+
+.l-container {
+  width: 100%;
+  max-width: var(--breakpoint-xl);     /* Máximo: 1280px */
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: var(--spacing-4);     /* Estilo base: 32px */
+  padding-left: var(--spacing-4);
+
+  /* En escritorio, más espaciado lateral */
+  @media (min-width: 1280px) {
+    padding-right: var(--spacing-8);   /* 64px */
+    padding-left: var(--spacing-8);
+  }
+}
+```
+
+**Comportamiento:**
+
+- **Móviles:** El contenedor usa 100% del ancho disponible con padding de 32px.
+- **Desktop:** El contenedor se limita a 1280px de ancho máximo, centrándose con márgenes automáticos y padding de 64px para dejar espacios laterales más generosos.
+
+---
+
+## 4.5 Container Queries
+
+Actualmente, el proyecto **no utiliza Container Queries** (`@container`). Sin embargo, esta es una estrategia futura recomendada para:
+
+- **Componentes independientes:** Permitir que componentes como modales o tarjetas se adapten según el tamaño de su contenedor padre, no solo el viewport.
+- **Reutilización mejorada:** Un mismo componente podría tener estilos diferentes según dónde se coloque (sidebar vs. contenedor principal).
+
+**Caso de uso futuro:**
+
+```scss
+/* Ejemplo hipotético para un componente card que se adapta a su contenedor */
+.card-container {
+  container-type: inline-size;
+}
+
+@container (max-width: 300px) {
+  .card {
+    grid-template-columns: 1fr;  /* Apilado en contenedores pequeños */
+  }
+}
+
+@container (min-width: 300px) {
+  .card {
+    grid-template-columns: 1fr 1fr;  /* 2 columnas en contenedores medianos */
+  }
+}
+```
+
+---
+
+## 4.6 Vistas Responsive: Móvil, Tablet y Desktop
+
+El proyecto responde a tres contextos principales de uso:
+
+### Vista Móvil (< 768px)
+
+**Características:**
+- Una columna principal con contenido apilado verticalmente.
+- Tamaños de fuente reducidos para máxima legibilidad sin zoom.
+- Buttons y elementos táctiles con suficiente espacio (mínimo 44px de altura).
+- Navegación simplificada o colapsable.
+
+**Ejemplo:**
+- Tarjetas de curiosidades: 1 columna
+- Formularios: Campos apilados verticalmente
+- Headers: Menú hamburguesa
+
+*![VistaMovil.png](../images/VistaMovil.png)*  
+*![VistaMovil2.png](../images/VistaMovil2.png)*
+*![VistaMovil3.png](../images/VistaMovil3.png)*
+
+### Vista Tablet (768px - 1024px)
+
+**Características:**
+- Dos columnas para tarjetas y contenido.
+- Espacio lateral para asides decorativos.
+- Navegación en línea con botones más grandes.
+- Buen balance entre contenido y espacio en blanco.
+
+**Ejemplo:**
+- Tarjetas de curiosidades: 2 columnas
+- Formularios: Campos en cuadrículas de 2 columnas (cuando procede)
+- Layouts tipo "sidebar + contenido principal"
+
+*[VistaTablet](../images/vista-tablet.png)*
+*[VistaTablet2](../images/vista-tablet.png)*
+
+### Vista Desktop (> 1024px)
+
+**Características:**
+- Tres o más columnas para máximo aprovechamiento del espacio.
+- Tamaños de fuente más grandes para confortabilidad de lectura.
+- Spacing generoso para evitar aglomeración.
+- Navegación completa con todos las opciones visibles.
+
+**Ejemplo:**
+- Tarjetas de curiosidades: 3 columnas (grid auto-fit)
+- Formularios: Campos en cuadrículas de 2-3 columnas
+- Layouts complejos con múltiples sidebars
+
+*![VistaDesktop.png](../images/VistaDesktop.png)*
+*![VistaDesktop2.png](../images/VistaDesktop2.png)*
+*![VistaDesktop3.png](../images/VistaDesktop3.png)*
+
+---
+
+## 4.7 Puntos de Ruptura por Componente
+
+Algunos componentes tienen necesidades específicas de responsive y usan media queries puntuales:
+
+### Página de Contacto
+```scss
+// app/pages/contact/contact.scss
+
+@media (max-width: 768px) {
+  .contact-page {
+    flex-direction: column;  /* De lado a lado a apilado */
+  }
+  
+  .contact-page__side-img {
+    display: none;  /* Ocultar imágenes decorativas en móvil */
+  }
+}
+```
+
+### Página de Curiosidades
+```scss
+// app/pages/curiosities/curiosities.scss
+
+@media (max-width: var(--breakpoint-lg)) {
+  .curiosities-page__grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: var(--breakpoint-md)) {
+  .curiosities-page__grid {
+    grid-template-columns: 1fr;  /* Una columna en tablet pequeña */
+  }
+}
+```
+
+---
+
 # Guía de Configuración y Ejecución del Proyecto
 
 Estos son los pasos para descargar, instalar y ejecutar el proyecto en local.

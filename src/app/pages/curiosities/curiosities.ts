@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Card } from '../../components/card/card';
+import {Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Card} from '../../components/card/card';
 
 interface Curiosity {
   id: number;
@@ -25,42 +25,42 @@ export class Curiosities implements OnInit {
       category: 'Comportamiento',
       title: 'No eran para pelear',
       description: 'El triceratops usaba su cornamenta especialmente para el cortejo.',
-      image: 'img/triceratops.png'
+      image: 'assets/images/Triceratops1200px.avif'
     },
     {
       id: 2,
       category: 'Hábitat',
       title: 'Fósiles helados',
       description: 'Se han encontrado fósiles donde hoy hay hielo en el planeta Tierra.',
-      image: 'img/world-map.png'
+      image: 'assets/images/FosilHielo1200px.avif'
     },
     {
       id: 3,
       category: 'Biología',
       title: 'Los más pequeños',
       description: 'El microraptor media solo 77cm y tenía plumas y estaba entre los dinosaurios no aviares más abundantes en su ecosistema.',
-      image: 'img/microrraptor.png'
+      image: 'assets/images/Microrraptor1200px.avif'
     },
     {
       id: 4,
       category: 'Alimentación',
       title: 'El gran devorador',
       description: 'El T-Rex podía comer hasta 230 kg de carne de un solo bocado.',
-      image: 'img/t-rex.png'
+      image: 'assets/images/T-rex1200px.avif'
     },
     {
       id: 5,
       category: 'Velocidad',
       title: 'Corredores natos',
       description: 'Los velociraptores podían alcanzar velocidades de hasta 60 km/h.',
-      image: 'img/velocirraptor-corriendo.png'
+      image: 'assets/images/Velocirraptor-corriendo1200px.avif'
     },
     {
       id: 6,
       category: 'Tamaño',
       title: 'Gigantes gentiles',
       description: 'El Argentinosaurus es uno de los animales terrestres más grandes conocidos.',
-      image: 'img/argentinasaurus.png'
+      image: 'assets/images/Argentinasaurus400px.avif'
     },
     {
       id: 7,
@@ -125,8 +125,7 @@ export class Curiosities implements OnInit {
       .filter((id): id is number => id !== null);
 
     // Obtener una curiosidad que no coincida con las otras 2
-    const randomCuriosity = this.getRandomCuriosityWithoutDuplicates(otherIds);
-    this.displayedCuriosities[index] = randomCuriosity;
+    this.displayedCuriosities[index] = this.getRandomCuriosityWithoutDuplicates(otherIds);
   }
 }
 

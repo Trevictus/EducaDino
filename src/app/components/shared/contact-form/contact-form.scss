@@ -93,7 +93,7 @@
     width: 100%;
     font-family: var(--font-primary);
     font-size: var(--font-size-xl);
-    color: var(--text-color);
+    color: #3A4243;
     background-color: #F7F7F7;
     border: var(--border-thin) solid transparent;
     border-radius: var(--radius-form-field);
@@ -171,3 +171,24 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+/* ==========================================================================
+   TEMA OSCURO - OVERRIDES PARA INPUTS
+   ========================================================================== */
+
+.theme-dark {
+  .form-field__input,
+  .form-field__textarea {
+    color: #3A4243 !important;
+    background-color: #F7F7F7;
+
+    &::placeholder {
+      color: var(--gray-scale-dark);
+    }
+
+    &:focus {
+      background-color: #FFFFFF;
+    }
+  }
+}
+

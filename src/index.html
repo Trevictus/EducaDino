@@ -1,15 +1,47 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Untitled</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <!-- === META TAGS ESENCIALES === -->
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="description" content="EducaDino - Plataforma educativa interactiva para aprender sobre dinosaurios con minijuegos, curiosidades y contenido didáctico." />
+    <meta name="theme-color" content="#2c3e50" />
+
+    <!-- === INFORMACIÓN GENERAL === -->
+    <title>EducaDino - Aprende sobre Dinosaurios</title>
+    <base href="/" />
+
+    <!-- === FAVICON === -->
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+    <link rel="apple-touch-icon" href="./favicon.ico" />
+
+    <!-- === FUENTES EXTERNAS === -->
+    <!-- Material Icons: Iconografía moderna -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts: Baloo 2 (body) y Fredoka One (headings) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Fredoka+One&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- === ESTILOS COMPILADOS === -->
+    <!-- Archivo CSS compilado desde styles.scss con arquitectura ITCSS -->
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body>
+    <!-- === RAÍZ DE LA APLICACIÓN ANGULAR === -->
+    <!-- Los componentes se renderizarán dentro de este elemento -->
+    <app-root role="application" aria-label="Aplicación EducaDino"></app-root>
+
+    <!-- === SCRIPT DE LA APLICACIÓN === -->
+    <!-- Bundle principal compilado por Angular CLI -->
+    <script src="./main.js" type="module"></script>
+  </body>
 </html>

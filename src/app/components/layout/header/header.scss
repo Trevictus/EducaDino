@@ -47,21 +47,32 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    transition: background-color var(--transition-fast);
+    transition: background-color var(--transition-fast) var(--transition-ease),
+                transform var(--transition-fast) var(--transition-ease);
+    border: none;
+    cursor: pointer;
 
     &:hover {
       background-color: var(--primary-color-hover);
+      transform: translateY(-2px);
+    }
+
+    &:focus {
+      outline: 2px solid var(--secondary-color);
+      outline-offset: 2px;
     }
 
     /* Texto más pequeño en tablets */
     @media (max-width: 1024px) {
-      font-size: var(--font-size-sm);
+      font-size: var(--font-size-xl);
       padding: 6px 14px;
     }
   }
 
   &__search {
     padding: 5px 15px;
+    position: relative;
+
     input {
       background: transparent;
       border: none;
@@ -69,15 +80,35 @@
       font-family: inherit;
       outline: none;
       width: 80px;
-      &::placeholder { color: rgba(255,255,255, 0.7); }
+      height: 24px;
+      padding: 0;
+      margin: 0;
+
+      &::placeholder {
+        color: rgba(255,255,255, 0.7);
+      }
+
+      &:focus {
+        outline: none;
+      }
 
       /* Input más pequeño en tablets */
       @media (max-width: 1024px) {
         width: 60px;
-        font-size: var(--font-size-sm);
+        font-size: var(--font-size-xl);
       }
     }
-    .material-icons { font-size: 18px; }
+
+    .material-icons {
+      font-size: 18px;
+      transition: color var(--transition-fast) var(--transition-ease);
+      flex-shrink: 0;
+    }
+
+    &:hover .material-icons,
+    &:focus-within .material-icons {
+      color: rgba(255, 255, 255, 0.9);
+    }
   }
 
   &__menu {
@@ -126,14 +157,14 @@
     @media (max-width: 1024px) {
       width: 90px;
       height: 90px;
-      font-size: var(--font-size-sm);
+      font-size: var(--font-size-xl);
     }
 
     /* Estrella aún más pequeña en móvil */
     @media (max-width: 768px) {
       width: 70px;
       height: 70px;
-      font-size: var(--font-size-sm);
+      font-size: var(--font-size-xl);
     }
   }
 

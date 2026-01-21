@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ThemeToggle } from '../../shared/theme-toggle/theme-toggle';
@@ -14,6 +14,8 @@ export class Header {
   // Estado del menú móvil
   isMenuOpen: boolean = false;
 
+  @ViewChild('searchInput') searchInput?: ElementRef<HTMLInputElement>;
+
   // Alterna el estado del menú
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
@@ -22,6 +24,13 @@ export class Header {
   // Cierra el menú (al hacer clic en un enlace)
   closeMenu(): void {
     this.isMenuOpen = false;
+  }
+
+  // Función de búsqueda sincronizada con otros botones
+  onSearch(searchTerm: string): void {
+    // Aquí puedes agregar la lógica de búsqueda
+    console.log('Buscando:', searchTerm);
+    // Por ejemplo, podrías emitir un evento o navegar a una página de búsqueda
   }
 
   /**

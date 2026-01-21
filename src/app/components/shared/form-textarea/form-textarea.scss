@@ -35,7 +35,7 @@
     /* TIPOGRAFÍA INTERNA */
     font-family: var(--font-primary);
     font-size: var(--font-size-xl);
-    color: var(--text-color);
+    color: #3A4243;
     line-height: var(--line-height-normal);
 
     /* FORMA Y BORDES */
@@ -97,6 +97,25 @@
     font-weight: var(--font-weight-bold);
     margin-left: var(--spacing-2);
     margin-top: 4px;
+  }
+}
+
+/* ==========================================================================
+   TEMA OSCURO - OVERRIDES PARA TEXTAREAS
+   ========================================================================== */
+
+.theme-dark {
+  .form-group__textarea {
+    color: #3A4243 !important;
+    background-color: #F7F7F7;
+
+    &::placeholder {
+      color: var(--gray-scale-dark);
+    }
+
+    &:focus {
+      background-color: #FFFFFF;
+    }
   }
 }
 

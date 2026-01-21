@@ -8,7 +8,8 @@ import { Home } from './pages/home/home';
 import { Contact } from './pages/contact/contact';
 import { StyleGuide } from './pages/style-guide/style-guide';
 import { Curiosities } from './pages/curiosities/curiosities';
-import { Ordenes } from './pages/ordenes/ordenes';
+import { Orders } from './pages/orders/orders';
+import { Minigames } from './pages/minigames/minigames';
 
 /**
  * Configuración de Rutas de la Aplicación
@@ -83,7 +84,7 @@ export const routes: Routes = [
    */
   {
     path: 'ordenes',
-    component: Ordenes,
+    component: Orders,
     data: { breadcrumb: 'Órdenes' },
     title: 'EducaDino - Órdenes de Dinosaurios'
   },
@@ -159,6 +160,14 @@ export const routes: Routes = [
       import('./pages/admin/admin.routes').then(m => m.ADMIN_ROUTES)
   },
 
+  // 5. Ruta Órdenes
+  { path: 'ordenes', component: Orders },
+
+  // 6. Ruta Minijuegos
+  { path: 'minijuegos', component: Minigames },
+
+  // 7. Ruta Style Guide (documentación de componentes)
+  { path: 'style-guide', component: StyleGuide },
   // ══════════════════════════════════════════════════════════════════
   // AUTENTICACIÓN
   // ══════════════════════════════════════════════════════════════════
@@ -181,5 +190,7 @@ export const routes: Routes = [
       import('./pages/not-found/not-found').then(m => m.NotFound),
     data: { breadcrumb: 'Página no encontrada' },
     title: 'EducaDino - Página no encontrada'
-  }
+  },
+  // 7. Wildcard: cualquier ruta desconocida redirige a Style Guide
+  { path: '**', redirectTo: 'style-guide' }
 ];
