@@ -683,3 +683,299 @@ readonly hasSuccess = computed(() => !!this.state().successMessage);
 | `/login` | ✅ | - | - | Iniciar Sesión |
 | `/**` | ✅ | - | - | Página no encontrada |
 
+---
+
+## FASE 6: GESTIÓN DE ESTADO Y ACTUALIZACIÓN DINÁMICA
+
+### Arquitectura de Estado con Angular Signals
+
+La aplicación implementa un patrón de gestión de estado centralizado usando **Angular Signals** (Angular 17+), evitando la sobreingeniería de NgRx y aprovechando las ventajas de rendimiento de las señales nativas.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    ARQUITECTURA DE ESTADO (FASE 6)                      │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│  ┌───────────┐    ┌──────────────────┐    ┌──────────────────┐         │
+│  │ Componente│ <- │ ProductStore     │ <- │ ProductService   │         │
+│  │  (OnPush) │    │ (Signals)        │    │ (HTTP/API)       │         │
+│  └───────────┘    └──────────────────┘    └──────────────────┘         │
+│       │                    │                       │                    │
+│       │   ┌────────────────┴────────────────┐     │                    │
+│       │   │     ESTADO CENTRALIZADO         │     │                    │
+│       │   ├─────────────────────────────────┤     │                    │
+│       │   │ • products: signal<Product[]>   │     │                    │
+│       │   │ • loading: signal<boolean>      │     │                    │
+│       │   │ • error: signal<string | null>  │     │                    │
+│       │   │ • searchTerm: signal<string>    │     │                    │
+│       │   │ • currentPage: signal<number>   │     │                    │
+│       │   └─────────────────────────────────┘     │                    │
+│       │                    │                       │                    │
+│       │   ┌────────────────┴────────────────┐     │                    │
+│       │   │     COMPUTED SIGNALS            │     │                    │
+│       │   ├─────────────────────────────────┤     │                    │
+│       │   │ • filteredProducts (auto-filter)│     │                    │
+│       │   │ • paginatedProducts (slicing)   │     │                    │
+│       │   │ • totalPages (calculated)       │     │                    │
+│       │   │ • isEmpty, hasError (UI states) │     │                    │
+│       │   └─────────────────────────────────┘     │                    │
+│       │                                           │                    │
+│       └───────────────────────────────────────────┘                    │
+│                     Reactividad Automática                              │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### ¿Por qué Angular Signals en lugar de NgRx?
+
+| Criterio | Angular Signals | NgRx | BehaviorSubject |
+|:---------|:----------------|:-----|:----------------|
+| **Complejidad** | Baja | Alta (boilerplate) | Media |
+| **Curva de aprendizaje** | Rápida | Lenta | Media |
+| **Rendimiento** | Óptimo (fine-grained) | Bueno | Bueno |
+| **Integración Angular** | Nativa (17+) | Librería externa | RxJS |
+| **Detección de cambios** | Automática con OnPush | Manual con async pipe | Manual |
+| **Caso de uso ideal** | Apps medianas | Apps enterprise complejas | Casos simples |
+
+**Decisión:** Signals es la opción recomendada por Angular para nuevos proyectos. Proporciona reactividad fine-grained sin el boilerplate de NgRx, manteniendo código limpio y fácil de mantener.
+
+### ProductStore - Implementación del Patrón Store
+
+```typescript
+// src/app/store/product.store.ts
+@Injectable({ providedIn: 'root' })
+export class ProductStore {
+  // ═══════════════════════════════════════════════════════════════
+  // ESTADO PRIVADO (Signals mutables internamente)
+  // ═══════════════════════════════════════════════════════════════
+  private readonly _products = signal<Product[]>([]);
+  private readonly _loading = signal<boolean>(false);
+  private readonly _error = signal<string | null>(null);
+  private readonly _searchTerm = signal<string>('');
+  private readonly _currentPage = signal<number>(1);
+  private readonly _pageSize = signal<number>(10);
+
+  // ═══════════════════════════════════════════════════════════════
+  // SELECTORES PÚBLICOS (Solo lectura)
+  // ═══════════════════════════════════════════════════════════════
+  readonly products = this._products.asReadonly();
+  readonly loading = this._loading.asReadonly();
+  readonly error = this._error.asReadonly();
+
+  // ═══════════════════════════════════════════════════════════════
+  // COMPUTED SIGNALS (Datos derivados automáticos)
+  // ═══════════════════════════════════════════════════════════════
+  readonly filteredProducts = computed(() => {
+    let result = this._products();
+    const search = this._searchTerm().toLowerCase();
+    if (search) {
+      result = result.filter(p => 
+        p.name.toLowerCase().includes(search)
+      );
+    }
+    return result;
+  });
+
+  readonly totalPages = computed(() => 
+    Math.ceil(this.filteredProducts().length / this._pageSize())
+  );
+
+  readonly paginatedProducts = computed(() => {
+    const start = (this._currentPage() - 1) * this._pageSize();
+    return this.filteredProducts().slice(start, start + this._pageSize());
+  });
+
+  // ═══════════════════════════════════════════════════════════════
+  // ACCIONES CRUD (Actualización inmutable)
+  // ═══════════════════════════════════════════════════════════════
+  add(product: CreateProductDto): void {
+    this.productService.createProduct(product).subscribe({
+      next: (newProduct) => {
+        // ⚡ Actualización inmutable - UI se actualiza automáticamente
+        this._products.update(products => [...products, newProduct]);
+      }
+    });
+  }
+
+  delete(id: string): void {
+    this.productService.deleteProduct(id).subscribe({
+      next: () => {
+        // ⚡ Actualización inmutable - El producto desaparece instantáneamente
+        this._products.update(products => 
+          products.filter(p => p.id !== id)
+        );
+      }
+    });
+  }
+}
+```
+
+### Optimización de Rendimiento
+
+#### 1. ChangeDetectionStrategy.OnPush
+
+Todos los componentes que consumen el Store usan `OnPush` para optimizar la detección de cambios:
+
+```typescript
+@Component({
+  selector: 'app-product-list',
+  changeDetection: ChangeDetectionStrategy.OnPush,  // ✅ Solo re-renderiza cuando cambian inputs o signals
+  // ...
+})
+export class ProductListComponent {
+  readonly store = inject(ProductStore);
+  // Los signals del store disparan re-render automáticamente
+}
+```
+
+**Beneficio:** Angular solo verifica cambios cuando:
+- Cambia un `@Input()`
+- Se dispara un evento en el template
+- Un Signal cambia de valor (fine-grained reactivity)
+
+#### 2. TrackBy en Listas (@for con track)
+
+El nuevo control flow de Angular 17+ incluye `track` obligatorio para optimizar listas:
+
+```html
+<!-- ✅ Angular 17+ @for con track -->
+@for (product of store.paginatedProducts(); track product.id) {
+  <article class="product-card">
+    <!-- ... -->
+  </article>
+}
+```
+
+**Beneficio:** Angular identifica elementos únicos por `id`, evitando re-crear elementos DOM que no cambiaron.
+
+#### 3. Limpieza Automática de Suscripciones
+
+Usamos `takeUntilDestroyed()` para limpieza automática sin `OnDestroy`:
+
+```typescript
+export class ProductListComponent {
+  private readonly destroyRef = inject(DestroyRef);
+
+  ngOnInit(): void {
+    this.searchControl.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      takeUntilDestroyed(this.destroyRef)  // ✅ Se limpia automáticamente
+    ).subscribe(term => {
+      this.store.setSearchTerm(term);
+    });
+  }
+}
+```
+
+### Búsqueda Reactiva con Debounce
+
+La búsqueda implementa `debounceTime` para evitar saturar la UI y mejorar UX:
+
+```typescript
+// Configuración del FormControl reactivo
+readonly searchControl = new FormControl<string>('', { nonNullable: true });
+
+private setupSearchDebounce(): void {
+  this.searchControl.valueChanges.pipe(
+    debounceTime(300),           // ⏱️ Espera 300ms después de que el usuario deje de escribir
+    distinctUntilChanged(),      // 🔄 Solo emite si el valor cambió
+    takeUntilDestroyed(this.destroyRef)
+  ).subscribe(term => {
+    this.store.setSearchTerm(term);  // Actualiza el store → UI reacciona
+  });
+}
+```
+
+```html
+<!-- Template con FormControl -->
+<input 
+  type="text"
+  [formControl]="searchControl"
+  placeholder="Buscar productos..."
+/>
+```
+
+**UX lograda:**
+- ✅ Sin parpadeos mientras el usuario escribe
+- ✅ Solo filtra cuando el usuario "termina" de escribir
+- ✅ Actualización instantánea del grid
+
+### Actualización Dinámica sin Recargas
+
+**Requisito cumplido:** La UI se actualiza inmediatamente tras operaciones CRUD sin usar `window.location.reload()`.
+
+```typescript
+// ❌ PROHIBIDO - Recarga toda la página
+window.location.reload();
+
+// ✅ CORRECTO - Actualización reactiva con Signals
+this._products.update(products => products.filter(p => p.id !== id));
+// El computed `paginatedProducts` se recalcula automáticamente
+// El componente con OnPush detecta el cambio y re-renderiza
+```
+
+| Operación | Actualización UI | Mantiene Scroll | Sin Parpadeo |
+|:----------|:-----------------|:----------------|:-------------|
+| **Create** | Producto aparece al final | ✅ | ✅ |
+| **Update** | Producto se actualiza in-place | ✅ | ✅ |
+| **Delete** | Producto desaparece | ✅ | ✅ |
+| **Search** | Lista se filtra | ✅ | ✅ |
+| **Paginate** | Lista cambia de página | ✅ | ✅ |
+
+### Paginación Reactiva
+
+La paginación es completamente reactiva usando computed signals:
+
+```typescript
+// Store
+readonly totalPages = computed(() =>
+  Math.ceil(this.filteredProducts().length / this._pageSize()) || 1
+);
+
+readonly hasPreviousPage = computed(() => this._currentPage() > 1);
+readonly hasNextPage = computed(() => this._currentPage() < this.totalPages());
+
+goToPage(page: number): void {
+  if (page >= 1 && page <= this.totalPages()) {
+    this._currentPage.set(page);
+    // paginatedProducts se recalcula automáticamente
+  }
+}
+```
+
+```html
+<!-- Template -->
+@if (store.totalPages() > 1) {
+  <nav class="product-list__pagination">
+    <button [disabled]="!store.hasPreviousPage()" (click)="previousPage()">
+      <span class="material-icons">chevron_left</span>
+    </button>
+    
+    <span>Página {{ store.viewState().pagination.currentPage }} de {{ store.totalPages() }}</span>
+    
+    <button [disabled]="!store.hasNextPage()" (click)="nextPage()">
+      <span class="material-icons">chevron_right</span>
+    </button>
+  </nav>
+}
+```
+
+
+
+### Archivos Creados en Fase 6
+
+| Archivo | Ubicación | Descripción |
+|:--------|:----------|:------------|
+| `product.store.ts` | `store/` | Store centralizado con Signals |
+| `index.ts` | `store/` | Barrel export del store |
+
+### Archivos Modificados en Fase 6
+
+| Archivo | Cambios |
+|:--------|:--------|
+| `product-list.ts` | OnPush, consume ProductStore, debounce search |
+| `product-list.html` | @for con track, FormControl reactivo |
+| `angular.json` | Ajuste de budgets para CSS |
+
+

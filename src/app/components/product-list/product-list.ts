@@ -1,30 +1,23 @@
-import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ProductService } from '../../services/product.service';
-import { Product, ProductSearchParams } from '../../models/product.dto';
-import { HttpErrorInfo } from '../../core/interceptors/error.interceptor';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { ProductStore } from '../../store/product.store';
+import { Product } from '../../models';
 import { Alert } from '../../components/shared/alert/alert';
 
 /**
- * Interface para el estado de la vista
- * Centraliza todos los estados posibles del componente
- */
-interface ViewState {
-  loading: boolean;
-  error: HttpErrorInfo | null;
-  data: Product[];
-  empty: boolean;
-}
-
-/**
- * ProductListComponent - Componente de Ejemplo con Manejo de Estados
+ * ProductListComponent - Listado Optimizado con Store + Signals
  *
- * Demuestra el uso de Signals para gestionar estados de vista reactivos:
- * - Loading: Muestra spinner mientras carga
- * - Error: Muestra mensaje amigable cuando hay error
- * - Empty: Muestra estado vacío cuando no hay datos
- * - Success: Muestra la lista de productos
+ * FASE 6 - Gestión de Estado (Requisitos cumplidos):
+ * ──────────────────────────────────────────────────
+ * ✅ ChangeDetectionStrategy.OnPush - Rendimiento optimizado
+ * ✅ TrackBy en @for - Evita re-render innecesarios
+ * ✅ Consume ProductStore (Signals) - Estado centralizado
+ * ✅ Búsqueda con debounceTime - UX sin parpadeos
+ * ✅ Paginación reactiva - Sin recargas de página
+ * ✅ DestroyRef - Limpieza automática de suscripciones
  *
  * @example
  * <app-product-list></app-product-list>
@@ -32,108 +25,37 @@ interface ViewState {
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, Alert],
+  imports: [CommonModule, ReactiveFormsModule, Alert],
   templateUrl: './product-list.html',
   styleUrl: './product-list.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductListComponent implements OnInit {
-  private readonly productService = inject(ProductService);
-
   // ============================================================
-  // ESTADO DE LA VISTA CON SIGNALS
+  // INYECCIÓN DE DEPENDENCIAS
   // ============================================================
 
-  /**
-   * Estado principal de la vista
-   * Gestiona loading, error, data y empty de forma centralizada
-   */
-  readonly state = signal<ViewState>({
-    loading: false,
-    error: null,
-    data: [],
-    empty: false,
-  });
+  /** Store centralizado de productos */
+  readonly store = inject(ProductStore);
 
-  /**
-   * Parámetros de búsqueda actuales
-   */
-  readonly searchParams = signal<ProductSearchParams>({
-    page: 1,
-    pageSize: 10,
-    search: '',
-    category: '',
-    sortBy: 'name',
-    sortOrder: 'asc',
-  });
-
-  /**
-   * Metadata de paginación
-   */
-  readonly pagination = signal({
-    currentPage: 1,
-    totalPages: 1,
-    totalItems: 0,
-    hasNextPage: false,
-    hasPreviousPage: false,
-  });
+  /** Referencia para limpieza automática de suscripciones */
+  private readonly destroyRef = inject(DestroyRef);
 
   // ============================================================
-  // COMPUTED SIGNALS (Señales Derivadas)
+  // CONTROLES DE FORMULARIO REACTIVO
   // ============================================================
 
-  /**
-   * Indica si hay productos cargados
-   */
-  readonly hasProducts = computed(() => this.state().data.length > 0);
+  /** Control para búsqueda con debounce */
+  readonly searchControl = new FormControl<string>('', { nonNullable: true });
 
-  /**
-   * Indica si estamos en estado de error
-   */
-  readonly hasError = computed(() => this.state().error !== null);
-
-  /**
-   * Mensaje de error formateado
-   */
-  readonly errorMessage = computed(() => {
-    const error = this.state().error;
-    return error?.friendlyMessage || 'Ha ocurrido un error inesperado';
-  });
-
-  /**
-   * Productos ordenados (ejemplo de computed)
-   */
-  readonly sortedProducts = computed(() => {
-    const { data } = this.state();
-    const { sortBy, sortOrder } = this.searchParams();
-
-    if (!sortBy) return data;
-
-    return [...data].sort((a, b) => {
-      const aVal = a[sortBy as keyof Product];
-      const bVal = b[sortBy as keyof Product];
-
-      if (typeof aVal === 'string' && typeof bVal === 'string') {
-        return sortOrder === 'desc'
-          ? bVal.localeCompare(aVal)
-          : aVal.localeCompare(bVal);
-      }
-
-      if (typeof aVal === 'number' && typeof bVal === 'number') {
-        return sortOrder === 'desc' ? bVal - aVal : aVal - bVal;
-      }
-
-      return 0;
-    });
-  });
+  /** Control para filtro de categoría */
+  readonly categoryControl = new FormControl<string>('', { nonNullable: true });
 
   // ============================================================
-  // FORMULARIO DE BÚSQUEDA
+  // CATEGORÍAS DISPONIBLES
   // ============================================================
 
-  searchTerm = '';
-  selectedCategory = '';
-
-  readonly categories = [
+  readonly defaultCategories = [
     'Kits Educativos',
     'Figuras',
     'Puzzles',
@@ -146,95 +68,71 @@ export class ProductListComponent implements OnInit {
   // ============================================================
 
   ngOnInit(): void {
-    this.loadProducts();
+    // Cargar productos al iniciar
+    this.store.load();
+
+    // Configurar búsqueda reactiva con debounce
+    this.setupSearchDebounce();
+
+    // Configurar filtro de categoría reactivo
+    this.setupCategoryFilter();
   }
 
   // ============================================================
-  // MÉTODOS DE CARGA
+  // CONFIGURACIÓN DE BÚSQUEDA REACTIVA
   // ============================================================
 
   /**
-   * Carga los productos con los parámetros actuales
+   * Configura el debounce para la búsqueda
+   * Evita llamadas excesivas mientras el usuario escribe
    */
-  loadProducts(): void {
-    // Actualizar estado a loading
-    this.state.update((s) => ({
-      ...s,
-      loading: true,
-      error: null,
-    }));
-
-    const params = this.searchParams();
-
-    this.productService.search(params).subscribe({
-      next: (response) => {
-        this.state.set({
-          loading: false,
-          error: null,
-          data: response.data,
-          empty: response.data.length === 0,
-        });
-
-        this.pagination.set(response.meta);
-      },
-      error: (error: HttpErrorInfo) => {
-        this.state.set({
-          loading: false,
-          error: error,
-          data: [],
-          empty: false,
-        });
-
-        console.error('[ProductList] Error cargando productos:', error);
-      },
+  private setupSearchDebounce(): void {
+    this.searchControl.valueChanges.pipe(
+      debounceTime(300), // Esperar 300ms después de que el usuario deje de escribir
+      distinctUntilChanged(), // Solo emitir si el valor cambió
+      takeUntilDestroyed(this.destroyRef) // Limpieza automática
+    ).subscribe(term => {
+      this.store.setSearchTerm(term);
     });
   }
 
   /**
-   * Ejecuta la búsqueda con los términos del formulario
+   * Configura el filtro de categoría reactivo
    */
-  onSearch(): void {
-    this.searchParams.update((p) => ({
-      ...p,
-      page: 1, // Reset a primera página
-      search: this.searchTerm,
-      category: this.selectedCategory,
-    }));
-
-    this.loadProducts();
+  private setupCategoryFilter(): void {
+    this.categoryControl.valueChanges.pipe(
+      distinctUntilChanged(),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(category => {
+      this.store.setCategory(category);
+    });
   }
 
+  // ============================================================
+  // ACCIONES DE BÚSQUEDA Y FILTROS
+  // ============================================================
+
   /**
-   * Limpia los filtros de búsqueda
+   * Limpia todos los filtros de búsqueda
    */
   clearFilters(): void {
-    this.searchTerm = '';
-    this.selectedCategory = '';
-
-    this.searchParams.set({
-      page: 1,
-      pageSize: 10,
-      search: '',
-      category: '',
-      sortBy: 'name',
-      sortOrder: 'asc',
-    });
-
-    this.loadProducts();
+    this.searchControl.setValue('');
+    this.categoryControl.setValue('');
+    this.store.clearFilters();
   }
 
   /**
    * Reintentar carga después de error
    */
   retry(): void {
-    this.loadProducts();
+    this.store.load();
   }
 
   /**
    * Limpia el estado de error
    */
   clearError(): void {
-    this.state.update((s) => ({ ...s, error: null }));
+    this.store.clearError();
   }
 
   // ============================================================
@@ -242,22 +140,15 @@ export class ProductListComponent implements OnInit {
   // ============================================================
 
   goToPage(page: number): void {
-    if (page < 1 || page > this.pagination().totalPages) return;
-
-    this.searchParams.update((p) => ({ ...p, page }));
-    this.loadProducts();
+    this.store.goToPage(page);
   }
 
   nextPage(): void {
-    if (this.pagination().hasNextPage) {
-      this.goToPage(this.pagination().currentPage + 1);
-    }
+    this.store.nextPage();
   }
 
   previousPage(): void {
-    if (this.pagination().hasPreviousPage) {
-      this.goToPage(this.pagination().currentPage - 1);
-    }
+    this.store.previousPage();
   }
 
   // ============================================================
@@ -265,64 +156,75 @@ export class ProductListComponent implements OnInit {
   // ============================================================
 
   sortBy(field: 'name' | 'price'): void {
-    const current = this.searchParams();
+    const currentSortBy = this.store.sortBy();
+    const currentOrder = this.store.sortOrder();
 
-    // Toggle orden si es el mismo campo
-    const newOrder =
-      current.sortBy === field && current.sortOrder === 'asc' ? 'desc' : 'asc';
-
-    this.searchParams.update((p) => ({
-      ...p,
-      sortBy: field,
-      sortOrder: newOrder,
-    }));
-
-    this.loadProducts();
+    // Toggle: si es el mismo campo, cambiar dirección; si es diferente, asc
+    if (currentSortBy === field) {
+      this.store.setSort(field, currentOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      this.store.setSort(field, 'asc');
+    }
   }
 
   /**
    * Obtiene el icono de ordenamiento para un campo
    */
   getSortIcon(field: string): string {
-    const { sortBy, sortOrder } = this.searchParams();
-    if (sortBy !== field) return 'unfold_more';
-    return sortOrder === 'asc' ? 'arrow_upward' : 'arrow_downward';
+    const currentSortBy = this.store.sortBy();
+    const currentOrder = this.store.sortOrder();
+
+    if (currentSortBy !== field) {
+      return 'unfold_more';
+    }
+    return currentOrder === 'asc' ? 'arrow_upward' : 'arrow_downward';
   }
 
   // ============================================================
-  // ACCIONES DE PRODUCTO
+  // ACCIONES DE PRODUCTO (CRUD)
   // ============================================================
 
+  /**
+   * Manejador de click en producto
+   */
   onProductClick(product: Product): void {
-    console.log('Producto seleccionado:', product);
-    // Navegar a detalle, abrir modal, etc.
+    this.store.select(product);
+    console.log('Producto seleccionado:', product.name);
   }
 
+  /**
+   * Editar producto
+   */
   onEditProduct(product: Product, event: Event): void {
     event.stopPropagation();
+    this.store.select(product);
     console.log('Editar producto:', product.id);
+    // Aquí abrirías un modal o navegarías a edición
   }
 
+  /**
+   * Eliminar producto con confirmación
+   * ⚡ La UI se actualiza automáticamente gracias al Store
+   */
   onDeleteProduct(product: Product, event: Event): void {
     event.stopPropagation();
 
     if (confirm(`¿Eliminar "${product.name}"?`)) {
-      this.state.update((s) => ({ ...s, loading: true }));
-
-      this.productService.deleteProduct(product.id).subscribe({
-        next: () => {
-          // Recargar lista
-          this.loadProducts();
-        },
-        error: (error) => {
-          this.state.update((s) => ({
-            ...s,
-            loading: false,
-            error: error,
-          }));
-        },
-      });
+      // El store actualiza la UI automáticamente sin recargar
+      this.store.delete(product.id);
     }
   }
-}
 
+  // ============================================================
+  // TRACK BY FUNCTION (Rendimiento)
+  // ============================================================
+
+  /**
+   * TrackBy para optimizar renderizado de listas
+   * Angular usa esto para identificar elementos únicos
+   * y evitar re-renderizar elementos que no cambiaron
+   */
+  trackByProductId(index: number, product: Product): string {
+    return product.id;
+  }
+}
