@@ -21,6 +21,7 @@
     width: calc(100% - 88px);
     aspect-ratio: 16 / 9;
     margin: 0 auto;
+    overflow: visible;
 
     .map-image {
       width: 100%;
@@ -36,7 +37,7 @@
       height: 20px;
       transform: translate(-50%, -50%);
       cursor: pointer;
-      z-index: 10;
+      z-index: 20;
     }
 
     /* Puntos interactivos sobre el mapa */
@@ -71,7 +72,7 @@
       min-width: 250px;
       max-width: 300px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-      z-index: 20;
+      z-index: 21;
       animation: fadeInTooltip 0.3s ease-in-out;
       pointer-events: none;
 
@@ -102,8 +103,12 @@
         margin: 0;
         line-height: var(--line-height-relaxed);
       }
+
+
     }
   }
+
+
 
   @keyframes fadeInTooltip {
     from {
@@ -179,55 +184,84 @@
     display: flex;
     gap: var(--spacing-4);
     overflow-y: visible;
-    overflow-x: hidden; /* Oculta las tarjetas fuera del viewport */
-    padding: var(--spacing-4) var(--spacing-4) calc(var(--spacing-4) + 20px) var(--spacing-4); /* Padding vertical aumentado */
+    padding: var(--spacing-4) var(--spacing-4) calc(var(--spacing-4) + 20px) var(--spacing-4);
     scroll-behavior: smooth;
-    width: 990px; /* 3 tarjetas x 300px + 2 gaps x 16px = 960px */
+    width: 100%;
     max-width: 100%;
 
-    /* Ocultar barra de scroll para estética */
     &::-webkit-scrollbar {
       display: none;
     }
-
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 
     .card-wrapper {
-      flex: 0 0 300px; /* Ancho fijo de tarjeta para carrusel */
+      flex: 0 0 300px;
       display: flex;
       flex-direction: column;
 
-      /* Responsive: reducir en tablets */
       @media (max-width: 1024px) {
         flex: 0 0 280px;
         height: 520px;
       }
+    }
+  }
 
-      /* Responsive: más reducido en móvil */
-      @media (max-width: 768px) {
-        flex: 0 0 90%;
+  @media (max-width: 768px) {
+    .trends-carousel {
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-4);
+    }
+
+    .cards-container {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: visible;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      padding: var(--spacing-4) var(--spacing-4) calc(var(--spacing-4) + 20px) var(--spacing-4);
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+
+      .card-wrapper {
+        flex: 0 0 auto;
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        scroll-snap-align: center;
         height: auto;
-        max-width: 350px;
-        margin: 0 auto;
+      }
+    }
+
+    .carousel-arrows {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-4);
+      margin-top: var(--spacing-4);
+      align-self: center;
+    }
+    .carousel-arrow {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--gray-scale-dark);
+      transition: transform var(--transition-fast), color var(--transition-fast);
+
+      .material-icons {
+        font-size: 48px;
+      }
+
+      &:hover {
+        color: var(--text-color);
+        transform: scale(1.2);
       }
     }
   }
 
-  .carousel-arrow {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--gray-scale-dark);
-    transition: transform var(--transition-fast), color var(--transition-fast);
-
-    .material-icons {
-      font-size: 48px;
-    }
-
-    &:hover {
-      color: var(--text-color);
-      transform: scale(1.2);
-    }
-  }
 }

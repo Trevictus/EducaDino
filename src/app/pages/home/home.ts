@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Card } from '../../components/card/card';
 
@@ -16,9 +16,13 @@ interface MapDiscovery {
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
-export class Home {
+export class Home implements OnInit {
   // Referencia al contenedor para el scroll
   @ViewChild('cardsContainer') cardsContainer!: ElementRef;
+
+  // Variable para detectar si estamos en vista móvil
+  isMobile: boolean = false;
+  currentCardIndex: number = 0;
 
   // Información sobre hallazgos de dinosaurios por región
   discoveries: MapDiscovery[] = [
@@ -44,7 +48,7 @@ export class Home {
       region: 'Australia',
       dinosaur: 'Quetzalcoatlus',
       discovery: 'El Quetzalcoatlus fue hallado en Australia. La mayor criatura voladora con envergadura de hasta 11 metros.',
-      position: { top: '72%', left: '92%' }
+      position: { top: '72%', left: '87%' }
     }
   ];
 
@@ -87,13 +91,47 @@ export class Home {
 
 
 
+  // Detectar cambios de tamaño de ventana
+  @HostListener('window:resize')
+  onResize() {
+    this.isMobile = window.innerWidth <= 768;
+  }
+
+  // Inicializar
+  ngOnInit() {
+    this.isMobile = window.innerWidth <= 768;
+  }
+
   // Lógica de los botones del carrusel
   scrollLeft() {
-    this.cardsContainer.nativeElement.scrollBy({ left: -320, behavior: 'smooth' });
+    if (this.isMobile) {
+      // En móvil, centrar la card anterior
+      this.currentCardIndex = Math.max(0, this.currentCardIndex - 1);
+      this.scrollToCard(this.currentCardIndex);
+    } else {
+      // En desktop, scroll horizontal tradicional
+      this.cardsContainer.nativeElement.scrollBy({ left: -320, behavior: 'smooth' });
+    }
   }
 
   scrollRight() {
-    this.cardsContainer.nativeElement.scrollBy({ left: 320, behavior: 'smooth' });
+    if (this.isMobile) {
+      // En móvil, centrar la siguiente card
+      this.currentCardIndex = Math.min(this.trends.length - 1, this.currentCardIndex + 1);
+      this.scrollToCard(this.currentCardIndex);
+    } else {
+      // En desktop, scroll horizontal tradicional
+      this.cardsContainer.nativeElement.scrollBy({ left: 320, behavior: 'smooth' });
+    }
+  }
+
+  // Centrar una card específica en móvil
+  private scrollToCard(index: number) {
+    const container = this.cardsContainer.nativeElement;
+    const cards = container.querySelectorAll('.card-wrapper');
+    if (cards[index]) {
+      cards[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
   }
 
   // Mostrar tooltip al hacer hover

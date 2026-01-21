@@ -343,10 +343,18 @@ Los elementos flotantes como modales, toasts y el header utilizan un sistema de 
 | Elemento | z-index | Descripción |
 |----------|---------|-------------|
 | Contenido base | 1 | Tarjetas, secciones |
-| Header sticky | 100 | Navegación fija |
-| Modal overlay | 1000 | Fondo oscuro del modal |
-| Modal content | 1001 | Contenido del modal |
+| Header sticky | 10 | Navegación fija |
+| Header overlay | 11 | Fondo oscuro del menú móvil |
+| Hamburger button | 12 | Botón de menú móvil |
+| Map points | 20 | Puntos interactivos del mapa |
+| Map tooltip | 21 | Tooltip del mapa |
+| Mobile nav (cerrado) | 30 | Menú móvil cuando está oculto |
+| Mobile nav (abierto) | 40 | Menú móvil cuando está visible |
+| Modal overlay | 100 | Fondo oscuro del modal |
+| Modal content | 101 | Contenido del modal |
+| Tooltip | 200 | Tooltips de componentes |
 | Toast | 9999 | Notificaciones siempre visibles |
+| Loading overlay | 10000 | Overlay de carga |
 
 ---
 

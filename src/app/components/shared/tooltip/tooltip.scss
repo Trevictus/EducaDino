@@ -10,7 +10,7 @@
   /* --- CONTENIDO DEL TOOLTIP --- */
   &__content {
     position: absolute;
-    z-index: 1000;
+    z-index: 200;
 
     padding: var(--spacing-1) var(--spacing-2);
     background-color: var(--primary-color-active);
