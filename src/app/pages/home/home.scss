@@ -183,6 +183,7 @@
   .cards-container {
     display: flex;
     gap: var(--spacing-4);
+    overflow-x: hidden;
     overflow-y: visible;
     padding: var(--spacing-4) var(--spacing-4) calc(var(--spacing-4) + 20px) var(--spacing-4);
     scroll-behavior: smooth;
@@ -199,19 +200,29 @@
       flex: 0 0 300px;
       display: flex;
       flex-direction: column;
+    }
+  }
 
-      @media (max-width: 1024px) {
+  // Tablet
+  @media (max-width: 1024px) {
+    .cards-container {
+      .card-wrapper {
         flex: 0 0 280px;
-        height: 520px;
       }
     }
   }
 
+  // Móvil
   @media (max-width: 768px) {
+    &__trends-section {
+      overflow-x: hidden; // Controla el desbordamiento a nivel de sección
+    }
+
     .trends-carousel {
       flex-direction: column;
       align-items: center;
       gap: var(--spacing-4);
+      overflow: visible; // Permite que el contenido sea visible verticalmente
     }
 
     .cards-container {
@@ -221,7 +232,7 @@
       overflow-y: visible;
       scroll-behavior: smooth;
       scroll-snap-type: x mandatory;
-      padding: var(--spacing-4) var(--spacing-4) calc(var(--spacing-4) + 20px) var(--spacing-4);
+      padding: var(--spacing-4) calc(50% - 150px) calc(var(--spacing-4) + 40px) calc(50% - 150px); // Más padding inferior para sombras
 
       &::-webkit-scrollbar {
         display: none;
@@ -230,12 +241,13 @@
       scrollbar-width: none;
 
       .card-wrapper {
-        flex: 0 0 auto;
-        width: 300px;
+        flex: 0 0 300px;
+        min-width: 300px;
+        max-width: 300px;
         display: flex;
         flex-direction: column;
         scroll-snap-align: center;
-        height: auto;
+        height: auto; // Sin altura fija para que se ajuste al contenido
       }
     }
 
@@ -246,6 +258,7 @@
       margin-top: var(--spacing-4);
       align-self: center;
     }
+
     .carousel-arrow {
       background: none;
       border: none;
