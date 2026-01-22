@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToastService, Toast, ToastType } from '../../../shared/services/toast';
 
@@ -13,7 +13,8 @@ import { ToastService, Toast, ToastType } from '../../../shared/services/toast';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './toast.html',
-  styleUrl: './toast.scss'
+  styleUrl: './toast.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToastComponent {
   /**

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoadingService } from '../../../shared/services/loading';
 
@@ -13,7 +13,8 @@ import { LoadingService } from '../../../shared/services/loading';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './loading-overlay.html',
-  styleUrl: './loading-overlay.scss'
+  styleUrl: './loading-overlay.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoadingOverlay {
   /**

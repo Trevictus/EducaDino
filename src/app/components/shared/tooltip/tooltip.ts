@@ -1,4 +1,4 @@
-import { Component, Input, HostListener, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component, Input, HostListener, ElementRef, Renderer2, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
@@ -8,7 +8,8 @@ export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './tooltip.html',
-  styleUrl: './tooltip.scss'
+  styleUrl: './tooltip.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Tooltip {
   /**

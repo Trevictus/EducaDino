@@ -1,11 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-card',
   standalone: true,
   imports: [],
   templateUrl: './card.html',
-  styleUrl: './card.scss'
+  styleUrl: './card.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Card {
   // Inputs: Reciben datos desde el Home

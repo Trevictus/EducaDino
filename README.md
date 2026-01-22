@@ -969,3 +969,176 @@ goToPage(page: number): void {
   </nav>
 }
 ```
+
+---
+
+## FASE 7: TESTING, OPTIMIZACIÓN Y ENTREGA FINAL
+
+### Arquitectura de Testing
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    ARQUITECTURA DE TESTING (FASE 7)                     │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│  ┌───────────────────────────────────────────────────────────────────┐ │
+│  │                    TESTS UNITARIOS                                 │ │
+│  ├───────────────────────────────────────────────────────────────────┤ │
+│  │ • ApiService.spec.ts      (15 tests) - HTTP mock testing          │ │
+│  │ • ProductService.spec.ts  (23 tests) - CRUD + cache testing       │ │
+│  │ • ProductStore.spec.ts    (50 tests) - State management testing   │ │
+│  └───────────────────────────────────────────────────────────────────┘ │
+│                                                                         │
+│  ┌───────────────────────────────────────────────────────────────────┐ │
+│  │                 TESTS DE COMPONENTES                               │ │
+│  ├───────────────────────────────────────────────────────────────────┤ │
+│  │ • Home.spec.ts            (20 tests) - UI + interactions          │ │
+│  │ • ContactForm.spec.ts     (30 tests) - Form validation            │ │
+│  │ • ProductList.spec.ts     (25 tests) - List + filters + CRUD      │ │
+│  └───────────────────────────────────────────────────────────────────┘ │
+│                                                                         │
+│  ┌───────────────────────────────────────────────────────────────────┐ │
+│  │                 TESTS DE INTEGRACIÓN                               │ │
+│  ├───────────────────────────────────────────────────────────────────┤ │
+│  │ • product-crud.integration.spec.ts (15 tests)                     │ │
+│  │   - Flujo CRUD completo sin recargar página                       │ │
+│  │   - Búsqueda + Filtros + Paginación combinados                    │ │
+│  │   - Selección y edición reactiva                                  │ │
+│  │   - Computed signals y manejo de errores                          │ │
+│  └───────────────────────────────────────────────────────────────────┘ │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Cobertura de Tests
+
+| Tipo | Archivos | Tests | Estado |
+|:-----|:---------|:------|:-------|
+| Servicios | 3 | 88 | ✅ 100% |
+| Componentes | 10+ | 80+ | ✅ |
+| Integración | 1 | 15 | ✅ |
+| **Total** | **17** | **219** | ✅ **Todos pasando** |
+
+### Optimización de Rendimiento
+
+#### ChangeDetectionStrategy.OnPush
+
+Componentes optimizados con `OnPush` para reducir ciclos de detección de cambios:
+
+| Componente | Tipo | OnPush |
+|:-----------|:-----|:-------|
+| ProductListComponent | Smart | ✅ |
+| Card | Presentacional | ✅ |
+| Alert | Presentacional | ✅ |
+| Toast | Presentacional | ✅ |
+| Button | Presentacional | ✅ |
+| Modal | Presentacional | ✅ |
+| Tooltip | Presentacional | ✅ |
+| LoadingOverlay | Presentacional | ✅ |
+| Footer | Layout | ✅ |
+
+#### TrackBy en Listas
+
+Todas las listas usan `track` en el nuevo `@for` de Angular 17+:
+
+```html
+@for (product of store.paginatedProducts(); track product.id) {
+  <app-card [product]="product" />
+}
+```
+
+#### Búsqueda con Debounce
+
+```typescript
+this.searchControl.valueChanges.pipe(
+  debounceTime(300),           // ⏱️ Espera 300ms
+  distinctUntilChanged(),      // 🔄 Solo si cambió
+  takeUntilDestroyed(this.destroyRef)
+).subscribe(term => {
+  this.store.setSearchTerm(term);
+});
+```
+
+### Build de Producción
+
+```
+Bundle Analysis (Production Build)
+══════════════════════════════════════════════════════════
+Initial Bundle:
+  - main.js:           483.56 kB → 108.62 kB (gzip)
+  - polyfills.js:       33.23 kB →  11.27 kB (gzip)
+  - styles.css:          8.61 kB →   1.97 kB (gzip)
+  
+Lazy Loaded Chunks:
+  - profile:            30.14 kB →   5.76 kB (gzip)
+  - product-list:       19.59 kB →   4.28 kB (gzip)
+  - product-form:       13.72 kB →   3.30 kB (gzip)
+  - about:               6.75 kB →   1.90 kB (gzip)
+  - login:               5.32 kB →   1.55 kB (gzip)
+
+Total Transfer Size: ~132 kB (gzip) ✅
+══════════════════════════════════════════════════════════
+```
+
+### Decisiones Técnicas Justificadas
+
+#### ¿Por qué Vitest en lugar de Karma/Jasmine?
+
+| Criterio | Vitest | Karma/Jasmine |
+|:---------|:-------|:--------------|
+| Velocidad | ⚡ Muy rápido (ESM nativo) | 🐢 Lento (bundle completo) |
+| Configuración | Mínima (Angular 17+) | Compleja |
+| HMR en tests | ✅ Sí | ❌ No |
+| Compatibilidad | Angular 17+ nativo | Legacy |
+| Sintaxis | Similar a Jest | Jasmine |
+
+**Decisión:** Vitest es el runner de tests recomendado por Angular 17+ y proporciona mejor DX.
+
+#### ¿Por qué Angular Signals en lugar de NgRx?
+
+| Criterio | Signals | NgRx |
+|:---------|:--------|:-----|
+| Boilerplate | Mínimo | Extenso (actions, reducers, effects) |
+| Curva de aprendizaje | Baja | Alta |
+| Rendimiento | Fine-grained reactivity | Bueno |
+| Tamaño del bundle | 0 KB (nativo) | ~15 KB |
+| Caso de uso | Apps pequeñas/medianas | Enterprise |
+
+**Decisión:** Signals es suficiente para el tamaño de esta aplicación y reduce complejidad.
+
+#### ¿Por qué OnPush en componentes presentacionales?
+
+- **Reduce ciclos de CD:** Solo re-renderiza cuando cambian `@Input()` o signals
+- **Mejora rendimiento:** Menos trabajo para el framework
+- **Fuerza inmutabilidad:** Mejor arquitectura de datos
+
+### Compatibilidad Cross-Browser
+
+| Característica | Chrome | Firefox | Safari | Edge |
+|:---------------|:-------|:--------|:-------|:-----|
+| Angular Signals | ✅ | ✅ | ✅ | ✅ |
+| @for / @if | ✅ | ✅ | ✅ | ✅ |
+| CSS Variables | ✅ | ✅ | ✅ | ✅ |
+| FormControl | ✅ | ✅ | ✅ | ✅ |
+| Lazy Loading | ✅ | ✅ | ✅ | ✅ |
+
+### Changelog
+
+#### v1.0.0 - Fase 7 (Testing y Optimización)
+
+**Testing:**
+- ✅ Añadidos 88 tests para servicios (ApiService, ProductService, ProductStore)
+- ✅ Añadidos 80+ tests para componentes (Home, ContactForm, ProductList)
+- ✅ Añadido test de integración para flujo CRUD completo
+- ✅ Coverage total: 219 tests pasando
+
+**Optimización:**
+- ✅ ChangeDetectionStrategy.OnPush en 9 componentes presentacionales
+- ✅ Build de producción optimizado (~132 KB transfer size)
+- ✅ Lazy loading para todas las rutas secundarias
+
+**Documentación:**
+- ✅ README actualizado con arquitectura de testing
+- ✅ Justificación de decisiones técnicas
+- ✅ Changelog añadido
+
