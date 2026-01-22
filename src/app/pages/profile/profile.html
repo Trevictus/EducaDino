@@ -1,0 +1,285 @@
+<section class="profile-page">
+  <!-- Fondo con imagen de dinosaurio -->
+  <div class="profile-page__background">
+    <img src="assets/images/Dino-painting1200px.avif" alt="Dinosaurio pintando" class="profile-page__bg-image">
+  </div>
+
+  <!-- Contenido principal del perfil -->
+  <div class="profile-page__content">
+    <h1 class="profile-page__title">Perfil</h1>
+
+    @if (userSession) {
+      <!-- Sección superior: Foto y Nivel -->
+      <div class="profile-page__header">
+        <div class="profile-page__photo-section">
+          <div class="profile-page__photo-container" (click)="openPhotoSelector()">
+            <img [src]="userSession.profileImage" [alt]="userSession.username" class="profile-page__photo">
+            <button class="profile-page__edit-photo" aria-label="Editar foto">
+              <span class="material-icons">edit</span>
+            </button>
+          </div>
+          <span class="profile-page__photo-label">FotoPerfil</span>
+        </div>
+
+        <div class="profile-page__level-section">
+          <div class="profile-page__level-info">
+            <span class="profile-page__level-title">Nivel ({{ userSession.level }})</span>
+            @if (!isEditingUsername) {
+              <div class="profile-page__username-display">
+                <span class="profile-page__username">{{ userSession.username }}</span>
+                <button class="profile-page__edit-btn" (click)="startEditUsername()" aria-label="Editar nombre">
+                  <span class="material-icons">edit</span>
+                </button>
+              </div>
+            } @else {
+              <div class="profile-page__username-edit">
+                <input
+                  type="text"
+                  [(ngModel)]="editUsername"
+                  class="profile-page__username-input"
+                  placeholder="Nombre de usuario"
+                  (keyup.enter)="saveUsername()"
+                  (keyup.escape)="cancelEditUsername()">
+                <button class="profile-page__save-btn" (click)="saveUsername()" aria-label="Guardar">
+                  <span class="material-icons">check</span>
+                </button>
+                <button class="profile-page__cancel-btn" (click)="cancelEditUsername()" aria-label="Cancelar">
+                  <span class="material-icons">close</span>
+                </button>
+              </div>
+            }
+          </div>
+          <div class="profile-page__progress-bar">
+            <div class="profile-page__progress-fill" [style.width.%]="levelProgress"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección de estadísticas -->
+      <div class="profile-page__stats">
+        <div class="profile-page__stat">
+          <div class="profile-page__stat-circle">
+            <svg viewBox="0 0 100 100" class="profile-page__stat-svg">
+              <circle class="profile-page__stat-bg" cx="50" cy="50" r="40"/>
+              <circle
+                class="profile-page__stat-progress"
+                cx="50"
+                cy="50"
+                r="40"
+                [style.stroke-dasharray]="251.2"
+                [style.stroke-dashoffset]="251.2 - (251.2 * minigamesPercent / 100)"/>
+            </svg>
+            <span class="profile-page__stat-value">{{ minigamesPercent | number:'1.0-0' }}%</span>
+          </div>
+          <div class="profile-page__stat-info">
+            <span class="profile-page__stat-label">Minijuegos completados</span>
+            <span class="profile-page__stat-count">{{ userSession.completedMinigames }}/{{ userSession.totalMinigames }}</span>
+          </div>
+        </div>
+
+        <div class="profile-page__stat">
+          <div class="profile-page__stat-circle">
+            <svg viewBox="0 0 100 100" class="profile-page__stat-svg">
+              <circle class="profile-page__stat-bg" cx="50" cy="50" r="40"/>
+              <circle
+                class="profile-page__stat-progress"
+                cx="50"
+                cy="50"
+                r="40"
+                [style.stroke-dasharray]="251.2"
+                [style.stroke-dashoffset]="251.2 - (251.2 * learningTimePercent / 100)"/>
+            </svg>
+            <span class="profile-page__stat-value">{{ learningTimePercent | number:'1.0-0' }}%</span>
+          </div>
+          <div class="profile-page__stat-info">
+            <span class="profile-page__stat-label">Tiempo aprendiendo</span>
+            <span class="profile-page__stat-count">{{ formattedLearningTime }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón para demostrar funcionalidad -->
+      <div class="profile-page__actions">
+        <button
+          class="profile-page__demo-btn"
+          (click)="completeMinigame()"
+          [disabled]="userSession.completedMinigames >= userSession.totalMinigames">
+          + Completar Minijuego (Demo)
+        </button>
+      </div>
+    }
+  </div>
+
+  <!-- Modal de pregunta inicial: ¿Estás registrado? -->
+  @if (modalState === 'question') {
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="question-title">
+      <div class="auth-modal__overlay"></div>
+
+      <div class="auth-modal__content auth-modal__content--small">
+        <h2 id="question-title" class="auth-modal__title">¿Estás registrado?</h2>
+
+        <div class="auth-modal__buttons">
+          <button type="button" class="auth-modal__btn auth-modal__btn--primary" (click)="onYesClick()">
+            Sí
+          </button>
+          <button type="button" class="auth-modal__btn auth-modal__btn--secondary" (click)="onNoClick()">
+            No
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Modal de Login -->
+  @if (modalState === 'login') {
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="login-title">
+      <div class="auth-modal__overlay"></div>
+
+      <div class="auth-modal__content">
+        <h2 id="login-title" class="auth-modal__title">Iniciar Sesión</h2>
+
+        @if (loginError) {
+          <div class="auth-modal__error-message">{{ loginError }}</div>
+        }
+
+        <form class="auth-modal__form" (ngSubmit)="onLogin()">
+          <div class="auth-modal__field">
+            <input
+              type="text"
+              id="login-username"
+              [(ngModel)]="loginForm.username"
+              name="username"
+              class="auth-modal__input"
+              placeholder="Nombre de usuario">
+          </div>
+
+          <div class="auth-modal__field">
+            <input
+              type="password"
+              id="login-password"
+              [(ngModel)]="loginForm.password"
+              name="password"
+              class="auth-modal__input"
+              placeholder="Contraseña">
+          </div>
+
+          <div class="auth-modal__buttons">
+            <button type="submit" class="auth-modal__btn auth-modal__btn--primary">
+              Aceptar
+            </button>
+            <button type="button" class="auth-modal__btn auth-modal__btn--secondary" (click)="onBack()">
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+
+  <!-- Modal de Registro -->
+  @if (modalState === 'register') {
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="register-title">
+      <div class="auth-modal__overlay"></div>
+
+      <div class="auth-modal__content">
+        <h2 id="register-title" class="auth-modal__title">Registro</h2>
+
+        <form class="auth-modal__form" (ngSubmit)="onRegister()">
+          <div class="auth-modal__field">
+            <input
+              type="text"
+              id="reg-username"
+              [(ngModel)]="registerForm.username"
+              name="username"
+              class="auth-modal__input"
+              placeholder="Nombre de usuario"
+              [class.auth-modal__input--error]="formErrors['username']">
+            @if (formErrors['username']) {
+              <span class="auth-modal__error">{{ formErrors['username'] }}</span>
+            }
+          </div>
+
+          <div class="auth-modal__field">
+            <input
+              type="email"
+              id="reg-email"
+              [(ngModel)]="registerForm.email"
+              name="email"
+              class="auth-modal__input"
+              placeholder="Email"
+              [class.auth-modal__input--error]="formErrors['email']">
+            @if (formErrors['email']) {
+              <span class="auth-modal__error">{{ formErrors['email'] }}</span>
+            }
+          </div>
+
+          <div class="auth-modal__field">
+            <input
+              type="password"
+              id="reg-password"
+              [(ngModel)]="registerForm.password"
+              name="password"
+              class="auth-modal__input"
+              placeholder="Contraseña"
+              [class.auth-modal__input--error]="formErrors['password']">
+            @if (formErrors['password']) {
+              <span class="auth-modal__error">{{ formErrors['password'] }}</span>
+            }
+          </div>
+
+          <div class="auth-modal__field">
+            <select
+              id="reg-age"
+              [(ngModel)]="registerForm.ageRange"
+              name="ageRange"
+              class="auth-modal__select"
+              [class.auth-modal__select--error]="formErrors['ageRange']">
+              <option value="" disabled>Selecciona tu edad</option>
+              @for (range of ageRanges; track range.value) {
+                <option [value]="range.value">{{ range.label }}</option>
+              }
+            </select>
+            @if (formErrors['ageRange']) {
+              <span class="auth-modal__error">{{ formErrors['ageRange'] }}</span>
+            }
+          </div>
+
+          <div class="auth-modal__buttons">
+            <button type="submit" class="auth-modal__btn auth-modal__btn--primary">
+              Aceptar
+            </button>
+            <button type="button" class="auth-modal__btn auth-modal__btn--secondary" (click)="onBack()">
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+
+  <!-- Modal de selección de foto -->
+  @if (isEditingPhoto) {
+    <div class="photo-modal" role="dialog" aria-modal="true" aria-labelledby="photo-title">
+      <div class="photo-modal__overlay" (click)="closePhotoSelector()"></div>
+
+      <div class="photo-modal__content">
+        <h2 id="photo-title" class="photo-modal__title">Elige tu foto de perfil</h2>
+
+        <div class="photo-modal__grid">
+          @for (image of profileImages; track image) {
+            <button
+              class="photo-modal__option"
+              [class.photo-modal__option--selected]="userSession?.profileImage === image"
+              (click)="selectProfileImage(image)">
+              <img [src]="image" [alt]="'Opción de perfil'" class="photo-modal__image">
+            </button>
+          }
+        </div>
+
+        <button class="photo-modal__close" (click)="closePhotoSelector()">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  }
+</section>

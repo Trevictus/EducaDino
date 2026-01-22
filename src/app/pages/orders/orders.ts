@@ -98,7 +98,7 @@ export class Orders {
                   id: 'tarbosaurus',
                   name: 'Tarbosaurus',
                   description: 'El equivalente asiático del T. rex. Vivió en Mongolia y era casi tan grande como su primo americano, con brazos igualmente pequeños.',
-                  image: ''
+                  image: 'assets/images/Tarbosaurus1200px.avif'
                 }
               ]
             },

@@ -180,6 +180,18 @@ export const routes: Routes = [
     title: 'EducaDino - Login'
   },
 
+  /**
+   * Perfil - Página de perfil de usuario
+   * Lazy Loading del componente
+   */
+  {
+    path: 'perfil',
+    loadComponent: () =>
+      import('./pages/profile/profile').then(m => m.Profile),
+    data: { breadcrumb: 'Perfil' },
+    title: 'EducaDino - Perfil'
+  },
+
   // ══════════════════════════════════════════════════════════════════
   // WILDCARD - Página 404 (Requisito 4.7)
   // ══════════════════════════════════════════════════════════════════
