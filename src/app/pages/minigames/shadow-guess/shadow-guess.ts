@@ -26,7 +26,7 @@ export class ShadowGuessGame {
   questions: ShadowQuestion[] = [
     {
       id: 1,
-      shadowImage: 'img/t-rex.png',
+      shadowImage: 'img/T-rex.png',
       correctAnswer: 'Tiranosaurio Rex',
       options: ['Triceratops', 'Tiranosaurio Rex', 'Velocirraptor']
     },
@@ -44,7 +44,7 @@ export class ShadowGuessGame {
     },
     {
       id: 4,
-      shadowImage: 'img/argentinasaurus.png',
+      shadowImage: 'img/Argentinasaurus.png',
       correctAnswer: 'Argentinosauro',
       options: ['Microrraptor', 'Argentinosauro', 'Triceratops']
     },
