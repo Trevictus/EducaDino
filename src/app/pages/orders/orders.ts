@@ -72,27 +72,27 @@ export class Orders {
           id: 'theropoda',
           name: 'Theropoda',
           description: 'Los terópodos son dinosaurios bípedos, en su mayoría carnívoros. Incluyen desde pequeños cazadores emplumados hasta los grandes depredadores como el Tyrannosaurus rex. Las aves modernas descienden directamente de este grupo de dinosaurios.',
-          image: '',
+          image: 'assets/images/Theropodo1200px.avif',
           expanded: false,
           types: [
             {
               id: 'tyrannosauridae',
               name: 'Tyrannosauridae',
               description: 'Familia de grandes terópodos carnívoros que incluye al famoso Tyrannosaurus rex. Se caracterizaban por sus enormes cabezas, mandíbulas poderosas y brazos relativamente pequeños.',
-              image: '',
+              image: 'assets/images/Tiranosauridae1200px.avif',
               expanded: false,
               dinosaurs: [
                 {
                   id: 'tyrannosaurus-rex',
                   name: 'Tyrannosaurus rex',
                   description: 'El "rey de los lagartos tiranos" es quizás el dinosaurio más famoso. Medía hasta 12 metros de largo y tenía la mordida más poderosa de cualquier animal terrestre conocido.',
-                  image: ''
+                  image: 'assets/images/T-rex1200px.avif'
                 },
                 {
                   id: 'albertosaurus',
                   name: 'Albertosaurus',
                   description: 'Pariente cercano del T. rex pero más pequeño y ligero. Vivió en Canadá hace 70 millones de años y era un depredador ápice de su ecosistema.',
-                  image: ''
+                  image: 'assets/images/Tarbosaurus1200px.avif'
                 },
                 {
                   id: 'tarbosaurus',
@@ -106,26 +106,26 @@ export class Orders {
               id: 'dromaeosauridae',
               name: 'Dromaeosauridae',
               description: 'Conocidos como "raptores", eran depredadores ágiles y probablemente emplumados. Incluyen al Velociraptor y al Deinonychus. Tenían garras retráctiles en forma de hoz en sus patas traseras.',
-              image: '',
+              image: 'assets/images/Dromaeosauridae1200px.avif',
               expanded: false,
               dinosaurs: [
                 {
                   id: 'velociraptor',
                   name: 'Velociraptor',
                   description: 'Pequeño pero letal depredador de Mongolia. Del tamaño de un pavo, estaba cubierto de plumas y cazaba en manada usando su inteligencia y garras en forma de hoz.',
-                  image: ''
+                  image: 'assets/images/Velocirraptor1200px.avif'
                 },
                 {
                   id: 'deinonychus',
                   name: 'Deinonychus',
                   description: 'Su nombre significa "garra terrible". Más grande que el Velociraptor, revolucionó nuestra comprensión de los dinosaurios como animales activos y de sangre caliente.',
-                  image: ''
+                  image: 'assets/images/Deinonychus1200px.avif'
                 },
                 {
                   id: 'utahraptor',
                   name: 'Utahraptor',
                   description: 'El raptor más grande conocido, podía alcanzar 7 metros de largo. Su garra en forma de hoz medía más de 20 cm y era un superdepredador del Cretácico temprano.',
-                  image: ''
+                  image: 'assets/images/Utharaptor1200px.avif'
                 }
               ]
             },
@@ -133,26 +133,26 @@ export class Orders {
               id: 'allosauridae',
               name: 'Allosauridae',
               description: 'Grandes terópodos carnívoros del Jurásico. El Allosaurus era uno de los principales depredadores de su época, con dientes aserrados y garras poderosas para cazar grandes herbívoros.',
-              image: '',
+              image: 'assets/images/Allosauridae1200px.avif',
               expanded: false,
               dinosaurs: [
                 {
                   id: 'allosaurus',
                   name: 'Allosaurus',
                   description: 'El depredador más común del Jurásico tardío en Norteamérica. Cazaba grandes saurópodos y estegosaurios usando sus potentes mandíbulas y garras.',
-                  image: ''
+                  image: 'assets/images/Allosaurio1200px.avif'
                 },
                 {
                   id: 'saurophaganax',
                   name: 'Saurophaganax',
                   description: 'Posiblemente el terópodo más grande del Jurásico, superando al Allosaurus en tamaño. Su nombre significa "señor de los comedores de lagartos".',
-                  image: ''
+                  image: 'assets/images/Saurophaganax1200px.avif'
                 },
                 {
                   id: 'acrocanthosaurus',
                   name: 'Acrocanthosaurus',
                   description: 'Gran carnívoro del Cretácico temprano con espinas altas en su espalda. Podía alcanzar 12 metros y era el depredador dominante de su época.',
-                  image: ''
+                  image: 'assets/images/Acrocanthosaurus1200px.avif'
                 }
               ]
             }
@@ -162,33 +162,33 @@ export class Orders {
           id: 'sauropodomorpha',
           name: 'Sauropodomorpha',
           description: 'Los sauropodomorfos incluyen a los dinosaurios más grandes que han existido. Se caracterizan por sus cuellos extremadamente largos, cuerpos masivos y alimentación herbívora. Evolucionaron desde formas bípedas pequeñas hasta gigantes cuadrúpedos.',
-          image: '',
+          image: 'assets/images/Sauropodomorpha1200px.avif',
           expanded: false,
           types: [
             {
               id: 'diplodocidae',
               name: 'Diplodocidae',
               description: 'Saurópodos de cuello y cola muy largos pero relativamente delgados. El Diplodocus y el Apatosaurus son miembros famosos de esta familia.',
-              image: '',
+              image: 'assets/images/Diplodocidae1200px.avif',
               expanded: false,
               dinosaurs: [
                 {
                   id: 'diplodocus',
                   name: 'Diplodocus',
                   description: 'Uno de los dinosaurios más largos conocidos, alcanzando 27 metros. Su larga cola en forma de látigo podría haber producido un sonido supersónico.',
-                  image: ''
+                  image: 'assets/images/Diplodocus1200px.avif'
                 },
                 {
                   id: 'apatosaurus',
                   name: 'Apatosaurus',
                   description: 'Antes conocido como Brontosaurus, era más robusto que el Diplodocus. Pesaba hasta 23 toneladas y se alimentaba de helechos y coníferas.',
-                  image: ''
+                  image: 'assets/images/Apatosaurus1200px.avif'
                 },
                 {
                   id: 'supersaurus',
                   name: 'Supersaurus',
                   description: 'Uno de los animales más largos que han existido, posiblemente superando los 33 metros. A pesar de su tamaño, era relativamente ligero.',
-                  image: ''
+                  image: 'assets/images/Supersaurus1200px.avif'
                 }
               ]
             },
@@ -196,26 +196,26 @@ export class Orders {
               id: 'brachiosauridae',
               name: 'Brachiosauridae',
               description: 'Saurópodos con las patas delanteras más largas que las traseras, lo que les daba una postura inclinada hacia arriba. El Brachiosaurus podía alcanzar las copas de los árboles más altos.',
-              image: '',
+              image: 'assets/images/Brachiosauridae1200px.avif',
               expanded: false,
               dinosaurs: [
                 {
                   id: 'brachiosaurus',
                   name: 'Brachiosaurus',
                   description: 'Uno de los dinosaurios más altos, podía alcanzar 13 metros de altura. Sus fosas nasales en lo alto de la cabeza le permitían respirar mientras comía.',
-                  image: ''
+                  image: 'assets/images/Brachiosaurus1200px.avif'
                 },
                 {
                   id: 'giraffatitan',
                   name: 'Giraffatitan',
                   description: 'Pariente africano del Brachiosaurus, antes considerado la misma especie. Podía pesar hasta 40 toneladas y tenía un cuello extremadamente largo.',
-                  image: ''
+                  image: 'assets/images/Girafatitan1200px.avif'
                 },
                 {
                   id: 'sauroposeidon',
                   name: 'Sauroposeidon',
                   description: 'Posiblemente el dinosaurio más alto conocido, con estimaciones de hasta 18 metros de altura. Solo se conoce por vértebras cervicales gigantes.',
-                  image: ''
+                  image: 'assets/images/Sauroposeidon1200px.avif'
                 }
               ]
             },
