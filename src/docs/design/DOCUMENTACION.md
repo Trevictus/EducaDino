@@ -1566,36 +1566,6 @@ Además de las animaciones, se utilizan transiciones suaves para estados interac
 
 ---
 
-# Guía de Configuración y Ejecución del Proyecto
-
-Estos son los pasos para descargar, instalar y ejecutar el proyecto en local.
-
-## 1. Descargar el repositorio
-Clona el repositorio con:
-
-```bash
-git clone https://github.com/Trevictus/EducaDino.git
-```
-
-## 2. Abrir con WebStorm
-Abre el proyecto con WebStorm.
-
-## 3. Instalar dependencias
-Abre la terminal desde el **directorio raíz** del proyecto y ejecuta:
-
-```bash
-npm install
-```
-
-## 4. Iniciar el proyecto
-Con la terminal abierta en el directorio raíz, ejecuta este comando para levantarlo en el puerto 4200:
-
-```bash
-npm start
-```
-
----
-
 # Sección 6: Sistema de temas
 
 EducaDino incluye un sistema completo de temas que permite a los usuarios alternar entre modo claro y modo oscuro. Este sistema utiliza Angular Signals para reactividad, localStorage para persistencia, y CSS Custom Properties para la implementación visual.
@@ -1874,3 +1844,60 @@ A continuación se muestran capturas de pantalla de 3 páginas principales en am
 
 **Modo oscuro:**
 ![Perfil - Modo Oscuro](public/img/Perfil-modoOscuro.png)
+
+
+
+
+---
+
+# Sección 7: Aplicación completa y despliegue
+
+## 7.1 Estado final de la aplicación
+
+**Páginas implementadas:**
+- Inicio (Home): Mapa interactivo, acceso a secciones y resumen visual.
+- Minijuegos: Juegos educativos interactivos.
+- Curiosidades: Tarjetas con datos y curiosidades de dinosaurios.
+- Productos: Listado, detalle, creación y edición de productos (CRUD).
+- Perfil de usuario: Información y edición de usuario.
+- Registro e inicio de sesión: Formularios validados.
+- Contacto: Formulario de contacto y datos de soporte.
+- Panel de administración: Gestión de productos y usuarios (solo admin).
+- Página 404: Error para rutas no encontradas.
+
+**Funcionalidades principales:**
+- Modo claro/oscuro persistente
+- Gestión de usuarios y autenticación
+- CRUD de productos
+- Minijuegos y actividades
+- Navegación protegida por guards
+- Formularios reactivos y validaciones avanzadas
+- Responsive y accesibilidad
+
+---
+
+## 7.2 Despliegue
+
+- **URL de producción:** https://trevictus.github.io/EducaDino/
+- **Verificación:**
+  - La aplicación está desplegada en GitHub Pages y accesible públicamente.
+  - Todas las páginas y funcionalidades principales han sido verificadas en producción.
+  - El modo claro/oscuro, navegación, minijuegos, formularios y CRUD funcionan correctamente en la versión publicada.
+
+---
+
+## 7.3 Problemas conocidos y mejoras futuras
+
+**Problemas menores actuales:**
+- En algunos dispositivos móviles antiguos, ciertos estilos pueden no verse perfectamente alineados.
+- El rendimiento de los minijuegos puede variar según el dispositivo.
+- La validación de formularios puede no mostrar todos los mensajes de error en navegadores poco comunes.
+
+**Mejoras futuras propuestas:**
+- Añadir más minijuegos y actividades interactivas.
+- Mejorar la accesibilidad para lectores de pantalla.
+- Internacionalización (i18n) para otros idiomas.
+- (Sugerencia extra) Implementar notificaciones push para novedades y recordatorios.
+
+---
+

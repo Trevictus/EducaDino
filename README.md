@@ -1,7 +1,52 @@
 # EducaDino
 
-Proyecto final sobre AppWeb educativa  
-Desplegado en: https://trevictus.github.io/EducaDino/
+EducaDino es una aplicación web educativa interactiva para aprender sobre dinosaurios, dirigida a público infantil y familiar. Permite explorar información, curiosidades, minijuegos y actividades de forma visual y divertida.
+
+- **URL de producción:** https://trevictus.github.io/EducaDino/
+
+---
+
+## Tecnologías utilizadas
+- Angular 17 (standalone components)
+- TypeScript
+- SCSS (ITCSS, BEM)
+- Angular Signals
+- LocalStorage
+- HTML5 y CSS3
+- GitHub Pages (despliegue)
+
+---
+
+## Características principales
+- Modo claro/oscuro con cambio instantáneo y persistencia
+- Mapa interactivo de dinosaurios
+- Minijuegos educativos
+- Sistema de registro y perfil de usuario
+- Formularios validados y accesibles
+- Diseño responsive y visual adaptado a niños
+- Notificaciones y modales animados
+
+---
+
+## Instalación local
+
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/Trevictus/EducaDino.git
+   ```
+2. Accede al directorio del proyecto:
+   ```bash
+   cd EducaDino
+   ```
+3. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+4. Inicia la aplicación en desarrollo:
+   ```bash
+   npm start
+   ```
+5. Abre tu navegador en [http://localhost:4200](http://localhost:4200)
 
 ---
 
@@ -647,42 +692,6 @@ readonly hasSuccess = computed(() => !!this.state().successMessage);
 | DELETE | `/api/products/:id` | Eliminar producto | - |
 | POST | `/api/products/:id/image` | Subir imagen | FormData: file |
 
-### Archivos Creados en Fase 5
-
-| Archivo | Ubicación | Descripción |
-|:--------|:----------|:------------|
-| `api.service.ts` | `core/services/` | Servicio HTTP base |
-| `auth.interceptor.ts` | `core/interceptors/` | Interceptor de autenticación |
-| `error.interceptor.ts` | `core/interceptors/` | Interceptor de errores |
-| `logging.interceptor.ts` | `core/interceptors/` | Interceptor de logging |
-| `product.service.ts` | `services/` | Servicio CRUD de productos |
-| `product.dto.ts` | `models/` | DTOs e interfaces de producto |
-| `environment.ts` | `environments/` | Variables de entorno (dev) |
-| `environment.prod.ts` | `environments/` | Variables de entorno (prod) |
-
----
-
-## Tabla Resumen de Rutas
-
-| Path | Lazy | Guard | Resolver | Breadcrumb |
-|:-----|:-----|:------|:---------|:-----------|
-| `/home` | ❌ | - | - | Inicio |
-| `/about` | ✅ | - | - | Sobre Nosotros |
-| `/contacto` | ❌ | - | - | Contacto |
-| `/curiosidades` | ❌ | - | - | Curiosidades |
-| `/ordenes` | ❌ | - | - | Órdenes |
-| `/style-guide` | ❌ | - | - | Guía de Estilos |
-| `/productos` | ✅ | - | - | Productos |
-| `/productos/nuevo` | ✅ | pendingChangesGuard | - | Nuevo Producto |
-| `/productos/:id` | ✅ | - | productResolver | Producto :id |
-| `/admin` | ✅ | authGuard | - | Administración |
-| `/admin/dashboard` | ✅ | authGuard | - | Dashboard |
-| `/admin/productos` | ✅ | authGuard | - | Gestión Productos |
-| `/admin/productos/:id/editar` | ✅ | authGuard + pendingChangesGuard | - | Editar |
-| `/admin/usuarios` | ✅ | authGuard | - | Usuarios |
-| `/login` | ✅ | - | - | Iniciar Sesión |
-| `/**` | ✅ | - | - | Página no encontrada |
-
 ---
 
 ## FASE 6: GESTIÓN DE ESTADO Y ACTUALIZACIÓN DINÁMICA
@@ -960,22 +969,3 @@ goToPage(page: number): void {
   </nav>
 }
 ```
-
-
-
-### Archivos Creados en Fase 6
-
-| Archivo | Ubicación | Descripción |
-|:--------|:----------|:------------|
-| `product.store.ts` | `store/` | Store centralizado con Signals |
-| `index.ts` | `store/` | Barrel export del store |
-
-### Archivos Modificados en Fase 6
-
-| Archivo | Cambios |
-|:--------|:--------|
-| `product-list.ts` | OnPush, consume ProductStore, debounce search |
-| `product-list.html` | @for con track, FormControl reactivo |
-| `angular.json` | Ajuste de budgets para CSS |
-
-
