@@ -13,6 +13,8 @@ import { ThemeToggle } from '../../shared/theme-toggle/theme-toggle';
 export class Header {
   // Estado del menú móvil
   isMenuOpen: boolean = false;
+  // Estado del menú de más opciones
+  isMoreMenuOpen: boolean = false;
 
   @ViewChild('searchInput') searchInput?: ElementRef<HTMLInputElement>;
 
@@ -24,6 +26,16 @@ export class Header {
   // Cierra el menú (al hacer clic en un enlace)
   closeMenu(): void {
     this.isMenuOpen = false;
+  }
+
+  // Alterna el estado del menú de más opciones
+  toggleMoreMenu(): void {
+    this.isMoreMenuOpen = !this.isMoreMenuOpen;
+  }
+
+  // Cierra el menú de más opciones
+  closeMoreMenu(): void {
+    this.isMoreMenuOpen = false;
   }
 
   // Función de búsqueda sincronizada con otros botones

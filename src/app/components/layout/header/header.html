@@ -1,28 +1,47 @@
 <header class="header">
   <div class="l-container header__container">
 
-    <a routerLink="/home" class="header__logo">
+    <!-- Logo Desktop (imagen) y Logo Landscape (texto) -->
+    <a routerLink="/home" class="header__logo header__logo--image">
       <img src="img/logotipo-EducaDino.png" alt="EducaDino Logo">
+    </a>
+
+    <a routerLink="/home" class="header__logo header__logo--text">
+      Inicio
     </a>
 
     <!-- Navegación Desktop -->
     <nav class="header__nav">
-
-      <button class="header__search" aria-label="Buscar en el sitio" type="button">
-        <span class="material-icons">search</span>
-        <input
-          #searchInput
-          type="text"
-          placeholder="Buscar"
-          (keyup.enter)="onSearch(searchInput.value)">
-      </button>
-
       <ul class="header__menu">
+        <li>
+          <button class="header__search" aria-label="Buscar en el sitio" type="button">
+            <span class="material-icons">search</span>
+            <input
+              #searchInput
+              type="text"
+              placeholder="Buscar"
+              (keyup.enter)="onSearch(searchInput.value)">
+          </button>
+        </li>
         <li><a routerLink="/minijuegos" class="header__link">Minijuegos</a></li>
         <li><a routerLink="/curiosidades" class="header__link">Curiosidades</a></li>
         <li><a routerLink="/ordenes" class="header__link">Órdenes</a></li>
         <li><a routerLink="/contacto" class="header__link">Contacto</a></li>
         <li><a routerLink="/style-guide" class="header__link">Guia de estilo</a></li>
+        <li>
+          <button
+            class="header__more-menu"
+            aria-label="Más opciones"
+            type="button"
+            (click)="toggleMoreMenu()"
+            [class.is-active]="isMoreMenuOpen">
+            <span class="material-icons">more_vert</span>
+          </button>
+          <ul class="header__more-menu-items" [class.is-open]="isMoreMenuOpen">
+            <li><a routerLink="/home" class="header__more-link" (click)="closeMoreMenu()">Inicio</a></li>
+            <li><a routerLink="/style-guide" class="header__more-link" (click)="closeMoreMenu()">Guia de estilo</a></li>
+          </ul>
+        </li>
       </ul>
     </nav>
 
