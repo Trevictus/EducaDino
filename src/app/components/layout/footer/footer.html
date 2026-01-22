@@ -2,7 +2,19 @@
   <div class="l-container footer__container">
     <!-- Sección de Branding -->
     <div class="footer__section footer__section--brand">
-      <img src="assets/images/logotipo-EducaDino1200px.avif" alt="EducaDino" class="footer__logo">
+      <picture>
+        <source
+          type="image/avif"
+          srcset="assets/images/logotipo-EducaDino400px.avif 400w,
+                  assets/images/logotipo-EducaDino800px.avif 800w,
+                  assets/images/logotipo-EducaDino1200px.avif 1200w"
+          sizes="(max-width: 640px) 150px, 200px">
+        <img
+          src="assets/images/logotipo-EducaDino1200px.avif"
+          alt="EducaDino"
+          class="footer__logo"
+          loading="lazy">
+      </picture>
       <p class="footer__brand-text">Plataforma educativa para aprender sobre dinosaurios</p>
       <a routerLink="/contacto" class="footer__cta">Contacto directo</a>
     </div>

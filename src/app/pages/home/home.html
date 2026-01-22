@@ -4,7 +4,23 @@
     <div class="l-container">
       <div class="map-container">
 
-        <img src="assets/images/World_map1200px.avif" alt="Mapa mundial interactivo" class="map-image">
+        <!-- Imagen optimizada con picture, srcset y sizes -->
+        <picture>
+          <source
+            type="image/avif"
+            srcset="assets/images/World_map400px.avif 400w,
+                    assets/images/World_map800px.avif 800w,
+                    assets/images/World_map1200px.avif 1200w"
+            sizes="(max-width: 640px) 100vw,
+                   (max-width: 1024px) 80vw,
+                   1200px">
+          <img
+            src="assets/images/World_map1200px.avif"
+            alt="Mapa mundial interactivo"
+            class="map-image"
+            loading="eager"
+            fetchpriority="high">
+        </picture>
 
         @for (discovery of discoveries; track discovery.region) {
           <div class="map-point-wrapper" [style.top]="discovery.position.top" [style.left]="discovery.position.left">

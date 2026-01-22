@@ -2,7 +2,11 @@
 
   <span class="dino-card__category">{{ category }}</span>
 
-  <img [src]="image" [alt]="title" class="dino-card__media">
+  <img
+    [src]="image"
+    [alt]="title"
+    class="dino-card__media"
+    loading="lazy">
 
   <h3 class="dino-card__title">{{ title }}</h3>
 

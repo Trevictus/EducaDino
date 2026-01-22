@@ -1,7 +1,20 @@
 <section class="profile-page">
   <!-- Fondo con imagen de dinosaurio -->
   <div class="profile-page__background">
-    <img src="assets/images/Dino-painting1200px.avif" alt="Dinosaurio pintando" class="profile-page__bg-image">
+    <picture>
+      <source
+        type="image/avif"
+        srcset="assets/images/Dino-painting400px.avif 400w,
+                assets/images/Dino-painting800px.avif 800w,
+                assets/images/Dino-painting1200px.avif 1200w"
+        sizes="(max-width: 768px) 100vw,
+               50vw">
+      <img
+        src="assets/images/Dino-painting1200px.avif"
+        alt="Dinosaurio pintando"
+        class="profile-page__bg-image"
+        loading="lazy">
+    </picture>
   </div>
 
   <!-- Contenido principal del perfil -->
@@ -248,7 +261,7 @@
             <button type="submit" class="auth-modal__btn auth-modal__btn--primary">
               Aceptar
             </button>
-            <button type="button" class="auth-modal__btn auth-modal__btn--secondary" (click)="onBack()">
+            <button type="button" class="auth-modal__btn auth-modal__btn--secondary" (click)="onCancel()">
               Cancelar
             </button>
           </div>

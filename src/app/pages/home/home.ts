@@ -61,25 +61,25 @@ export class Home implements OnInit {
       category: 'Comportamiento',
       title: 'No eran para pelear',
       desc: 'El triceratops usaba su cornamenta especialmente para el cortejo.',
-      img: 'img/triceratops.png'
+      img: 'assets/images/Triceratops1200px.avif'
     },
     {
       category: 'Alimentación',
       title: 'El gran devorador',
       desc: 'El T-Rex podía comer hasta 230 kg de carne de un solo bocado.',
-      img: 'img/t-rex.png'
+      img: 'assets/images/T-rex1200px.avif'
     },
     {
       category: 'Velocidad',
       title: 'Corredores natos',
       desc: 'Los velociraptores podían alcanzar velocidades de hasta 60 km/h.',
-      img: 'img/velocirraptor.png'
+      img: 'assets/images/Velocirraptor1200px.avif'
     },
     {
       category: 'Tamaño',
       title: 'Gigantes gentiles',
       desc: 'El Argentinosaurus es uno de los animales terrestres más grandes conocidos.',
-      img: 'img/argentinasaurus.png'
+      img: 'assets/images/Argentinasaurus1200px.avif'
     },
     {
       category: 'Vuelo',

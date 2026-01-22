@@ -3,7 +3,18 @@
 
     <!-- Logo Desktop (imagen) y Logo Landscape (texto) -->
     <a routerLink="/home" class="header__logo header__logo--image">
-      <img src="assets/images/logotipo-EducaDino400px.avif" alt="EducaDino Logo">
+      <picture>
+        <source
+          type="image/avif"
+          srcset="assets/images/logotipo-EducaDino400px.avif 400w,
+                  assets/images/logotipo-EducaDino800px.avif 800w"
+          sizes="(max-width: 640px) 150px, 200px">
+        <img
+          src="assets/images/logotipo-EducaDino400px.avif"
+          alt="EducaDino Logo"
+          loading="eager"
+          fetchpriority="high">
+      </picture>
     </a>
 
     <a routerLink="/home" class="header__logo header__logo--text">

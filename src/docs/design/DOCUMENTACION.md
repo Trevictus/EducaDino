@@ -1163,6 +1163,409 @@ Algunos componentes tienen necesidades específicas de responsive y usan media q
 
 ---
 
+# Sección 5: Optimización Multimedia
+
+Esta sección documenta las estrategias de optimización de imágenes y animaciones CSS implementadas para mejorar el rendimiento y la experiencia de usuario.
+
+---
+
+## 5.1 Formatos Elegidos
+
+### AVIF - Formato Principal
+
+**AVIF (AV1 Image File Format)** es el formato elegido para todas las imágenes optimizadas del proyecto. Se utiliza para:
+
+- **Imágenes de contenido**: Dinosaurios, ilustraciones, logotipos
+- **Imágenes decorativas**: Fondos, elementos visuales de páginas
+- **Mapa interactivo**: Imagen principal de la home
+
+**Justificación del uso de AVIF:**
+
+| Característica | AVIF | WebP | JPG/PNG |
+|---------------|------|------|---------|
+| **Compresión** | Excelente (50-80% menor que JPG) | Buena (25-35% menor que JPG) | Base de referencia |
+| **Calidad visual** | Superior a igual tamaño | Buena | Variable |
+| **Transparencia** | ✅ Soportada | ✅ Soportada | Solo PNG |
+| **Soporte navegadores** | 95%+ (2024) | 97%+ | 100% |
+| **HDR/Wide Gamut** | ✅ Soportado | ❌ Limitado | ❌ No |
+
+**¿Por qué AVIF sobre WebP?**
+- Mayor ratio de compresión sin pérdida perceptible de calidad
+- Mejor manejo de gradientes y colores planos (ideal para ilustraciones de dinosaurios)
+- Soporte nativo en navegadores modernos (Chrome, Firefox, Safari, Edge)
+
+**¿Cuándo se mantiene PNG?**
+- Imágenes en `public/img/` que se sirven dinámicamente desde el backend
+- Casos donde se requiere compatibilidad máxima con sistemas externos
+
+---
+
+## 5.2 Herramientas Utilizadas
+
+### Squoosh
+
+**Squoosh** es la herramienta principal utilizada para la optimización de imágenes.
+
+**Características aprovechadas:**
+- Conversión de PNG a AVIF con control de calidad
+- Redimensionamiento a múltiples resoluciones (400px, 800px, 1200px)
+- Comparación visual lado a lado antes/después
+- Procesamiento en el navegador sin subir archivos a servidores
+
+**Configuración típica usada:**
+
+| Parámetro | Valor |
+|-----------|-------|
+| Formato de salida | AVIF |
+| Calidad | 60-75% |
+| Esfuerzo de codificación | 4-6 |
+| Submuestreo de croma | 4:2:0 |
+
+**Flujo de trabajo:**
+1. Cargar imagen PNG original en Squoosh
+2. Seleccionar AVIF como formato de salida
+3. Ajustar calidad hasta equilibrio tamaño/calidad
+4. Exportar en 3 resoluciones: 400px, 800px, 1200px
+
+---
+
+## 5.3 Resultados de Optimización
+
+La siguiente tabla muestra los resultados de optimización para imágenes representativas del proyecto:
+
+| Imagen | Tamaño Original (PNG) | Tamaño Optimizado (AVIF 800px) | Reducción |
+|--------|----------------------|-------------------------------|-----------|
+| `world-map.png` | 647.85 KB | ~120 KB | **81%** |
+| `Apatosaurus.png` | 368.18 KB | 84.71 KB | **77%** |
+| `T-rex.png` | 346.07 KB | 79.46 KB | **77%** |
+| `Tiranosauridae.png` | 333.23 KB | 94.22 KB | **72%** |
+| `velocirraptor.png` | 314.75 KB | 70.42 KB | **78%** |
+| `triceratops.png` | 261.10 KB | 85.23 KB | **67%** |
+| `Argentinasaurus.png` | ~280 KB | 81.15 KB | **71%** |
+
+**Resumen de optimización:**
+- **Reducción promedio**: ~75%
+- **Ahorro total estimado**: >2MB en imágenes principales
+- **Impacto en carga**: Mejora significativa en LCP (Largest Contentful Paint)
+
+---
+
+## 5.4 Tecnologías Implementadas
+
+### 5.4.1 Elemento `<picture>` con `srcset` y `sizes`
+
+El elemento `<picture>` permite servir diferentes versiones de imagen según las condiciones del dispositivo.
+
+**Implementación en el mapa de inicio (`home.html`):**
+
+```html
+<picture>
+  <source
+    type="image/avif"
+    srcset="assets/images/World_map400px.avif 400w,
+            assets/images/World_map800px.avif 800w,
+            assets/images/World_map1200px.avif 1200w"
+    sizes="(max-width: 640px) 100vw,
+           (max-width: 1024px) 80vw,
+           1200px">
+  <img
+    src="assets/images/World_map1200px.avif"
+    alt="Mapa mundial interactivo"
+    class="map-image"
+    loading="eager"
+    fetchpriority="high">
+</picture>
+```
+
+**Implementación en el header (`header.html`):**
+
+```html
+<picture>
+  <source
+    type="image/avif"
+    srcset="assets/images/logotipo-EducaDino400px.avif 400w,
+            assets/images/logotipo-EducaDino800px.avif 800w"
+    sizes="(max-width: 640px) 150px, 200px">
+  <img
+    src="assets/images/logotipo-EducaDino400px.avif"
+    alt="EducaDino Logo"
+    loading="eager"
+    fetchpriority="high">
+</picture>
+```
+
+**Implementación en página de contacto (`contact.html`):**
+
+```html
+<picture>
+  <source
+    type="image/avif"
+    srcset="assets/images/Dino-throw400px.avif 400w,
+            assets/images/Dino-throw800px.avif 800w,
+            assets/images/Dino-throw1200px.avif 1200w"
+    sizes="(max-width: 768px) 0px,
+           (max-width: 1024px) 200px,
+           300px">
+  <img
+    src="assets/images/Dino-throw1200px.avif"
+    alt="Dinosaurio lanzando avión"
+    loading="lazy">
+</picture>
+```
+
+### 5.4.2 Atributo `loading="lazy"`
+
+La carga diferida evita cargar imágenes fuera del viewport inicial, mejorando el tiempo de carga.
+
+**Implementación en tarjetas de producto (`product-list.html`):**
+
+```html
+<img [src]="product.image" [alt]="product.name" loading="lazy" />
+```
+
+**Implementación en componente card (`card.html`):**
+
+```html
+<img
+  [src]="image"
+  [alt]="title"
+  class="dino-card__media"
+  loading="lazy">
+```
+
+**Dónde NO usar `loading="lazy"`:**
+- Imágenes above-the-fold (mapa principal, logo del header)
+- Elementos críticos para el LCP
+- En estos casos se usa `loading="eager"` y `fetchpriority="high"`
+
+### 5.4.3 Mejoras Pendientes
+
+Las siguientes mejoras están planificadas para futuras iteraciones:
+
+| Mejora | Descripción | Prioridad |
+|--------|-------------|-----------|
+| **srcset dinámico en Angular** | Crear directiva para generar srcset automáticamente desde URLs base | Alta |
+| **Fallback a WebP/PNG** | Añadir `<source>` adicionales para navegadores sin soporte AVIF | Media |
+| **Lazy loading nativo en carrusel** | Implementar Intersection Observer para cargar imágenes bajo demanda | Media |
+| **Placeholder blur** | Mostrar versión borrosa de baja resolución mientras carga la imagen | Baja |
+
+---
+
+## 5.5 Animaciones CSS
+
+### Principio de Rendimiento
+
+Todas las animaciones del proyecto utilizan exclusivamente las propiedades `transform` y `opacity`.
+
+**¿Por qué solo `transform` y `opacity`?**
+
+| Propiedad | Capa de renderizado | Repaint | Reflow | Rendimiento |
+|-----------|---------------------|---------|--------|-------------|
+| `transform` | Compositor | ❌ No | ❌ No | ⚡ Excelente |
+| `opacity` | Compositor | ❌ No | ❌ No | ⚡ Excelente |
+| `width/height` | Layout | ✅ Sí | ✅ Sí | 🐌 Malo |
+| `margin/padding` | Layout | ✅ Sí | ✅ Sí | 🐌 Malo |
+| `background-color` | Paint | ✅ Sí | ❌ No | 😐 Regular |
+
+Las propiedades `transform` y `opacity` son ejecutadas por el **compositor del GPU**, sin afectar al hilo principal del navegador. Esto garantiza animaciones fluidas a 60fps incluso en dispositivos móviles.
+
+### Animaciones Implementadas
+
+#### 1. Toast Slide In/Out
+**Ubicación:** `components/shared/toast/toast.scss`
+
+```scss
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes toastSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+```
+**Descripción:** Entrada suave desde la derecha para notificaciones, salida inversa.
+
+#### 2. Loading Overlay
+**Ubicación:** `components/shared/loading-overlay/loading-overlay.scss`
+
+```scss
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes overlaySlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes spinnerRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes dinoWalk {
+  from { transform: translateX(-5px); }
+  to { transform: translateX(5px); }
+}
+```
+**Descripción:** Overlay con fade, contenido que sube, spinner rotativo y emoji que "camina".
+
+#### 3. Modal Slide In
+**Ubicación:** `pages/profile/profile.scss`
+
+```scss
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+```
+**Descripción:** Modal que aparece deslizándose hacia abajo con fade.
+
+#### 4. Bounce (404 y Cards)
+**Ubicación:** `pages/not-found/not-found.scss`, `pages/products/product-list/product-list.scss`
+
+```scss
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+```
+**Descripción:** Efecto de rebote suave para llamar la atención.
+
+#### 5. Float (Elementos decorativos)
+**Ubicación:** `pages/products/product-list/product-list.scss`
+
+```scss
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+```
+**Descripción:** Flotación suave para elementos decorativos.
+
+#### 6. Fade In (Contenedores)
+**Ubicación:** `pages/minigames/minigames.scss`, `pages/home/home.scss`
+
+```scss
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInTooltip {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+```
+**Descripción:** Entrada suave para secciones y tooltips del mapa.
+
+#### 7. Pulse (Indicadores)
+**Ubicación:** `pages/products/product-form/product-form.scss`
+
+```scss
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+```
+**Descripción:** Pulsación para indicadores de estado (cambios sin guardar).
+
+#### 8. Slide In (Cards)
+**Ubicación:** `pages/products/product-list/product-list.scss`
+
+```scss
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+```
+**Descripción:** Entrada sutil para tarjetas de productos.
+
+### Transiciones en Hover
+
+Además de las animaciones, se utilizan transiciones suaves para estados interactivos:
+
+```scss
+// Elevación de tarjetas
+.dino-card {
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+// Iconos interactivos
+.dino-card__icon {
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+// Botones
+.btn-intro {
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+```
+
+---
+
 # Guía de Configuración y Ejecución del Proyecto
 
 Estos son los pasos para descargar, instalar y ejecutar el proyecto en local.

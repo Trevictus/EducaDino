@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -90,12 +90,12 @@ export class Profile implements OnInit, OnDestroy {
 
   // Imágenes de perfil disponibles
   profileImages = [
-    'img/t-rex.png',
-    'img/triceratops.png',
-    'img/velocirraptor.png',
-    'img/argentinasaurus.png',
+    'assets/images/T-rex1200px.avif',
+    'assets/images/Triceratops1200px.avif',
+    'assets/images/Velocirraptor1200px.avif',
+    'assets/images/Argentinasaurus1200px.avif',
     'img/quetzalcoatl.png',
-    'img/microrraptor.png'
+    'assets/images/Microrraptor1200px.avif'
   ];
 
   ngOnInit(): void {
@@ -229,7 +229,7 @@ export class Profile implements OnInit, OnDestroy {
     // Login exitoso - crear sesión en memoria
     this.userSession = {
       username: user.username,
-      profileImage: 'img/t-rex.png',
+      profileImage: 'src/assets/images/T-rex.avif',
       learningTime: 0,
       completedMinigames: 0,
       totalMinigames: 4,
@@ -300,7 +300,7 @@ export class Profile implements OnInit, OnDestroy {
     // Crear sesión en memoria
     this.userSession = {
       username: newUser.username,
-      profileImage: 'img/t-rex.png',
+      profileImage: 'src/assets/images/T-rex.avif',
       learningTime: 0,
       completedMinigames: 0,
       totalMinigames: 4,
@@ -312,7 +312,7 @@ export class Profile implements OnInit, OnDestroy {
   }
 
   /**
-   * Cancela y vuelve al inicio
+   * Cancela y vuelve al inicio (tanto en login como en registro)
    */
   onCancel(): void {
     this.router.navigate(['/home']);

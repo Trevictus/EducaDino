@@ -2,7 +2,20 @@
   <div class="l-container contact-page__grid">
 
     <aside class="contact-page__side-img contact-page__side-img--left">
-      <img src="assets/images/Dino-throw1200px.avif" alt="Dinosaurio lanzando avión">
+      <picture>
+        <source
+          type="image/avif"
+          srcset="assets/images/Dino-throw400px.avif 400w,
+                  assets/images/Dino-throw800px.avif 800w,
+                  assets/images/Dino-throw1200px.avif 1200w"
+          sizes="(max-width: 768px) 0px,
+                 (max-width: 1024px) 200px,
+                 300px">
+        <img
+          src="assets/images/Dino-throw1200px.avif"
+          alt="Dinosaurio lanzando avión"
+          loading="lazy">
+      </picture>
     </aside>
 
     <div class="contact-page__form-container">
@@ -14,7 +27,20 @@
     </div>
 
     <aside class="contact-page__side-img contact-page__side-img--right">
-      <img src="assets/images/Dino-ride1200px.avif" alt="Dinosaurio volando en avión">
+      <picture>
+        <source
+          type="image/avif"
+          srcset="assets/images/Dino-ride400px.avif 400w,
+                  assets/images/Dino-ride800px.avif 800w,
+                  assets/images/Dino-ride1200px.avif 1200w"
+          sizes="(max-width: 768px) 0px,
+                 (max-width: 1024px) 200px,
+                 300px">
+        <img
+          src="assets/images/Dino-ride1200px.avif"
+          alt="Dinosaurio volando en avión"
+          loading="lazy">
+      </picture>
     </aside>
 
   </div>
