@@ -513,7 +513,7 @@ He elegido la configuración estándar de Angular porque ofrece el mejor equilib
 
 ---
 
-## 2. HTML Semántico y Estructura
+# Sección 2: HTML Semántico y Estructura
 
 ### 2.1 Elementos semánticos utilizados
 En el proyecto se han sustituido los `div` por etiquetas de HTML5 para mejorar el SEO.
@@ -1087,8 +1087,8 @@ El proyecto responde a tres contextos principales de uso:
 - Headers: Menú hamburguesa
 
 *![VistaMovil.png](../images/VistaMovil.png)*  
-*![VistaMovil2.png](../images/VistaMovil2.png)*
-*![VistaMovil3.png](../images/VistaMovil3.png)*
+*![VistaMovil2.png](../images/VistaMovil2.png)*  
+*![VistaMovil3.png](../images/VistaMovil3.png)*  
 
 ### Vista Tablet (768px - 1024px)
 
@@ -1103,8 +1103,8 @@ El proyecto responde a tres contextos principales de uso:
 - Formularios: Campos en cuadrículas de 2 columnas (cuando procede)
 - Layouts tipo "sidebar + contenido principal"
 
-*[VistaTablet](../images/vista-tablet.png)*
-*[VistaTablet2](../images/vista-tablet.png)*
+*[VistaTablet](../images/vista-tablet.png)*  
+*[VistaTablet2](../images/vista-tablet.png)*  
 
 ### Vista Desktop (> 1024px)
 
@@ -1119,9 +1119,9 @@ El proyecto responde a tres contextos principales de uso:
 - Formularios: Campos en cuadrículas de 2-3 columnas
 - Layouts complejos con múltiples sidebars
 
-*![VistaDesktop.png](../images/VistaDesktop.png)*
-*![VistaDesktop2.png](../images/VistaDesktop2.png)*
-*![VistaDesktop3.png](../images/VistaDesktop3.png)*
+*![VistaDesktop.png](../images/VistaDesktop.png)*  
+*![VistaDesktop2.png](../images/VistaDesktop2.png)*  
+*![VistaDesktop3.png](../images/VistaDesktop3.png)*  
 
 ---
 
@@ -1593,3 +1593,284 @@ Con la terminal abierta en el directorio raíz, ejecuta este comando para levant
 ```bash
 npm start
 ```
+
+---
+
+# Sección 6: Sistema de temas
+
+EducaDino incluye un sistema completo de temas que permite a los usuarios alternar entre modo claro y modo oscuro. Este sistema utiliza Angular Signals para reactividad, localStorage para persistencia, y CSS Custom Properties para la implementación visual.
+
+---
+
+## 6.1 Variables de tema: CSS Custom Properties
+
+El proyecto implementa un conjunto completo de CSS Custom Properties que se adaptan según el tema activo. Las variables se definen en `/src/styles/00-settings/_variables.scss`.
+
+### Tema claro (por defecto - `:root`)
+
+```scss
+:root {
+  /* Colores primarios */
+  --primary-color: #3A737D;
+  --primary-color-disabled: #C2D4D7;
+  --primary-color-active: #2E5C64;
+  --primary-color-hover: #346871;
+
+  /* Colores secundarios */
+  --secondary-color: #65C1BE;
+  --secondary-color-disabled: #B0E4DD;
+  --secondary-color-active: #008774;
+  --secondary-color-hover: #009883;
+
+  /* Color de apoyo */
+  --support-color: #EF7B51;
+  --support-color-disabled: #FAD6C9;
+  --support-color-active: #BF6241;
+  --support-color-hover: #D76F49;
+
+  /* Fondos */
+  --background-color: #D6E18D;
+  --background-color-disabled: #F5FADC;
+  --background-color-active: #C2CD73;
+  --background-color-hover: #EAF0B4;
+
+  /* Escala de grises */
+  --gray-scale: #CFCFCF;
+  --gray-scale-light: #F7F7F7;
+  --gray-scale-dark: #B8B8B8;
+
+  /* Textos */
+  --text-color: #3A4243;
+  --text-color-light: #FDF2EE;
+  --text-color-hover: #FDEBE5;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.20);
+  --shadow-lg: 0 8px 12px rgba(0, 0, 0, 0.25);
+  --shadow-xl: 0 12px 16px rgba(0, 0, 0, 0.30);
+  --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.20);
+}
+```
+
+### Tema oscuro (`.theme-dark`)
+
+```scss
+.theme-dark {
+  /* Colores primarios oscurecidos */
+  --primary-color: #4A8A95;
+  --primary-color-disabled: #2D4F54;
+  --primary-color-active: #5BA0AC;
+  --primary-color-hover: #5495A0;
+
+  /* Colores secundarios ajustados */
+  --secondary-color: #4DA8A5;
+  --secondary-color-disabled: #2D5654;
+  --secondary-color-active: #5EBFBC;
+  --secondary-color-hover: #55B3B0;
+
+  /* Color de apoyo para modo oscuro */
+  --support-color: #D4714A;
+  --support-color-disabled: #5C3626;
+  --support-color-active: #E88A60;
+  --support-color-hover: #DE7D55;
+
+  /* Fondos oscuros */
+  --background-color: #1A2625;
+  --background-color-disabled: #0F1615;
+  --background-color-active: #243433;
+  --background-color-hover: #1E2E2D;
+
+  /* Escala de grises invertida */
+  --gray-scale: #3A3A3A;
+  --gray-scale-light: #2A2A2A;
+  --gray-scale-dark: #4A4A4A;
+
+  /* Textos para contraste */
+  --text-color: #E8EDE8;
+  --text-color-light: #FDF2EE;
+  --text-color-hover: #FDEBE5;
+
+  /* Sombras más pronunciadas */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 12px rgba(0, 0, 0, 0.6);
+  --shadow-xl: 0 12px 16px rgba(0, 0, 0, 0.7);
+  --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+html {
+  transition: background-color var(--transition-base) var(--transition-ease),
+              color var(--transition-base) var(--transition-ease);
+}
+```
+
+---
+
+## 6.2 Implementación del Theme Switcher
+
+El sistema de temas se implementa mediante tres componentes principales:
+
+### 6.2.1 ThemeService (`src/app/services/theme.ts`)
+
+Servicio Angular que gestiona toda la lógica de temas:
+
+```typescript
+import { Injectable, Inject, PLATFORM_ID, signal, effect } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+
+export type Theme = 'light' | 'dark';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ThemeService {
+  private readonly themeSignal = signal<Theme>('light');
+  private readonly STORAGE_KEY = 'educadino-theme';
+  private readonly isBrowser: boolean;
+
+  constructor(@Inject(PLATFORM_ID) platformId: Object) {
+    this.isBrowser = isPlatformBrowser(platformId);
+    if (this.isBrowser) {
+      this.initializeTheme();
+      effect(() => {
+        this.applyTheme(this.themeSignal());
+      });
+    }
+  }
+  get theme() { return this.themeSignal.asReadonly(); }
+  get currentTheme(): Theme { return this.themeSignal(); }
+  toggleTheme(): void {
+    const newTheme: Theme = this.themeSignal() === 'light' ? 'dark' : 'light';
+    this.setTheme(newTheme);
+  }
+  setTheme(theme: Theme): void {
+    this.themeSignal.set(theme);
+    if (this.isBrowser) {
+      localStorage.setItem(this.STORAGE_KEY, theme);
+    }
+  }
+  private initializeTheme(): void {
+    const savedTheme = localStorage.getItem(this.STORAGE_KEY) as Theme | null;
+    if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+      this.themeSignal.set(savedTheme);
+      return;
+    }
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    this.themeSignal.set(prefersDark ? 'dark' : 'light');
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem(this.STORAGE_KEY)) {
+        this.themeSignal.set(e.matches ? 'dark' : 'light');
+      }
+    });
+  }
+  private applyTheme(theme: Theme): void {
+    const htmlElement = document.documentElement;
+    htmlElement.classList.remove('theme-light', 'theme-dark');
+    htmlElement.classList.add(`theme-${theme}`);
+    htmlElement.setAttribute('data-theme', theme);
+  }
+}
+```
+
+**Características principales:**
+- Angular Signals para reactividad
+- Persistencia en localStorage
+- Respeta la preferencia del sistema operativo
+- Cambia la clase del `<html>` y las variables CSS automáticamente
+
+### 6.2.2 ThemeToggle Component (`src/app/components/shared/theme-toggle/`)
+
+Componente visual que proporciona el botón para alternar temas:
+
+```typescript
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ThemeService } from '../../../services/theme';
+
+@Component({
+  selector: 'app-theme-toggle',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './theme-toggle.html',
+  styleUrl: './theme-toggle.scss'
+})
+export class ThemeToggle {
+  private readonly themeService = inject(ThemeService);
+  readonly theme = this.themeService.theme;
+  toggleTheme(): void { this.themeService.toggleTheme(); }
+  get themeIcon(): string { return this.theme() === 'light' ? 'dark_mode' : 'light_mode'; }
+  get ariaLabel(): string { return this.theme() === 'light' ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro'; }
+}
+```
+
+**HTML del componente:**
+```html
+<button
+  class="theme-toggle"
+  (click)="toggleTheme()"
+  [attr.aria-label]="ariaLabel">
+  <span class="material-icons">{{ themeIcon }}</span>
+</button>
+```
+
+### 6.2.3 Flujo de funcionamiento
+
+```
+┌─────────────────────────────────────────────────────┐
+│ 1. App se carga                                      │
+│    - ThemeService.initializeTheme() se ejecuta      │
+│    - Lee localStorage o detecta preferencia del SO  │
+└─────────────────────────────────────────────────────┘
+                         ↓
+┌─────────────────────────────────────────────────────┐
+│ 2. Se establece el tema inicial                      │
+│    - themeSignal se actualiza                       │
+│    - Efecto se dispara automáticamente             │
+└─────────────────────────────────────────────────────┘
+                         ↓
+┌─────────────────────────────────────────────────────┐
+│ 3. applyTheme() se ejecuta                          │
+│    - Añade clase 'theme-light' o 'theme-dark'     │
+│    - CSS custom properties se actualizan            │
+│    - Página cambia de color instantáneamente       │
+└─────────────────────────────────────────────────────┘
+                         ↓
+┌─────────────────────────────────────────────────────┐
+│ 4. Usuario hace clic en el botón de tema           │
+│    - toggleTheme() se llama                         │
+│    - themeSignal se actualiza                       │
+│    - Se guarda en localStorage                      │
+│    - Vuelve al paso 3                              │
+└─────────────────────────────────────────────────────┘
+```
+
+---
+
+## 6.3 Capturas de pantalla: Modo claro y modo oscuro
+
+A continuación se muestran capturas de pantalla de 3 páginas principales en ambos modos:
+
+### 6.3.1 Página de Inicio
+
+**Modo claro:**
+![Home - Modo Claro](public/img/Home-modoclaro.png)
+
+**Modo oscuro:**
+![Home - Modo Oscuro](public/img/Home-modoOscuro.png)
+
+### 6.3.2 Página de Minijuegos
+
+**Modo claro:**
+![Minijuegos - Modo Claro](public/img/Minijuegos-modoclaro.png)
+
+**Modo oscuro:**
+![Minijuegos - Modo Oscuro](public/img/Minijuegos-modoOscuro.png)
+
+### 6.3.3 Página de Perfil
+
+**Modo claro:**
+![Perfil - Modo Claro](public/img/Perfil-modoclaro.png)
+
+**Modo oscuro:**
+![Perfil - Modo Oscuro](public/img/Perfil-modoOscuro.png)
