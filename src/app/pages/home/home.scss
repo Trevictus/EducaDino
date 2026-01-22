@@ -173,9 +173,10 @@
 
   .trends-carousel {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--spacing-2);
+    gap: var(--spacing-4);
     max-width: 1200px;
     margin: 0 auto;
   }
@@ -203,6 +204,37 @@
     }
   }
 
+  .carousel-arrows {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--spacing-4);
+    flex-shrink: 0;
+  }
+
+  .carousel-arrow {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--gray-scale-dark);
+    transition: transform var(--transition-fast), color var(--transition-fast);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .material-icons {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+    }
+
+    &:hover {
+      color: var(--text-color);
+      transform: scale(1.2);
+    }
+  }
+
   // Tablet
   @media (max-width: 1024px) {
     .cards-container {
@@ -215,14 +247,12 @@
   // Móvil
   @media (max-width: 768px) {
     &__trends-section {
-      overflow-x: hidden; // Controla el desbordamiento a nivel de sección
+      overflow-x: hidden;
     }
 
     .trends-carousel {
       flex-direction: column;
-      align-items: center;
       gap: var(--spacing-4);
-      overflow: visible; // Permite que el contenido sea visible verticalmente
     }
 
     .cards-container {
@@ -232,7 +262,7 @@
       overflow-y: visible;
       scroll-behavior: smooth;
       scroll-snap-type: x mandatory;
-      padding: var(--spacing-4) calc(50% - 150px) calc(var(--spacing-4) + 40px) calc(50% - 150px); // Más padding inferior para sombras
+      padding: var(--spacing-4) calc(50% - 150px) calc(var(--spacing-4) + 40px) calc(50% - 150px);
 
       &::-webkit-scrollbar {
         display: none;
@@ -247,32 +277,7 @@
         display: flex;
         flex-direction: column;
         scroll-snap-align: center;
-        height: auto; // Sin altura fija para que se ajuste al contenido
-      }
-    }
-
-    .carousel-arrows {
-      display: flex;
-      justify-content: center;
-      gap: var(--spacing-4);
-      margin-top: var(--spacing-4);
-      align-self: center;
-    }
-
-    .carousel-arrow {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--gray-scale-dark);
-      transition: transform var(--transition-fast), color var(--transition-fast);
-
-      .material-icons {
-        font-size: 48px;
-      }
-
-      &:hover {
-        color: var(--text-color);
-        transform: scale(1.2);
+        height: auto;
       }
     }
   }
