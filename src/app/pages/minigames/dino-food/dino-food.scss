@@ -321,3 +321,176 @@
     .fun-fact { max-width: 100%; }
   }
 }
+
+.game-results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 500px;
+  padding: var(--spacing-4);
+
+  .results-content {
+    text-align: center;
+    max-width: 500px;
+    background: linear-gradient(135deg, rgba(255, 200, 87, 0.1) 0%, rgba(255, 152, 0, 0.1) 100%);
+    padding: var(--spacing-6);
+    border-radius: var(--border-radius-lg);
+    border: 3px solid var(--primary-color-active);
+  }
+
+  .results-title {
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-5xl);
+    color: var(--primary-color-active);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-4);
+    animation: bounceIn 0.6s ease-out;
+  }
+
+  .results-score {
+    margin-bottom: var(--spacing-5);
+
+    .score-display {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: var(--spacing-3);
+
+      .score-label {
+        font-size: var(--font-size-xl);
+        color: var(--primary-color-active);
+        font-weight: var(--font-weight-bold);
+        margin-bottom: var(--spacing-1);
+      }
+
+      .score-value {
+        font-family: var(--font-secondary);
+        font-size: 4rem;
+        color: var(--primary-color-active);
+        font-weight: var(--font-weight-bold);
+        display: block;
+      }
+    }
+  }
+
+  .results-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-3);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+
+    .message-emoji {
+      font-size: 2rem;
+    }
+
+    .message-text {
+      color: var(--primary-color-active);
+    }
+
+    &.message-perfect {
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(102, 187, 106, 0.2) 100%);
+      border-left: 5px solid #4CAF50;
+    }
+
+    &.message-good {
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(102, 187, 106, 0.15) 100%);
+      border-left: 5px solid #66BB6A;
+    }
+
+    &.message-ok {
+      background: linear-gradient(135deg, rgba(255, 193, 7, 0.2) 0%, rgba(255, 213, 47, 0.2) 100%);
+      border-left: 5px solid #FFC107;
+    }
+
+    &.message-improve {
+      background: linear-gradient(135deg, rgba(33, 150, 243, 0.2) 0%, rgba(66, 165, 245, 0.2) 100%);
+      border-left: 5px solid #2196F3;
+    }
+  }
+
+  .results-buttons {
+    display: flex;
+    gap: var(--spacing-2);
+    justify-content: center;
+
+    .btn-restart {
+      padding: var(--spacing-3) var(--spacing-5);
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      background: var(--primary-color-active);
+      color: var(--background-color);
+      border: none;
+      border-radius: var(--radius-button-top-left) var(--radius-button-top-right) var(--radius-button-bottom-right) var(--radius-button-bottom-left);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: var(--font-secondary);
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .game-results {
+    min-height: 400px;
+
+    .results-content {
+      padding: var(--spacing-4);
+    }
+
+    .results-title {
+      font-size: var(--font-size-4xl);
+      margin-bottom: var(--spacing-3);
+    }
+
+    .results-score {
+      .score-value {
+        font-size: 3rem;
+      }
+    }
+
+    .results-message {
+      font-size: var(--font-size-base);
+
+      .message-emoji {
+        font-size: 1.5rem;
+      }
+    }
+
+    .results-buttons {
+      .btn-restart {
+        padding: var(--spacing-2) var(--spacing-4);
+        font-size: var(--font-size-base);
+      }
+    }
+  }
+}

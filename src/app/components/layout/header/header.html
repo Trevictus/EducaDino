@@ -25,14 +25,22 @@
     <nav class="header__nav">
       <ul class="header__menu">
         <li>
-          <button class="header__search" aria-label="Buscar en el sitio" type="button">
-            <span class="material-icons">search</span>
+          <div class="header__search">
+            <button
+              type="button"
+              id="search-label"
+              class="header__search-icon-btn"
+              (click)="searchInput.focus()">
+              <span class="material-icons">search</span>
+            </button>
+
             <input
               #searchInput
               type="text"
               placeholder="Buscar"
+              aria-labelledby="search-label"
               (keyup.enter)="onSearch(searchInput.value)">
-          </button>
+          </div>
         </li>
         <li><a routerLink="/minijuegos" class="header__link">Minijuegos</a></li>
         <li><a routerLink="/curiosidades" class="header__link">Curiosidades</a></li>

@@ -23,6 +23,7 @@ export class JurassicChronologyGame {
   selectedAnswer = signal<string | null>(null);
   showResult = signal<boolean>(false);
   isCorrect = signal<boolean>(false);
+  showFinalResults = signal<boolean>(false);
 
   questions: ChronologyQuestion[] = [
     {
@@ -114,10 +115,11 @@ export class JurassicChronologyGame {
   }
 
   endGame() {
-    this.gameStarted.set(false);
+    this.showFinalResults.set(true);
   }
 
   restartGame() {
+    this.showFinalResults.set(false);
     this.startGame();
   }
 

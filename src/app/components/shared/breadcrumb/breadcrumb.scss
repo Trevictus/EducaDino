@@ -27,7 +27,7 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    color: var(--primary-color);
+    color: var(--primary-color-active);
     text-decoration: none;
     transition: color 0.2s ease;
 
@@ -42,8 +42,9 @@
   }
 
   &__separator {
-    color: var(--gray-scale-dark);
-    margin: 0 4px;
+    color: var(--primary-color-active);
+    font-weight: var(--font-weight-bold);
+    margin: 0 0.5rem;
   }
 
   &__current {
@@ -51,9 +52,9 @@
     font-weight: var(--font-weight-medium);
   }
 
-  &__item--active {
+  &__item--current {
     .breadcrumb__current {
-      color: var(--support-color);
+      color: var(--primary-color-active);
     }
   }
 }

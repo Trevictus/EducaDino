@@ -1,5 +1,5 @@
 <div class="chronology-game">
-  @if (!gameStarted()) {
+  @if (!gameStarted() && !showFinalResults()) {
     <!-- Pantalla de inicio -->
     <div class="game-intro">
       <div class="intro-content">
@@ -115,6 +115,53 @@
             }
           </div>
         }
+      </div>
+    </div>
+  }
+
+  @if (showFinalResults()) {
+    <!-- Pantalla de resultados finales -->
+    <div class="game-results">
+      <div class="results-content">
+        <h2 class="results-title">🎓 ¡Quiz Completado! 🎓</h2>
+
+        <div class="results-score">
+          <div class="score-display">
+            <span class="score-label">Tu Puntuación</span>
+            <span class="score-value">{{ score() }}/{{ totalQuestions }}</span>
+          </div>
+
+          @if (score() === totalQuestions) {
+            <div class="results-message message-perfect">
+              <span class="message-emoji">⭐</span>
+              <span class="message-text">¡Excelente! ¡Eres un experto en cronología!</span>
+            </div>
+          }
+          @if (score() >= totalQuestions * 0.8 && score() < totalQuestions) {
+            <div class="results-message message-good">
+              <span class="message-emoji">🌟</span>
+              <span class="message-text">¡Muy bien! Demuestra que sabes mucho de los períodos.</span>
+            </div>
+          }
+          @if (score() >= totalQuestions * 0.5 && score() < totalQuestions * 0.8) {
+            <div class="results-message message-ok">
+              <span class="message-emoji">👍</span>
+              <span class="message-text">¡Bien! Estás aprendiendo sobre la cronología jurásica.</span>
+            </div>
+          }
+          @if (score() < totalQuestions * 0.5) {
+            <div class="results-message message-improve">
+              <span class="message-emoji">📚</span>
+              <span class="message-text">¡Sigue estudiando! Repite el quiz para aprender más.</span>
+            </div>
+          }
+        </div>
+
+        <div class="results-buttons">
+          <button class="btn-restart" (click)="restartGame()">
+            Intentar de Nuevo
+          </button>
+        </div>
       </div>
     </div>
   }

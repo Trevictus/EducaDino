@@ -60,7 +60,29 @@
   }
 
   /* --- ESTILO BOTÓN ASIMÉTRICO --- */
-  &__search,
+  &__search{
+      display: flex;
+      align-items: center;
+      background-color: var(--primary-color);
+      border-radius: var(--radius-button-top-left) var(--radius-button-top-right) var(--radius-button-bottom-left) var(--radius-button-bottom-right);
+      overflow: hidden;
+      padding: 0;
+
+      .header__search-icon-btn {
+        background-color: var(--primary-color);
+        color: var(--text-color-light);
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        .material-icons {
+          font-size: 20px;
+        }
+      }
+  }
   &__link {
     background-color: var(--primary-color);
     color: var(--text-color-light);

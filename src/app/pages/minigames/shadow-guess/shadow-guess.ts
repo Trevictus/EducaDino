@@ -22,6 +22,7 @@ export class ShadowGuessGame {
   selectedAnswer = signal<string | null>(null);
   showResult = signal<boolean>(false);
   isCorrect = signal<boolean>(false);
+  showFinalResults = signal<boolean>(false);
 
   questions: ShadowQuestion[] = [
     {
@@ -87,10 +88,11 @@ export class ShadowGuessGame {
   }
 
   endGame() {
-    this.gameStarted.set(false);
+    this.showFinalResults.set(true);
   }
 
   restartGame() {
+    this.showFinalResults.set(false);
     this.startGame();
   }
 

@@ -1,23 +1,21 @@
-<nav class="breadcrumb" aria-label="Navegación de migas de pan">
-  @let breadcrumbs = (breadcrumbs$ | async) ?? [];
-  @if (breadcrumbs.length > 1) {
+@if (breadcrumbService.hasBreadcrumbs()) {
+  <nav class="breadcrumb" aria-label="Navegación por migas de pan">
     <ol class="breadcrumb__list">
-      @for (crumb of breadcrumbs; track crumb.url; let first = $first; let last = $last) {
-        <li class="breadcrumb__item" [class.breadcrumb__item--active]="last">
-          @if (!last) {
+      @for (crumb of breadcrumbService.breadcrumbs(); track crumb.url) {
+        <li class="breadcrumb__item" [class.breadcrumb__item--current]="crumb.isCurrentPage">
+          @if (!crumb.isCurrentPage) {
             <a [routerLink]="crumb.url" class="breadcrumb__link">
-              @if (first) {
-                <span class="breadcrumb__icon">🏠</span>
-              }
               {{ crumb.label }}
             </a>
-            <span class="breadcrumb__separator">/</span>
+            <span class="breadcrumb__separator" aria-hidden="true">›</span>
           } @else {
-            <span class="breadcrumb__current">{{ crumb.label }}</span>
+            <span class="breadcrumb__current" aria-current="page">
+              {{ crumb.label }}
+            </span>
           }
         </li>
       }
     </ol>
-  }
-</nav>
+  </nav>
+}
 

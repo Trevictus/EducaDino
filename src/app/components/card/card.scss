@@ -43,7 +43,7 @@
   &__description {
     font-family: var(--font-primary);
     font-size: var(--font-size-xl);
-    color: var(--primary-color);
+    color: var(--primary-color-active);
     margin-bottom: var(--spacing-4);
     min-height: 90px;
     max-height: 90px;
@@ -78,7 +78,7 @@
   }
 
   &__icon {
-    color: var(--text-color-hover);
+    color: var(--primary-color);
     font-size: 2rem;
     cursor: pointer;
     user-select: none;
