@@ -3,50 +3,344 @@
 EducaDino es una aplicación web educativa interactiva para aprender sobre dinosaurios, dirigida a público infantil y familiar. Permite explorar información, curiosidades, minijuegos y actividades de forma visual y divertida.
 
 - **URL de producción:** https://trevictus.github.io/EducaDino/
+- **API Backend:** `http://localhost:8080/api` (desarrollo local)
+- **Swagger UI:** `http://localhost:8080/api/swagger-ui.html`
+
+---
+
+## 🏗️ Arquitectura
+
+EducaDino ahora tiene una **arquitectura full-stack**:
+
+### **Frontend (Angular)**
+- Angular 21 (standalone components)
+- TypeScript
+- SCSS (ITCSS, BEM)
+- Angular Signals
+- RxJS Observables
+- Autenticación JWT
+- CORS habilitado
+
+### **Backend (Spring Boot)**
+- Spring Boot 3.4
+- Java 21
+- Spring Security + JWT
+- Spring Data JPA
+- PostgreSQL (Neon en la nube)
+- Swagger/OpenAPI
+
+### **Base de Datos**
+- PostgreSQL en Neon
+- 6 tablas: users, dinosaurs, products, user_progress, cart_items, contact_messages
 
 ---
 
 ## Tecnologías utilizadas
-- Angular 17 (standalone components)
-- TypeScript
+
+### Frontend
+- Angular 21 (standalone components)
+- TypeScript 5.9
 - SCSS (ITCSS, BEM)
 - Angular Signals
-- LocalStorage
+- RxJS 7.8
 - HTML5 y CSS3
-- GitHub Pages (despliegue)
+
+### Backend
+- Spring Boot 3.4
+- Java 21
+- Spring Security
+- JWT (JSON Web Tokens)
+- Spring Data JPA
+- PostgreSQL
+- Maven
+- Swagger/OpenAPI
 
 ---
 
 ## Características principales
-- Modo claro/oscuro con cambio instantáneo y persistencia
-- Mapa interactivo de dinosaurios
-- Minijuegos educativos
-- Sistema de registro y perfil de usuario
-- Formularios validados y accesibles
-- Diseño responsive y visual adaptado a niños
-- Notificaciones y modales animados
+
+### Usuario
+- ✅ Modo claro/oscuro con cambio instantáneo y persistencia
+- ✅ Sistema de registro e login con JWT
+- ✅ Perfil de usuario con estadísticas
+- ✅ Autenticación segura
+
+### Contenido Educativo
+- ✅ Mapa interactivo de dinosaurios
+- ✅ Información detallada de 8+ dinosaurios
+- ✅ Minijuegos educativos
+- ✅ Registro de progreso en BD
+
+### Tienda (Simulada)
+- ✅ Catálogo de productos educativos
+- ✅ Carrito de compras
+- ✅ Sistema de checkout (simulado)
+- ✅ Historial de compras
+
+### Admin
+- ✅ Gestión de dinosaurios
+- ✅ Gestión de productos
+- ✅ Ver mensajes de contacto
+- ✅ Dashboard de usuarios
 
 ---
 
-## Instalación local
+## 🚀 Instalación y ejecución
 
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/Trevictus/EducaDino.git
-   ```
-2. Accede al directorio del proyecto:
-   ```bash
-   cd EducaDino
-   ```
-3. Instala las dependencias:
-   ```bash
-   npm install
-   ```
-4. Inicia la aplicación en desarrollo:
-   ```bash
-   npm start
-   ```
-5. Abre tu navegador en [http://localhost:4200](http://localhost:4200)
+### Requisitos previos
+- **Java 21** - [Descargar](https://www.oracle.com/java/technologies/downloads/#java21)
+- **Node.js 20+** - [Descargar](https://nodejs.org/)
+- **PostgreSQL** (opcional si usas Neon)
+- **Git**
+
+### Opción 1: Ejecución rápida (Script PowerShell)
+
+```powershell
+# Desde la raíz del proyecto
+.\start-educadino.ps1
+```
+
+Selecciona opción **2** para ejecutar Backend + Frontend automáticamente.
+
+### Opción 2: Ejecución manual
+
+#### Terminal 1 - Backend
+```powershell
+cd backend
+.\mvnw.cmd spring-boot:run
+```
+
+Espera hasta ver:
+```
+🦕 EducaDino Backend iniciado correctamente! 🦖
+API REST: http://localhost:8080/api
+```
+
+#### Terminal 2 - Frontend
+```powershell
+cd frontend
+npm install  # Primera vez
+npm start
+```
+
+Espera hasta ver:
+```
+✔ Compiled successfully
+ℹ Angular Live Development Server is listening on localhost:4200
+```
+
+### Acceso a la aplicación
+
+- **Frontend:** http://localhost:4200
+- **Perfil/Login:** http://localhost:4200/perfil
+- **Backend API:** http://localhost:8080/api
+- **Swagger UI:** http://localhost:8080/api/swagger-ui.html
+
+---
+
+## 🔐 Credenciales de prueba
+
+| Usuario | Contraseña | Rol | Descripción |
+|---------|-----------|-----|------------|
+| `admin` | `admin` | ADMIN | Acceso a todo (dinosaurios, productos, admin) |
+| `dino_fan` | `1234` | USER | Usuario normal (ver contenido, jugar, comprar) |
+
+O registra tu propio usuario en `/perfil`
+
+---
+
+## 📱 Uso de la aplicación
+
+### Para usuarios normales (USER)
+1. Abre http://localhost:4200
+2. Ve a `/perfil`
+3. Selecciona "No" para registrarse
+4. Completa el formulario
+5. ¡Ya estás registrado! Ahora puedes:
+   - Jugar minijuegos
+   - Ver dinosaurios
+   - Usar el carrito
+   - Ver tu progreso
+
+### Para administradores (ADMIN)
+1. Abre http://localhost:8080/api/swagger-ui.html
+2. Login con `admin/admin`
+3. Accede a endpoints de admin:
+   - POST/PUT/DELETE `/dinosaurs`
+   - POST/PUT/DELETE `/products`
+   - GET `/contact/all` (ver mensajes)
+
+---
+
+## 🧪 Probar CORS
+
+El sistema CORS está completamente configurado. Para verificar:
+
+1. Abre DevTools (F12)
+2. Ve a pestaña **Network**
+3. Intenta registrarte en `/perfil`
+4. Busca petición **register**
+5. Verifica headers CORS:
+   - `Access-Control-Allow-Origin: http://localhost:4200` ✅
+   - Status: **200** ✅
+   - Response contiene `"token"` ✅
+
+---
+
+## 📂 Estructura del proyecto
+
+```
+EducaDino/
+├── backend/                    # Spring Boot REST API
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/educadino/
+│   │   │   │   ├── controller/    # REST Controllers
+│   │   │   │   ├── service/       # Business Logic
+│   │   │   │   ├── entity/        # JPA Entities
+│   │   │   │   ├── dto/           # Data Transfer Objects
+│   │   │   │   ├── security/      # JWT + Spring Security
+│   │   │   │   └── config/        # Configuration
+│   │   │   └── resources/
+│   │   │       └── application.yml # Config (Neon DB)
+│   ├── pom.xml                    # Maven Dependencies
+│   ├── mvnw.cmd                   # Maven Wrapper (Windows)
+│   └── README.md                  # Backend Documentation
+│
+├── frontend/                   # Angular Application
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── core/
+│   │   │   │   ├── services/      # AuthService, ProductService, etc.
+│   │   │   │   └── interceptors/  # authInterceptor
+│   │   │   ├── pages/
+│   │   │   │   ├── login/         # Login Component
+│   │   │   │   ├── profile/       # Profile + Registration
+│   │   │   │   ├── products/      # Product List
+│   │   │   │   └── ...
+│   │   │   └── shared/
+│   │   └── assets/
+│   ├── package.json               # NPM Dependencies
+│   ├── proxy.conf.json            # CORS Proxy config
+│   └── README.md                  # Frontend Documentation
+│
+├── GUIA_CORS_FINAL.md            # Guía completa CORS
+├── start-educadino.ps1           # Script de inicio
+└── README.md                      # Este archivo
+```
+
+---
+
+## 🔗 Flujo de CORS
+
+```
+Navegador (http://localhost:4200)
+           ↓
+    Usuario registra
+           ↓
+    ProfileComponent.onRegister()
+           ↓
+    AuthService.register(data)
+           ↓
+    POST /api/auth/register
+           ↓
+    authInterceptor agrega headers
+           ↓
+    Navegador envía OPTIONS (preflight)
+           ↓
+    Backend verifica CORS en SecurityConfig
+           ↓
+    ✅ Permitido → Responde con headers CORS
+           ↓
+    Navegador envía POST real
+           ↓
+    Backend procesa registro
+           ↓
+    Genera JWT token
+           ↓
+    Devuelve respuesta + token
+           ↓
+    Frontend guarda token en localStorage
+           ↓
+    ✅ Usuario registrado
+```
+
+---
+
+
+## 🐛 Solución de problemas
+
+### Error: "Cannot GET /api/auth/register"
+- ✅ Verifica que el backend está corriendo en puerto 8080
+- ✅ Abre http://localhost:8080/api para verificar
+
+### Error: "Access to XMLHttpRequest blocked by CORS"
+- ✅ Reinicia el backend
+- ✅ Verifica que SecurityConfig.java tiene corsConfigurationSource()
+
+### El token no se guarda
+- ✅ Abre DevTools → Storage → localStorage
+- ✅ Verifica que `auth_token` está ahí
+- ✅ Revisa la consola para errores
+
+### Base de datos no conecta
+- ✅ Si usas Neon: verifica credenciales en application.yml
+- ✅ Si usas PostgreSQL local: crea BD `educadino`
+
+---
+
+## 🚀 Despliegue a producción
+
+### Backend
+- Opción 1: Heroku
+- Opción 2: Railway.app
+- Opción 3: AWS Elastic Beanstalk
+
+### Frontend
+- Opción 1: Vercel
+- Opción 2: Netlify
+- Opción 3: GitHub Pages
+
+### Base de Datos
+- Neon PostgreSQL (ya configurado)
+- AWS RDS
+- Google Cloud SQL
+
+---
+
+## 📄 Licencia
+
+MIT License - Consulta [LICENSE](./LICENSE) para detalles
+
+---
+
+## 👨‍💻 Autor
+
+**Víctor** - Full Stack Developer
+
+---
+
+## 🤝 Contribuir
+
+Las contribuciones son bienvenidas. Por favor:
+1. Fork el repositorio
+2. Crea una rama (`git checkout -b feature/AmazingFeature`)
+3. Commit cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+---
+
+## 📞 Soporte
+
+Para problemas o preguntas:
+1. Abre un issue en GitHub
+2. Consulta la documentación en `GUIA_CORS_FINAL.md`
+3. Revisa Swagger UI en `http://localhost:8080/api/swagger-ui.html`
+
+---
+
+**¡Gracias por usar EducaDino! 🦕🦖**
 
 ---
 
