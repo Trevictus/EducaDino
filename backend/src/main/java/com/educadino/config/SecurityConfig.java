@@ -9,6 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,155 +21,91 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-/**
- * Configuración de Seguridad
- *
- * ═══════════════════════════════════════════════════════════════
- * ¿CÓMO FUNCIONA SPRING SECURITY?
- * ═══════════════════════════════════════════════════════════════
- *
- * Spring Security es un framework de seguridad que protege la aplicación.
- *
- * CONCEPTOS CLAVE:
- * ────────────────
- * 1. SecurityFilterChain: Cadena de filtros que procesan cada petición
- * 2. AuthenticationManager: Gestiona la autenticación de usuarios
- * 3. PasswordEncoder: Encripta contraseñas (BCrypt es muy seguro)
- * 4. JWT Filter: Nuestro filtro personalizado para validar tokens
- *
- * FLUJO DE UNA PETICIÓN:
- * ──────────────────────
- * Petición HTTP → CORS → JWT Filter → Autorización → Controller
- *                           ↓
- *                  ¿Token válido?
- *                  ↓           ↓
- *                 SÍ          NO
- *                  ↓           ↓
- *              Continúa    401 Unauthorized
- */
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity  // Habilita @PreAuthorize en controllers
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtAuthFilter;
-    private final JwtAuthenticationEntryPoint jwtAuthEntryPoint;
-    private final UserDetailsService userDetailsService;
+  private final JwtAuthenticationFilter jwtAuthFilter;
+  private final JwtAuthenticationEntryPoint jwtAuthEntryPoint;
+  private final UserDetailsService userDetailsService;
 
-    /**
-     * Configura la cadena de filtros de seguridad.
-     */
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            // Deshabilitar CSRF (no necesario con JWT)
-            .csrf(csrf -> csrf.disable())
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-            // Configurar CORS (permitir peticiones desde Angular)
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+    http
+      .csrf(csrf -> csrf.disable())
+      .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+      .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthEntryPoint))
+      .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-            // Configurar manejo de excepciones de autenticación
-            .exceptionHandling(ex -> ex
-                .authenticationEntryPoint(jwtAuthEntryPoint)
-            )
+      .authorizeHttpRequests(auth -> auth
 
-            // Configurar sesiones como STATELESS (no guardar sesión en servidor)
-            .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
+        // Rutas públicas
+        .requestMatchers("/auth/**").permitAll()
+        .requestMatchers("/docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+        .requestMatchers(HttpMethod.GET, "/dinosaurs/**").permitAll()
+        .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
+        .requestMatchers(HttpMethod.POST, "/contact").permitAll()
 
-            // Configurar autorización de rutas
-            .authorizeHttpRequests(auth -> auth
-                // ═══════════════════════════════════════════════════════════
-                // RUTAS PÚBLICAS (no requieren autenticación)
-                // ═══════════════════════════════════════════════════════════
-                .requestMatchers("/auth/**").permitAll()           // Login, registro, reset
-                .requestMatchers("/docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()  // Swagger
-                .requestMatchers(HttpMethod.GET, "/dinosaurs/**").permitAll()  // Ver dinosaurios
-                .requestMatchers(HttpMethod.GET, "/products/**").permitAll()   // Ver productos
-                .requestMatchers(HttpMethod.POST, "/contact").permitAll()      // Enviar contacto
+        // Rutas examen / pruebas
+        .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
 
-                // ═══════════════════════════════════════════════════════════
-                // RUTAS DE ADMIN (requieren rol ADMIN)
-                // ═══════════════════════════════════════════════════════════
-                .requestMatchers(HttpMethod.POST, "/dinosaurs/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/dinosaurs/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/dinosaurs/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.POST, "/products/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/contact/all").hasRole("ADMIN")
+        // Admin
+        .requestMatchers(HttpMethod.POST, "/dinosaurs/**").hasRole("ADMIN")
+        .requestMatchers(HttpMethod.PUT, "/dinosaurs/**").hasRole("ADMIN")
+        .requestMatchers(HttpMethod.DELETE, "/dinosaurs/**").hasRole("ADMIN")
+        .requestMatchers(HttpMethod.POST, "/products/**").hasRole("ADMIN")
+        .requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN")
+        .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
+        .requestMatchers("/admin/**").hasRole("ADMIN")
+        .requestMatchers("/contact/all").hasRole("ADMIN")
 
-                // ═══════════════════════════════════════════════════════════
-                // RUTAS PROTEGIDAS (requieren autenticación)
-                // ═══════════════════════════════════════════════════════════
-                .anyRequest().authenticated()
-            )
+        // Sugerencias
+        .requestMatchers(HttpMethod.POST, "/api/sugerencias/**")
+        .hasAnyRole("USER", "ADMIN")
 
-            // Agregar el filtro JWT antes del filtro de autenticación estándar
-            .authenticationProvider(authenticationProvider())
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        // Todo lo demás requiere autenticación
+        .anyRequest().authenticated()
+      )
 
-        return http.build();
-    }
+      .authenticationProvider(authenticationProvider())
+      .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
-    /**
-     * Configuración de CORS para permitir peticiones desde Angular.
-     */
-    @Bean
-    public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
-        var configuration = new org.springframework.web.cors.CorsConfiguration();
+    return http.build();
+  }
 
-        // Orígenes permitidos (frontend Angular)
-        configuration.addAllowedOrigin("http://localhost:4200");
-        configuration.addAllowedOrigin("http://localhost:4201");
+  @Bean
+  public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
+    var configuration = new org.springframework.web.cors.CorsConfiguration();
+    configuration.addAllowedOrigin("http://localhost:4200");
+    configuration.addAllowedOrigin("http://localhost:4201");
+    configuration.addAllowedMethod("*");
+    configuration.addAllowedHeader("*");
+    configuration.setAllowCredentials(true);
 
-        // Métodos HTTP permitidos
-        configuration.addAllowedMethod("*");
+    var source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+  }
 
-        // Headers permitidos
-        configuration.addAllowedHeader("*");
+  @Bean
+  public AuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+    authProvider.setUserDetailsService(userDetailsService);
+    authProvider.setPasswordEncoder(passwordEncoder());
+    return authProvider;
+  }
 
-        // Permitir envío de credenciales (cookies, auth headers)
-        configuration.setAllowCredentials(true);
+  @Bean
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
+    throws Exception {
+    return config.getAuthenticationManager();
+  }
 
-        var source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-
-        return source;
-    }
-
-    /**
-     * Proveedor de autenticación que usa nuestra BD.
-     */
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
-
-    /**
-     * Gestor de autenticación.
-     */
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
-
-    /**
-     * Codificador de contraseñas BCrypt.
-     *
-     * BCrypt es un algoritmo de hashing seguro que:
-     * - Genera un salt aleatorio automáticamente
-     * - Es lento por diseño (dificulta ataques de fuerza bruta)
-     * - Produce hashes únicos incluso para la misma contraseña
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 }

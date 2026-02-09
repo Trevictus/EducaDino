@@ -48,6 +48,14 @@ export const routes: Routes = [
     title: 'EducaDino - Inicio'
   },
 
+  {
+    path: 'sugerencias',
+    loadComponent: () =>
+      import('./pages/sugerencias/sugerencias').then(m => m.Sugerencias),
+    data: { breadcrumb: 'Sugerencias' },
+    title: 'EducaDino - Sugerencias'
+  },
+
   /**
    * About - Información sobre la aplicación
    * Cargado con Lazy Loading para demostrar la técnica
