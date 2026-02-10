@@ -53,3 +53,7 @@ Luego hice la prueba de los post de sugerencia para tener una lista contundente 
 Por último para utilizar el método GET de las sugerencias, mediante swagger se ejecutó correctamente enviando el código 200:
 ![uso-metodo-get-sugerencia.png](imagenesDWES/uso-metodo-get-sugerencia.png)
 ![respuesta-correcta-get.png](imagenesDWES/respuesta-correcta-get.png)
+
+## Bibliografía.
+El problema de ; trás anotaciones.
+https://stackoverflow.com/questions/45526647/annotations-are-not-allowed-here
