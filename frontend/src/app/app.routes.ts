@@ -48,12 +48,15 @@ export const routes: Routes = [
     title: 'EducaDino - Inicio'
   },
 
+  /*
+   * Vamos a añadir la ruta hacia una nueva página llamada comments
+   */
+
   {
-    path: 'sugerencias',
-    loadComponent: () =>
-      import('./pages/sugerencias/sugerencias').then(m => m.Sugerencias),
-    data: { breadcrumb: 'Sugerencias' },
-    title: 'EducaDino - Sugerencias'
+    path: 'comments',
+    loadComponent: () =>  import('./pages/comments/comments').then(m => m.Comments),
+    data: { bradscrumb: 'Comentarios'},
+    title: 'Educadino - Comentarios'
   },
 
   /**
