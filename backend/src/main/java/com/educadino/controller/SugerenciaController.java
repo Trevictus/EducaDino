@@ -20,24 +20,25 @@ import java.util.List;
 
 /**
  * Controlador de Sugerencia
- *
+ * <p>
  * Endpoints para el formulario de contacto.
- *
+ * <p>
  * Base URL: /api/contact
  */
 @RestController
 @RequestMapping("/sugerencias")
 @RequiredArgsConstructor
 @Tag(name = "Sugenrencia", description = "Formulario de contacto")
+@SecurityRequirement(name = "bearerAuth")
 public class SugerenciaController {
 
   private final SugerenciaService sugerenciaService;
 
   /**
    * Envía un mensaje de contacto (público).
-   *
+   * <p>
    * POST /api/contact
-   *
+   * <p>
    * Body: { "nombre": "...", "email": "...", "asunto": "...", "mensaje": "..." }
    */
   @PostMapping
@@ -47,5 +48,16 @@ public class SugerenciaController {
     String email = userDetails.getUsername();
     Sugerencia sugerencia = sugerenciaService.crear(email, request);
     return ResponseEntity.status(HttpStatus.CREATED).body(sugerencia);
+  }
+
+
+  /**
+   * Obtiene todas las sugerencias solo ADMIN
+   */
+  @GetMapping("/")
+  @PreAuthorize("hasRole('ADMIN')");
+  @Operation(summary = "Listar sugerencias", description = "Obtiene todas las sugerencias (solo admin)")
+  public ResponseEntity<ApiResponse<List<UserDto>>> getAllcomments() {
+    return ResponseEntity.ok(ApiResponse.success(sugerenciaService.getAllcomments()));
   }
 }

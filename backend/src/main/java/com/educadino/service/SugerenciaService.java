@@ -24,4 +24,8 @@ public class SugerenciaService {
 
     return sugerenciaRepository.save(sugerencia);
   }
+
+  public Sugerencia getAllcomments(){
+    return sugerenciaRepository.findAll().get(0);
+  }
 }
