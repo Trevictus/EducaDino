@@ -63,10 +63,11 @@ public class SecurityConfig {
         .requestMatchers("/contact/all").hasRole("ADMIN")
 
         // Sugerencias
+        .requestMatchers(HttpMethod.GET, "/api/sugerencias/**").hasAnyRole("USER", "ADMIN")
         .requestMatchers(HttpMethod.POST, "/api/sugerencias/**")
         .hasAnyRole("USER", "ADMIN")
 
-        // Todo lo demás requiere autenticación
+        // Lo demás requiere autenticación
         .anyRequest().authenticated()
       )
 

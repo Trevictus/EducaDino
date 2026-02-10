@@ -53,11 +53,12 @@ public class SugerenciaController {
 
   /**
    * Obtiene todas las sugerencias solo ADMIN
+   * Listado de sugerencias
    */
-  @GetMapping("/")
-  @PreAuthorize("hasRole('ADMIN')");
-  @Operation(summary = "Listar sugerencias", description = "Obtiene todas las sugerencias (solo admin)")
-  public ResponseEntity<ApiResponse<List<UserDto>>> getAllcomments() {
-    return ResponseEntity.ok(ApiResponse.success(sugerenciaService.getAllcomments()));
+  @GetMapping()
+  @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+  @Operation(summary = "Listar sugerencias", description = "Obtiene todas las sugerencias")
+  public ResponseEntity<ApiResponse<List<SugerenciaCreateRequest>>> getAllcomments() {
+    return ResponseEntity.ok(ApiResponse.success(sugerenciaService.getAllComments()));
   }
 }

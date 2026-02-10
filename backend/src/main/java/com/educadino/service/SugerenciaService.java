@@ -4,8 +4,11 @@ import com.educadino.dto.SugerenciaCreateRequest;
 import com.educadino.entity.Sugerencia;
 import com.educadino.entity.User;
 import com.educadino.repository.SugerenciaRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +28,10 @@ public class SugerenciaService {
     return sugerenciaRepository.save(sugerencia);
   }
 
-  public Sugerencia getAllcomments(){
-    return sugerenciaRepository.findAll().get(0);
+  @Transactional
+  public List<SugerenciaCreateRequest> getAllComments() {
+    return sugerenciaRepository.findAll().stream()
+            .map(s -> new SugerenciaCreateRequest(s.getTitle(), s.getMessage()))
+            .toList();
   }
 }

@@ -16,11 +16,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class UserProgressDto {
 
-    private Long id;
-    private Long userId;
-    private String minigameType;
-    private Integer score;
-    private Integer timePlayed;
-    private Boolean completed;
-    private LocalDateTime playedAt;
+  private Long id;
+  private Long userId;
+  private String minigameType;
+  private Integer score;
+  private Integer timePlayed;
+  private Boolean completed;
+  private LocalDateTime playedAt;
 }
