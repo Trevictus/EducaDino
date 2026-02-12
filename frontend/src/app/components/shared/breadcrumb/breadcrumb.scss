@@ -57,6 +57,35 @@
       color: var(--primary-color-active);
     }
   }
+
+}
+
+// Modo oscuro
+:host-context(.theme-dark) .breadcrumb,
+.theme-dark .breadcrumb {
+  &__link {
+    color: var(--text-color-white);
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--primary-color-hover);
+      text-decoration: underline;
+    }
+  }
+
+  &__separator {
+    color: var(--text-color-white);
+  }
+
+  &__current {
+    color: var(--text-color-white);
+  }
+
+  &__item--current {
+    .breadcrumb__current {
+      color: var(--text-color-white);
+    }
+  }
 }
 
 // Ocultar en pantallas muy pequeñas si hay muchos niveles

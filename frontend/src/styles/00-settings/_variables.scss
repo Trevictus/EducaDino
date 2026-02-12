@@ -42,12 +42,14 @@
   /*Color de texto principal oscuro para asegurar legibilidad y contraste con los fondos claros.*/
   :root {
       --text-color: #3A4243; /* tono neutro y apagado, con predominancia de verde mezclado con gris.*/
+      --text-color-black: #000000;
   }
 
   /*Color de texto principal claro para asegurar legibilidad y contraste con los fondos oscuros.*/
   :root {
     --text-color-light: #FDF2EE;
     --text-color-hover: #FDEBE5;
+    --text-color-white: #FFFFFF;
   }
 
   /*--------------------VARIABLES DE FUENTES--------------------*/
@@ -76,6 +78,7 @@
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
+    --font-weight-extrabold: 900;
   }
 
   /*--------------------VARIABLES DE ESPACIOS--------------------*/
@@ -196,9 +199,8 @@
 */
 .theme-dark {
   /* Colores primarios oscurecidos */
-  --primary-color: #4A8A95;
   --primary-color-disabled: #2D4F54;
-  --primary-color-active: #5BA0AC;
+  --primary-color-active: #2e5c64;
   --primary-color-hover: #5495A0;
 
   /* Colores secundarios ajustados */

@@ -200,6 +200,14 @@ export const routes: Routes = [
     title: 'EducaDino - Perfil'
   },
 
+  {
+    path: 'feedback',
+    loadComponent: () =>
+      import('./pages/feedback-page/feedback-page').then(m => m.FeedbackPage),
+    data: { breadcrumb: 'Feedback' },
+    title: 'EducaDino - Feedback'
+  },
+
   // ══════════════════════════════════════════════════════════════════
   // WILDCARD - Página 404 (Requisito 4.7)
   // ══════════════════════════════════════════════════════════════════

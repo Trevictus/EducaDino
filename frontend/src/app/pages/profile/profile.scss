@@ -319,12 +319,13 @@
     font-family: var(--font-primary);
     font-size: var(--font-size-lg);
     color: var(--text-color-light);
-    background-color: var(--secondary-color-active);
+    background-color: var(--primary-color);
     border: none;
     border-radius: var(--radius-button-top-left) var(--radius-button-top-right) var(--radius-button-bottom-left) var(--radius-button-bottom-right);
     padding: var(--spacing-2) var(--spacing-4);
     cursor: pointer;
     transition: background-color var(--transition-fast);
+    font-weight: var(--font-weight-bold);
 
     &:hover:not(:disabled) {
       background-color: var(--secondary-color);
@@ -411,6 +412,13 @@
     gap: var(--spacing-1);
   }
 
+  &__label {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-lg);
+    color: var(--primary-color-active);
+    font-weight: var(--font-weight-medium);
+  }
+
   &__input,
   &__select {
     font-family: var(--font-primary);
@@ -462,7 +470,7 @@
   &__btn {
     font-family: var(--font-primary);
     font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-extrabold);
     border: none;
     border-radius: var(--radius-button-top-left) var(--radius-button-top-right) var(--radius-button-bottom-left) var(--radius-button-bottom-right);
     padding: var(--spacing-1) var(--spacing-4);
@@ -471,8 +479,8 @@
     min-width: 80px;
 
     &--primary {
-      background-color: var(--secondary-color-active);
-      color: var(--text-color-light);
+      background-color: var(--primary-color);
+      color: var(--text-color-white);
 
       &:hover {
         background-color: var(--secondary-color);
@@ -481,7 +489,7 @@
 
     &--secondary {
       background-color: var(--support-color);
-      color: var(--text-color-light);
+      color: var(--text-color-black);
 
       &:hover {
         background-color: var(--support-color-hover);
