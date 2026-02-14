@@ -4,7 +4,7 @@
 
   <img
     [src]="image"
-    [alt]="title"
+    [alt]="'Imagen de ' + title"
     class="dino-card__media"
     loading="lazy">
 
@@ -20,12 +20,14 @@
       Siguiente curiosidad
     </button>
 
-    <span
+    <button
       class="dino-card__icon material-icons"
+      [attr.aria-label]="isLiked ? 'Quitar de favoritos' : 'Añadir a favoritos'"
+      [attr.aria-pressed]="isLiked"
       [class.is-liked]="isLiked"
       (click)="toggleLike()">
       favorite
-    </span>
+    </button>
   </div>
 
 </article>
