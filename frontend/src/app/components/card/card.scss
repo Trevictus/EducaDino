@@ -18,7 +18,7 @@
   &__category {
     font-family: var(--font-secondary);
     font-size: var(--font-size-3xl);
-    color: #1a3f47;
+    color: var(--primary-color-active);
     text-align: center;
     margin-bottom: var(--spacing-2);
   }
@@ -70,47 +70,24 @@
     border: none;
     cursor: pointer;
     border-radius: var(--radius-button-top-left) var(--radius-button-top-right) var(--radius-button-bottom-right) var(--radius-button-bottom-left);
-    transition: background-color var(--transition-fast), outline var(--transition-fast);
+    transition: background-color var(--transition-fast);
 
     &:hover {
       background-color: var(--primary-color-hover);
     }
-
-    &:focus-visible {
-      outline: 3px solid #2c3e50;
-      outline-offset: 2px;
-    }
-
-    &:focus {
-      outline: 3px solid #2c3e50;
-      outline-offset: 2px;
-    }
   }
 
   &__icon {
+    background-color: transparent;
+    border: none;
     color: var(--primary-color);
     font-size: 2rem;
     cursor: pointer;
     user-select: none;
     transition: all var(--transition-fast);
-    background: none;
-    border: none;
-    padding: 4px;
-    border-radius: 4px;
+    padding: 0;
 
-    &:hover {
-      transform: scale(1.1);
-    }
-
-    &:focus-visible {
-      outline: 2px solid #2c3e50;
-      outline-offset: 2px;
-    }
-
-    &:focus {
-      outline: 2px solid #2c3e50;
-      outline-offset: 2px;
-    }
+    &:hover { transform: scale(1.1); }
 
     &.is-liked {
       color: var(--support-color);
@@ -124,22 +101,22 @@
 .theme-dark .dino-card {
 
   .dino-card__category {
-    color: var(--secondary-color) !important;
+    color: var(--secondary-color);
   }
 
   .dino-card__title {
-    color: var(--secondary-color) !important;
+    color: var(--secondary-color);
   }
 
   .dino-card__description {
-    color: var(--secondary-color) !important;
+    color: var(--secondary-color);
   }
 
   .dino-card__icon {
-    color: var(--secondary-color) !important;
+    color: var(--secondary-color);
 
     &.is-liked {
-      color: var(--support-color) !important;
+      color: var(--support-color);
     }
   }
 }
