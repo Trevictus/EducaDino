@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, HostListener, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Card } from '../../components/card/card';
 
@@ -14,7 +14,8 @@ interface MapDiscovery {
   standalone: true,
   imports: [CommonModule, Card],
   templateUrl: './home.html',
-  styleUrl: './home.scss'
+  styleUrl: './home.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class Home implements OnInit {
   // Referencia al contenedor para el scroll

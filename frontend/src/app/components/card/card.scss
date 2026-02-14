@@ -91,3 +91,30 @@
     }
   }
 }
+
+/* ========================================================================
+   ESTILOS PARA TEMA OSCURO
+   ======================================================================== */
+.theme-dark .dino-card {
+
+  .dino-card__category {
+    color: var(--secondary-color) !important;
+  }
+
+  .dino-card__title {
+    color: var(--secondary-color) !important;
+  }
+
+  .dino-card__description {
+    color: var(--secondary-color) !important;
+  }
+
+  .dino-card__icon {
+    color: var(--secondary-color) !important;
+
+    &.is-liked {
+      color: var(--support-color) !important;
+    }
+  }
+}
+

@@ -283,3 +283,32 @@
   }
 
 }
+
+/* ========================================================================
+   ESTILOS PARA TEMA OSCURO
+   ======================================================================== */
+.theme-dark .home-page .map-info__title {
+  color: var(--secondary-color) !important;
+}
+
+.theme-dark .home-page .map-info__desc {
+  color: var(--secondary-color) !important;
+}
+
+.theme-dark .home-page .map-info__sub {
+  color: var(--secondary-color) !important;
+}
+
+.theme-dark .home-page .carousel-arrow {
+  color: var(--secondary-color) !important;
+
+  &:hover {
+    color: var(--secondary-color-hover) !important;
+  }
+}
+
+.theme-dark .home-page .trends-title {
+  color: var(--secondary-color);
+}
+
+
