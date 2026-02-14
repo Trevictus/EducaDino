@@ -10,7 +10,7 @@
   &__title {
     font-family: var(--font-secondary);
     font-size: var(--font-size-5xl);
-    color: var(--primary-color-active);
+    color: var(--secondary-color);
     text-align: center;
 
     line-height: var(--line-height-tight);
@@ -51,7 +51,7 @@
   &__video-title {
     font-family: var(--font-secondary);
     font-size: var(--font-size-3xl);
-    color: var(--primary-color-active);
+    color: var(--secondary-color);
     text-align: center;
     margin-bottom: var(--spacing-6);
     font-weight: var(--font-weight-bold);
@@ -84,12 +84,12 @@
   &__video-note {
     text-align: center;
     font-size: var(--font-size-md);
-    color: var(--text-color-secondary);
+    color: var(--text-color-light);
     margin-bottom: var(--spacing-6);
     line-height: var(--line-height-relaxed);
 
     a {
-      color: var(--primary-color-active);
+      color: var(--secondary-color);
       text-decoration: none;
       font-weight: var(--font-weight-semibold);
 
@@ -110,14 +110,14 @@
   &__transcript-title {
     font-family: var(--font-secondary);
     font-size: var(--font-size-2xl);
-    color: var(--primary-color-active);
+    color: var(--secondary-color);
     margin-bottom: var(--spacing-4);
     font-weight: var(--font-weight-bold);
   }
 
   &__transcript-content {
     font-size: var(--font-size-md);
-    color: var(--text-color-primary);
+    color: var(--text-color-light);
     line-height: var(--line-height-relaxed);
 
     p {
@@ -128,7 +128,7 @@
       }
 
       strong {
-        color: var(--primary-color-active);
+        color: var(--secondary-color);
         font-weight: var(--font-weight-semibold);
       }
     }

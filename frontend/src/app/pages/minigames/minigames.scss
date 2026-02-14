@@ -18,7 +18,7 @@
   &__title {
     font-family: var(--font-secondary);
     font-size: var(--font-size-5xl);
-    color: var(--primary-color-active);
+    color: var(--secondary-color);
     text-align: center;
     text-decoration: underline;
     line-height: var(--line-height-tight);
@@ -48,7 +48,7 @@
   &__label {
     font-family: var(--font-secondary);
     font-size: var(--font-size-3xl);
-    color: var(--primary-color-active);
+    color: var(--secondary-color);
     text-align: center;
     margin-bottom: var(--spacing-4);
   }

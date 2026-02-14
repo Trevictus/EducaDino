@@ -288,22 +288,22 @@
    ESTILOS PARA TEMA OSCURO
    ======================================================================== */
 .theme-dark .home-page .map-info__title {
-  color: var(--secondary-color) !important;
+  color: var(--secondary-color);
 }
 
 .theme-dark .home-page .map-info__desc {
-  color: var(--secondary-color) !important;
+  color: var(--secondary-color);
 }
 
 .theme-dark .home-page .map-info__sub {
-  color: var(--secondary-color) !important;
+  color: var(--secondary-color);
 }
 
 .theme-dark .home-page .carousel-arrow {
-  color: var(--secondary-color) !important;
+  color: var(--secondary-color);
 
   &:hover {
-    color: var(--secondary-color-hover) !important;
+    color: var(--secondary-color-hover);
   }
 }
 

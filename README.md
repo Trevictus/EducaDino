@@ -8,7 +8,7 @@ EducaDino es una aplicación web educativa interactiva para aprender sobre dinos
 
 ---
 
-## 🏗️ Arquitectura
+## Arquitectura
 
 EducaDino ahora tiene una **arquitectura full-stack**:
 
