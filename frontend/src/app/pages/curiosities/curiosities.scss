@@ -84,7 +84,7 @@
   &__video-note {
     text-align: center;
     font-size: var(--font-size-md);
-    color: var(--text-color-light);
+    color: var(--primary-color-active);
     margin-bottom: var(--spacing-6);
     line-height: var(--line-height-relaxed);
 
@@ -117,7 +117,7 @@
 
   &__transcript-content {
     font-size: var(--font-size-md);
-    color: var(--text-color-light);
+    color: var(--primary-color);
     line-height: var(--line-height-relaxed);
 
     p {
@@ -133,5 +133,19 @@
       }
     }
   }
+
+}
+
+/* Tema oscuro */
+.theme-dark .curiosities__video-note {
+  color: var(--text-color-light);
+
+  a {
+    color: var(--secondary-color);
+  }
+}
+
+.theme-dark .curiosities__transcript-content p {
+  color: var(--text-color-light);
 }
 

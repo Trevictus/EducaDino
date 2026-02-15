@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Card} from '../../components/card/card';
 
@@ -15,7 +15,8 @@ interface Curiosity {
   standalone: true,
   imports: [CommonModule, Card],
   templateUrl: './curiosities.html',
-  styleUrl: './curiosities.scss'
+  styleUrl: './curiosities.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class Curiosities implements OnInit {
   // Todas las curiosidades disponibles
