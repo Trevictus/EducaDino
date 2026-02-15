@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "ng build --configuration production --base-href /EducaDino/ && npx angular-cli-ghpages --dir=dist/untitled/browser"
+    "deploy": "ng build --configuration production --base-href /EducaDino/ && npx angular-cli-ghpages --dir=dist/educadino/browser"
   },
   "prettier": {
     "printWidth": 100,

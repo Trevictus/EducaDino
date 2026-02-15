@@ -1,6 +1,9 @@
 <article class="dino-card">
 
-  <span class="dino-card__category">{{ category }}</span>
+  <header class="dino-card__header">
+    <span class="dino-card__category">{{ category }}</span>
+    <h3 class="dino-card__title">{{ title }}</h3>
+  </header>
 
   <img
     [src]="image"
@@ -8,7 +11,6 @@
     class="dino-card__media"
     loading="lazy">
 
-  <h3 class="dino-card__title">{{ title }}</h3>
 
   <p class="dino-card__description">
     {{ description }}
