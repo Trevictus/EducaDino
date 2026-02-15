@@ -78,7 +78,7 @@
   &__info-title {
     font-family: var(--font-secondary);
     font-size: var(--font-size-4xl);
-    color: var(--primary-color-active);
+    color: var(--secondary-color);
     text-decoration: underline;
     line-height: var(--line-height-tight);
     display: flex;
@@ -113,6 +113,20 @@
     font-size: var(--font-size-2xl);
     color: var(--text-color);
     line-height: var(--line-height-normal);
+  }
+}
+
+.theme-dark .ordenes {
+  &__icon {
+    color: var(--secondary-color);
+
+    &.is-liked {
+      color: var(--support-color);
+    }
+  }
+
+  &__info-title {
+    color: var(--secondary-color);
   }
 }
 

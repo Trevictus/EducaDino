@@ -12,38 +12,39 @@ EducaDino es una plataforma educativa interactiva enfocada en enseñar a los usu
 
 La accesibilidad web es fundamental para garantizar que todas las personas, independientemente de sus capacidades, puedan acceder y usar una página web de manera equitativa. Afecta a usuarios con discapacidades visuales, auditivas, motoras y cognitivas. Además, beneficia a todos los usuarios (mejor navegación, contenido más claro), es obligatoria legalmente en Europa/España según la Directiva (UE) 2016/2102, y es simplemente lo correcto desde una perspectiva ética.
 
-### Tipos de Discapacidades Consideradas
-
-- **Visuales:** Ceguera, baja visión, daltonismo
-- **Auditivas:** Sordera, hipoacusia
-- **Motoras:** Dificultades para usar ratón, parálisis, temblores
-- **Cognitivas:** Dislexia, dificultades de concentración, autismo
-
 ### Los 4 Principios de WCAG 2.1
 
 #### 1. **Perceptible:** La información debe poder percibirse por todos
-- **Explicación:** Los usuarios deben poder ver, escuchar o entender el contenido sin depender de un único sentido.
-- **Ejemplo en EducaDino:** Las imágenes de dinosaurios en las tarjetas incluyen texto alternativo (`alt`) descriptivo, y el video tiene una transcripción completa en texto para usuarios sordos.
+- Los usuarios deben poder ver, escuchar o entender el contenido sin depender de un único sentido.
+- Ejemplo en EducaDino: Las imágenes de dinosaurios en las tarjetas incluyen texto alternativo (`alt`) descriptivo, y el video tiene una transcripción completa en texto para usuarios sordos.
 
 #### 2. **Operable:** La funcionalidad debe ser accesible sin ratón
-- **Explicación:** Todos los elementos interactivos deben funcionar con teclado y no debe haber "trampas" que bloqueen el uso.
-- **Ejemplo en EducaDino:** Los botones "Siguiente curiosidad" y el icono de "me gusta" son accesibles por teclado con Tab y Enter.
+- Todos los elementos interactivos deben funcionar con teclado y no debe haber "trampas" que bloqueen el uso.
+- Ejemplo en EducaDino: Los botones "Siguiente curiosidad" y el icono de "me gusta" son accesibles por teclado con Tab y Enter.
 
 #### 3. **Comprensible:** El contenido debe ser claro e inteligible
-- **Explicación:** El lenguaje debe ser simple, la estructura clara, y las instrucciones obvias.
-- **Ejemplo en EducaDino:** El título "Curiosidades" es claro, las descripciones de dinosaurios usan un lenguaje accesible, y el flujo de navegación es lógico.
+- El lenguaje debe ser simple, la estructura clara, y las instrucciones obvias.
+- Ejemplo en EducaDino: El título "Curiosidades" es claro, las descripciones de dinosaurios usan un lenguaje accesible, y el flujo de navegación es lógico.
 
 #### 4. **Robusto:** Compatible con tecnologías de asistencia
-- **Explicación:** El código debe ser válido HTML/CSS para que lectores de pantalla, ampliadores y otras herramientas funcionen correctamente.
-- **Ejemplo en EducaDino:** Usamos HTML5 semántico (`<article>`, `<h1>`, `<h2>`) y etiquetas ARIA cuando es necesario.
+-  El código debe ser válido HTML/CSS para que lectores de pantalla, ampliadores y otras herramientas funcionen correctamente.
+- Ejemplo en EducaDino: Usamos HTML5 semántico (`<article>`, `<h1>`, `<h2>`) y etiquetas ARIA cuando es necesario.
 
 ### Niveles de Conformidad WCAG 2.1
+**A**
+- Es el nivel mínimo de cumplimiento.
+- Cubre los requisitos esenciales para que una web sea usable por personas con discapacidad.
+- Si no se cumple este nivel, algunas personas directamente no podrán usar la web.
 
-| Nivel | Descripción | Objetivo |
-|-------|-------------|----------|
-| **A** | Conformidad básica | Acceso mínimo garantizado |
-| **AA** | Conformidad intermedia | **Nuestro objetivo** |
-| **AAA** | Conformidad máxima | Acceso óptimo (no siempre viable) |
+**AA**
+- Es el nivel recomendado para la mayoría de sitios web, especialmente institucionales o públicos.
+- Mejora significativamente la experiencia para usuarios con distintas discapacidades.
+- Es el nivel exigido por la legislación en muchos países.
+
+**AAA**
+- Es el nivel más alto y exigente.
+- No siempre es posible cumplirlo en todos los tipos de contenido.
+- Se orienta a ofrecer la mejor experiencia posible para todos los usuarios.
 
 El proyecto **EducaDino** persigue alcanzar **nivel AA**, que es el estándar recomendado por la mayoría de normativas europeas.
 
@@ -53,56 +54,29 @@ El proyecto **EducaDino** persigue alcanzar **nivel AA**, que es el estándar re
 
 ### Componente 1: Tarjetas de Curiosidades (app-card)
 
-**Tipo:** Galería de tarjetas interactivas
+**Galería de tarjetas interactivas**
 
-**Descripción:** 
 Componente reutilizable que muestra información sobre dinosaurios en formato de tarjeta. Cada tarjeta contiene: una imagen del dinosaurio, categoría, título, descripción, botón "Siguiente curiosidad" e icono de "me gusta". Las tarjetas permiten navegar por diferentes curiosidades de manera interactiva.
 
 **Características de Accesibilidad Implementadas:**
 
-1. **Etiqueta alt descriptiva en imágenes:** Cada imagen usa el atributo `alt` con el nombre del dinosaurio como texto alternativo
-2. **Navegación por teclado:** Todos los botones (Siguiente, Me gusta) son accesibles presionando Tab y activables con Enter
-3. **Estructura semántica:** Usa `<article>` para cada tarjeta, `<h3>` para títulos, y `<button>` para elementos interactivos
-4. **Focus visible:** Los elementos focusables tienen estilos CSS que muestran claramente cuál tiene el focus
-
-**Código del Componente:**
-```html
-<article class="dino-card">
-  <span class="dino-card__category">{{ category }}</span>
-  <img
-    [src]="image"
-    [alt]="title"
-    class="dino-card__media"
-    loading="lazy">
-  <h3 class="dino-card__title">{{ title }}</h3>
-  <p class="dino-card__description">{{ description }}</p>
-  <div class="dino-card__footer">
-    <button class="dino-card__btn" (click)="onNextClick()">
-      Siguiente curiosidad
-    </button>
-    <span
-      class="dino-card__icon material-icons"
-      [class.is-liked]="isLiked"
-      (click)="toggleLike()">
-      favorite
-    </span>
-  </div>
-</article>
-```
+- Cada imagen usa el atributo `alt` con el nombre del dinosaurio como texto alternativo.
+- Todos los botones (Siguiente, Me gusta) son accesibles presionando Tab y activables con Enter.
+- Usa `<article>` para cada tarjeta, `<h3>` para títulos, y `<button>` para elementos interactivos.
+- Los elementos focusables tienen estilos CSS que muestran claramente cuál tiene el focus.
 
 ### Componente 2: Video Documental
 
-**Tipo:** Video incrustado de YouTube
+**Video incrustado de YouTube**
 
-**Descripción:**
 Video educativo sobre dinosaurios incrustado desde YouTube con la transcripción completa disponible en texto plano debajo del reproductor. Permite a usuarios sordos y con discapacidades auditivas acceder al contenido.
 
 **Características de Accesibilidad Implementadas:**
 
-1. **Atributo `title` en iframe:** El iframe tiene un título descriptivo ("El Mundo de los Dinosaurios")
-2. **Transcripción completa:** Texto alternativo del video disponible, con timestamps para sincronización
-3. **Subtítulos:** El video de YouTube tiene subtítulos disponibles (activables en la plataforma)
-4. **Enlace directo:** Enlace a YouTube para usuarios que prefieran ver en otra plataforma
+- Atributo `title` en iframe: El iframe tiene un título descriptivo ("El Mundo de los Dinosaurios")
+- Texto alternativo del video disponible, con timestamps para sincronización
+- El video de YouTube tiene subtítulos disponibles (activables en la plataforma)
+- Enlace a YouTube para usuarios que prefieran ver en otra plataforma
 
 ---
 

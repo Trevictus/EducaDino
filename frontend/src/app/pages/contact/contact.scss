@@ -15,7 +15,7 @@
   &__title {
     font-family: var(--font-secondary);
     font-size: var(--font-size-5xl);
-    color: var(--primary-color-active);
+    color: var(--secondary-color);
     text-align: center;
     text-decoration: underline;
     line-height: var(--line-height-tight);
@@ -117,6 +117,13 @@
       transform: scale(1.05);
       background-color: var(--secondary-color-hover);
     }
+  }
+}
+
+/* --- TEMA OSCURO --- */
+.theme-dark .contact-page {
+  &__title {
+    color: var(--secondary-color-active);
   }
 }
 

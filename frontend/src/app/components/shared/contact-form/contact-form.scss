@@ -14,7 +14,7 @@
   &__legend {
     font-family: var(--font-secondary);
     font-size: var(--font-size-2xl);
-    color: var(--primary-color);
+    color: var(--secondary-color);
     margin-bottom: var(--spacing-3);
     padding: 0;
     border-bottom: 2px solid var(--primary-color-disabled);
@@ -83,7 +83,7 @@
   }
 
   &__required {
-    color: var(--primary-color-active);
+    color: var(--secondary-color);
     margin-left: 4px;
   }
 
@@ -189,6 +189,18 @@
     &:focus {
       background-color: #FFFFFF;
     }
+  }
+
+  .structured-form__legend {
+    color: var(--secondary-color-active);
+  }
+
+  .form-field__required {
+    color: var(--secondary-color-active);
+  }
+
+  .form-field__label {
+    color: var(--secondary-color-active);
   }
 }
 

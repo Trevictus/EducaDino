@@ -78,7 +78,7 @@
   &__info-title {
     font-family: var(--font-secondary);
     font-size: var(--font-size-4xl);
-    color: var(--primary-color-active);
+    color: var(--secondary-color);
     text-decoration: underline;
     line-height: var(--line-height-tight);
     display: flex;
@@ -88,7 +88,7 @@
   }
 
   &__icon {
-    color: var(--primary-color);
+    color: var(--secondary-color);
     font-size: 2rem;
     cursor: pointer;
     user-select: none;
@@ -268,3 +268,13 @@
   }
 }
 
+// Tema oscuro
+.theme-dark .orders {
+  &__info-title {
+    color: var(--secondary-color-active);
+  }
+
+  &__icon {
+    color: var(--secondary-color-active);
+  }
+}

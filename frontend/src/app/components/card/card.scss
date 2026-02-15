@@ -42,7 +42,7 @@
 
   &__description {
     font-family: var(--font-primary);
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-18p);
     color: var(--primary-color-active);
     margin-bottom: var(--spacing-4);
     min-height: 90px;
@@ -99,6 +99,7 @@
    ESTILOS PARA TEMA OSCURO
    ======================================================================== */
 .theme-dark .dino-card {
+  background-color: #222C2B;
   .dino-card__category {
     color: var(--secondary-color);
   }
