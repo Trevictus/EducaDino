@@ -40,7 +40,9 @@ EducaDino es una aplicación web educativa interactiva para aprender sobre dinos
 
 ## Autor
 **Nombre:** Víctor Gómez Tejada  
+
 **Curso:** 2º DAW - Desarrollo de Aplicaciones Web  
+
 **Módulo:** Diseño de Interfaces Web (DIW)
 
 ---
