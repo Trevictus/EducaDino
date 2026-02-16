@@ -2,7 +2,7 @@
   <div class="l-container header__container">
 
     <!-- Logo Desktop (imagen) y Logo Landscape (texto) -->
-    <a routerLink="/home" class="header__logo header__logo--image">
+    <a routerLink="/home" class="header__logo header__logo--image" aria-label="EducaDino - Ir a inicio">
       <picture>
         <source
           type="image/avif"
@@ -11,7 +11,7 @@
           sizes="(max-width: 640px) 150px, 200px">
         <img
           src="assets/images/logotipo-EducaDino400px.avif"
-          alt="EducaDino Logo"
+          alt="Logotipo de EducaDino - Plataforma educativa sobre dinosaurios"
           loading="eager"
           fetchpriority="high">
       </picture>
@@ -26,19 +26,21 @@
       <ul class="header__menu">
         <li>
           <div class="header__search">
+            <label for="search-input" class="visually-hidden">Buscar en EducaDino</label>
             <button
               type="button"
-              id="search-label"
               class="header__search-icon-btn"
+              aria-label="Enfocar campo de búsqueda"
               (click)="searchInput.focus()">
-              <span class="material-icons">search</span>
+              <span class="material-icons" aria-hidden="true">search</span>
             </button>
 
             <input
               #searchInput
-              type="text"
+              id="search-input"
+              type="search"
               placeholder="Buscar"
-              aria-labelledby="search-label"
+              aria-label="Buscar en EducaDino"
               (keyup.enter)="onSearch(searchInput.value)">
           </div>
         </li>
@@ -51,14 +53,16 @@
           <button
             class="header__more-menu"
             aria-label="Más opciones"
+            aria-haspopup="true"
+            [attr.aria-expanded]="isMoreMenuOpen"
             type="button"
             (click)="toggleMoreMenu()"
             [class.is-active]="isMoreMenuOpen">
-            <span class="material-icons">more_vert</span>
+            <span class="material-icons" aria-hidden="true">more_vert</span>
           </button>
-          <ul class="header__more-menu-items" [class.is-open]="isMoreMenuOpen">
-            <li><a routerLink="/home" class="header__more-link" (click)="closeMoreMenu()">Inicio</a></li>
-            <li><a routerLink="/style-guide" class="header__more-link" (click)="closeMoreMenu()">Guia de estilo</a></li>
+          <ul class="header__more-menu-items" [class.is-open]="isMoreMenuOpen" role="menu">
+            <li role="menuitem"><a routerLink="/home" class="header__more-link" (click)="closeMoreMenu()">Inicio</a></li>
+            <li role="menuitem"><a routerLink="/style-guide" class="header__more-link" (click)="closeMoreMenu()">Guia de estilo</a></li>
           </ul>
         </li>
       </ul>

@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter, withPreloading, PreloadAllModules, withComponentInputBinding, withRouterConfig } from '@angular/router';
+import { provideRouter, withPreloading, PreloadAllModules, withComponentInputBinding, withRouterConfig, withHashLocation } from '@angular/router';
 import { provideHttpClient, withInterceptors, withFetch } from '@angular/common/http';
 
 import { routes } from './app.routes';
@@ -17,6 +17,7 @@ import { authInterceptor, errorInterceptor, loggingInterceptor } from './core/in
  * - withPreloading(PreloadAllModules): Precarga todos los módulos lazy en segundo plano (Requisito 4.3)
  * - withComponentInputBinding: Permite pasar parámetros de ruta directamente como @Input()
  * - withRouterConfig: Configuración adicional del router
+ * - withHashLocation: Usa hash (#) en URLs para compatibilidad con GitHub Pages
  */
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,6 +28,7 @@ export const appConfig: ApplicationConfig = {
       routes,
       withPreloading(PreloadAllModules),   // Estrategia de precarga: carga todos los módulos lazy después del inicial
       withComponentInputBinding(),          // Habilita binding de parámetros de ruta a inputs del componente
+      withHashLocation(),                   // Usa URLs con hash (#) para GitHub Pages
       withRouterConfig({
         onSameUrlNavigation: 'reload',      // Permite recargar la misma ruta
         paramsInheritanceStrategy: 'always' // Hereda parámetros de rutas padre

@@ -54,6 +54,22 @@
               ],
               "outputHashing": "all"
             },
+            "github-pages": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "1MB",
+                  "maximumError": "2MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "20kB",
+                  "maximumError": "50kB"
+                }
+              ],
+              "outputHashing": "all",
+              "baseHref": "/EducaDino/"
+            },
             "development": {
               "optimization": false,
               "extractLicenses": false,

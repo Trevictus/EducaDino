@@ -1,18 +1,18 @@
-# Documentación de Accesibilidad - EducaDino
+# Documentación de accesibilidad - EducaDino
 
-## 📋 Descripción General
+## Descripción general
 
-EducaDino es una plataforma educativa interactiva enfocada en enseñar a los usuarios (principalmente niños y adolescentes) sobre dinosaurios a través de curiosidades, minijuegos y contenido multimedia. Este documento detalla el análisis exhaustivo de la accesibilidad del proyecto, las mejoras implementadas y el nivel de conformidad alcanzado con las directrices WCAG 2.1.
+EducaDino es una plataforma educativa interactiva enfocada en enseñar a los usuarios (principalmente niños) sobre dinosaurios a través de curiosidades, minijuegos y contenido multimedia. Este documento detalla el análisis exhaustivo de la accesibilidad del proyecto, las mejoras implementadas y el nivel de conformidad alcanzado con las directrices WCAG 2.1.
 
 ---
 
-## 1. Fundamentos de Accesibilidad
+## 1. Fundamentos de accesibilidad
 
 ### ¿Por qué es necesaria la accesibilidad web?
 
 La accesibilidad web es fundamental para garantizar que todas las personas, independientemente de sus capacidades, puedan acceder y usar una página web de manera equitativa. Afecta a usuarios con discapacidades visuales, auditivas, motoras y cognitivas. Además, beneficia a todos los usuarios (mejor navegación, contenido más claro), es obligatoria legalmente en Europa/España según la Directiva (UE) 2016/2102, y es simplemente lo correcto desde una perspectiva ética.
 
-### Los 4 Principios de WCAG 2.1
+### Los 4 principios de WCAG 2.1
 
 #### 1. **Perceptible:** La información debe poder percibirse por todos
 - Los usuarios deben poder ver, escuchar o entender el contenido sin depender de un único sentido.
@@ -30,7 +30,7 @@ La accesibilidad web es fundamental para garantizar que todas las personas, inde
 -  El código debe ser válido HTML/CSS para que lectores de pantalla, ampliadores y otras herramientas funcionen correctamente.
 - Ejemplo en EducaDino: Usamos HTML5 semántico (`<article>`, `<h1>`, `<h2>`) y etiquetas ARIA cuando es necesario.
 
-### Niveles de Conformidad WCAG 2.1
+### Niveles de conformidad WCAG 2.1
 **A**
 - Es el nivel mínimo de cumplimiento.
 - Cubre los requisitos esenciales para que una web sea usable por personas con discapacidad.
@@ -50,28 +50,28 @@ El proyecto **EducaDino** persigue alcanzar **nivel AA**, que es el estándar re
 
 ---
 
-## 2. Componentes Multimedia Implementados
+## 2. Componentes multimedia implementados
 
-### Componente 1: Tarjetas de Curiosidades (app-card)
+### Componente 1: Tarjetas de curiosidades (app-card)
 
 **Galería de tarjetas interactivas**
 
 Componente reutilizable que muestra información sobre dinosaurios en formato de tarjeta. Cada tarjeta contiene: una imagen del dinosaurio, categoría, título, descripción, botón "Siguiente curiosidad" e icono de "me gusta". Las tarjetas permiten navegar por diferentes curiosidades de manera interactiva.
 
-**Características de Accesibilidad Implementadas:**
+**Características de accesibilidad implementadas:**
 
 - Cada imagen usa el atributo `alt` con el nombre del dinosaurio como texto alternativo.
 - Todos los botones (Siguiente, Me gusta) son accesibles presionando Tab y activables con Enter.
 - Usa `<article>` para cada tarjeta, `<h3>` para títulos, y `<button>` para elementos interactivos.
 - Los elementos focusables tienen estilos CSS que muestran claramente cuál tiene el focus.
 
-### Componente 2: Video Documental
+### Componente 2: Video documental
 
 **Video incrustado de YouTube**
 
 Video educativo sobre dinosaurios incrustado desde YouTube con la transcripción completa disponible en texto plano debajo del reproductor. Permite a usuarios sordos y con discapacidades auditivas acceder al contenido.
 
-**Características de Accesibilidad Implementadas:**
+**Características de accesibilidad implementadas:**
 
 - Atributo `title` en iframe: El iframe tiene un título descriptivo ("El Mundo de los Dinosaurios")
 - Texto alternativo del video disponible, con timestamps para sincronización
@@ -80,54 +80,50 @@ Video educativo sobre dinosaurios incrustado desde YouTube con la transcripción
 
 ---
 
-## 3. Auditoría Automatizada Inicial
+## 3. Auditoría automatizada inicial
 
-Se han ejecutado tres herramientas de análisis de accesibilidad para obtener un diagnóstico inicial del proyecto:
+### Resultados de auditoría
 
-### Resultados de Auditoría
+| Herramienta | Puntuación/Errores    | Captura |
+|-------------|-----------------------|--------|
+| **Lighthouse** | 92/100                | ![Lighthouse inicial](../capturas/lighthouse-antes-home.png) |
+| **WAVE** | 35 errores, 6 alertas | ![WAVE inicial](../capturas/wave-antes-home.png) |
+| **TAW** | 5 problemas           | |
 
-| Herramienta | Puntuación/Errores | Estado |
-|-------------|-------------------|--------|
-| **Lighthouse (Chrome)** | 85/100 | ⚠️ Requiere mejoras |
-| **WAVE (WebAIM)** | 3 errores, 8 alertas | ⚠️ Problemas detectados |
-| **TAW (Test Accesibilidad Web)** | 5 problemas | ⚠️ Requiere correcciones |
+### 3 problemas más graves detectados
 
-### 3 Problemas Más Graves Detectados
-
-1. **Contraste insuficiente en algunos elementos de texto** (Lighthouse, WAVE)
+**Contraste insuficiente en algunos elementos de texto** Lighthouse y WAVE
    - Afecta a usuarios con baja visión
    - Afecta especialmente en modo claro
    - Solución: Aumentar ratio de contraste a 4.5:1
 
-2. **Falta de etiqueta `lang` en algunos componentes secundarios** (WAVE, TAW)
+**Falta de etiqueta `lang` en algunos componentes secundarios** WAVE y TAW
    - Afecta a lectores de pantalla
    - Puede causar mala pronunciación de palabras
    - Solución: Asegurar `lang="es"` en elementos raíz
 
-3. **Icono "me gusta" sin etiqueta accesible** (WAVE, TAW)
+**Icono "me gusta" sin etiqueta accesible** WAVE y TAW
    - Solo es un `<span>` clickeable sin texto
    - Los lectores de pantalla no saben qué es
    - Solución: Agregar atributos ARIA (`aria-label`, `aria-pressed`)
 
 ---
 
-## 4. Análisis y Corrección de Errores
+## 4. Análisis y corrección de errores
 
-### Tabla Resumen de Errores Encontrados y Corregidos
+### Tabla resumen de errores encontrados y corregidos
 
 | # | Error | Criterio WCAG | Herramienta | Estado |
 |---|-------|---------------|-------------|--------|
-| 1 | Icono "me gusta" sin etiqueta accesible | 4.1.2 | WAVE | ✅ Corregido |
-| 2 | Imagen sin atributo `alt` en algunas tarjetas | 1.1.1 | WAVE | ✅ Corregido |
-| 3 | Contraste insuficiente en texto secundario | 1.4.3 | Lighthouse | ✅ Corregido |
-| 4 | Iframe de video sin atributo `title` | 1.1.1 | TAW | ✅ Corregido |
-| 5 | Botón "Siguiente" sin `:focus` visible | 2.4.7 | Lighthouse | ✅ Corregido |
-
-### Detalle de Cada Error Corregido
+| 1 | Icono "me gusta" sin etiqueta accesible | 4.1.2 | WAVE | Corregido |
+| 2 | Imagen sin atributo `alt` en algunas tarjetas | 1.1.1 | WAVE | Corregido |
+| 3 | Contraste insuficiente en texto secundario | 1.4.3 | Lighthouse | Corregido |
+| 4 | Iframe de video sin atributo `title` | 1.1.1 | TAW | Corregido |
+| 5 | Botón "Siguiente" sin `:focus` visible | 2.4.7 | Lighthouse | Corregido |
 
 ---
 
-#### Error #1: Icono "Me gusta" sin etiqueta accesible
+#### Error #1: Icono "me gusta" sin etiqueta accesible
 
 **Problema:** 
 El icono de corazón era un `<span>` clickeable sin descripción. Los lectores de pantalla no sabían qué era ni para qué servía.
@@ -159,11 +155,6 @@ Usuarios ciegos o con baja visión no podían entender la función del elemento 
 </button>
 ```
 
-**Cambios aplicados:**
-- Cambié `<span>` a `<button>` (semánticamente correcto)
-- Agregué `aria-label` dinámico que cambia según el estado
-- Agregué `aria-pressed` para indicar estado
-
 ---
 
 #### Error #2: Imagen sin atributo `alt` en algunas tarjetas
@@ -193,10 +184,6 @@ Usuarios ciegos reciben un anuncio de "imagen" sin saber qué contiene.
   class="dino-card__media"
   loading="lazy">
 ```
-
-**Cambios aplicados:**
-- Agregué binding `[alt]="title"` para que cada imagen tenga su descripción
-- El texto es descriptivo: "Triceratops", "Velociraptor", etc.
 
 ---
 
@@ -228,10 +215,6 @@ Usuarios con baja visión o daltonismo no pueden leer el texto claramente.
   font-weight: 600;
 }
 ```
-
-**Cambios aplicados:**
-- Cambié color de `#999` a `#555` (más oscuro)
-- Nuevo ratio de contraste: 5.2:1 ✅ Cumple WCAG AA
 
 ---
 
@@ -268,9 +251,6 @@ Los lectores de pantalla no podían identificar el contenido del iframe.
   allowfullscreen>
 </iframe>
 ```
-
-**Cambios aplicados:**
-- Agregué atributo `title` con descripción clara del contenido
 
 ---
 
@@ -320,66 +300,60 @@ Usuarios que navegan solo con teclado no saben dónde está el cursor.
 }
 ```
 
-**Cambios aplicados:**
-- Agregué `:focus-visible` con un outline visible de 3px
-- Agregué pequeña animación para mayor claridad visual
-
 ---
 
-## 5. Análisis de Estructura Semántica
+## 5. Análisis de estructura semántica
 
-### Landmarks HTML5 Utilizados
+### Landmarks HTML5 utilizados
 
-- ✅ `<header>` - Cabecera con logo y navegación (en layout)
-- ✅ `<nav>` - Menú de navegación principal (en layout)
-- ✅ `<main>` - Contenido principal de cada página
-- ✅ `<section>` - Agrupación de contenido (ej: curiosities)
-- ✅ `<article>` - Tarjetas individuales de curiosidades
-- ✅ `<footer>` - Pie de página con info
+- [x] `<header>` - Cabecera con logo y navegación (en layout)
+- [x] `<nav>` - Menú de navegación principal (en layout)
+- [x] `<main>` - Contenido principal de cada página
+- [x] `<section>` - Agrupación de contenido (ej: curiosities)
+- [x] `<article>` - Tarjetas individuales de curiosidades
+- [x] `<footer>` - Pie de página con info
 
-**Nota:** El proyecto usa `<section class="curiosities">` para agrupar las tarjetas, lo que es semánticamente correcto.
-
-### Jerarquía de Encabezados
+### Jerarquía de encabezados
 
 ```
-H1: Curiosidades (página principal de curiosidades)
-  H2: Documental: El Mundo de los Dinosaurios
-    H3: Transcripción Completa
+H1: Curiosidades
+  H2: Documental: El mundo de los dinosaurios
+    H3: Transcripción completa
 
-[En otras páginas]
+[En las demás páginas]
 H1: Home
 H1: Minijuegos
 H1: Perfil
 H1: Contacto
 ```
 
-**Evaluación:** ✅ **Correcta** - No hay saltos de nivel, la estructura es lógica y jerárquica.
+No hay saltos de nivel, la estructura es lógica y jerárquica.
 
-### Análisis de Imágenes
+### Análisis de imágenes
 
 | Aspecto | Número | Estado |
 |---------|--------|--------|
-| **Total de imágenes** | 9 (en curiosidades) | - |
-| **Con texto alternativo** | 9 | ✅ |
+| **Total de imágenes** | 33+ | - |
+| **Con texto alternativo** | 33+ | ✅ |
 | **Decorativas (alt="")** | 0 | - |
-| **Sin alt (requería corrección)** | 0 | ✅ Todas corregidas |
-
-**Conclusión:** ✅ Todas las imágenes en el componente de curiosidades tienen textos alternativos descriptivos.
+| **Usando `<picture>` responsive** | 6 | ✅ |
+| **Con `loading="lazy"`** | 27+ | ✅ |
+| **Sin alt (requería corrección)** | 0 | Todas corregidas |
 
 ---
 
-## 6. Verificación Manual
+## 6. Verificación manual
 
-### 6.1 Test de Navegación por Teclado
+### 6.1 Test de navegación por teclado
 
 Se realizó prueba completa de navegación usando solo teclado (Tab, Shift+Tab, Enter, Esc):
 
-- ✅ Puedo llegar a todos los enlaces y botones con Tab
-- ✅ El orden de navegación es lógico (de arriba a abajo, izquierda a derecha)
-- ✅ Veo claramente qué elemento tiene el focus (outline visible)
-- ✅ Puedo usar los botones de la tarjeta solo con teclado
-- ✅ No hay trampas de teclado
-- ✅ Los modals se pueden cerrar con Esc
+- [x] Puedo llegar a todos los enlaces y botones con Tab
+- [x] El orden de navegación es lógico (de arriba a abajo, izquierda a derecha)
+- [x] Veo claramente qué elemento tiene el focus (outline visible)
+- [x] Puedo usar los botones de la tarjeta solo con teclado
+- [x] No hay trampas de teclado
+- [x] Los modals se pueden cerrar con Esc
 
 **Problemas encontrados:** Ninguno
 
@@ -387,7 +361,7 @@ Se realizó prueba completa de navegación usando solo teclado (Tab, Shift+Tab, 
 
 ---
 
-### 6.2 Test con Lector de Pantalla (NVDA)
+### 6.2 Test con lector de pantalla (NVDA)
 
 Se realizó verificación usando NVDA (Non Visual Desktop Access) en Windows.
 
@@ -399,7 +373,7 @@ Se realizó verificación usando NVDA (Non Visual Desktop Access) en Windows.
 | ¿Los enlaces tienen textos descriptivos? | ✅ | El enlace "YouTube" es claro, no hay "Haz clic aquí" |
 | ¿El componente multimedia es accesible? | ✅ | El iframe se anuncia correctamente, la transcripción es legible |
 
-**Principales problemas detectados:** Ninguno (después de correcciones)
+**Principales problemas detectados:** Ninguno
 
 **Mejoras aplicadas:**
 - Agregué `aria-label` al botón de "me gusta"
@@ -408,23 +382,27 @@ Se realizó verificación usando NVDA (Non Visual Desktop Access) en Windows.
 
 ---
 
-### 6.3 Verificación Cross-browser
+### 6.3 Verificación cross-browser
 
 Se verificó el proyecto en 3 navegadores diferentes:
 
 | Navegador | Versión | Layout correcto | Multimedia funciona | Observaciones |
 |-----------|---------|-----------------|---------------------|---------------|
-| Chrome | 131+ | ✅ | ✅ | Sin problemas. Lighthouse muestra 85/100 en accesibilidad |
-| Firefox | 133+ | ✅ | ✅ | Sin problemas. Inspector de accesibilidad sin alertas críticas |
-| Edge | 131+ | ✅ | ✅ | Sin problemas. Comportamiento idéntico a Chrome |
+| Chrome | 131+ | ✅ | ✅ | Sin problemas. |
+| Firefox | 133+ | ✅ | ✅ | Sin problemas. |
+| Edge | 131+ | ✅ | ✅ | Sin problemas. |
 
-**Conclusión:** El proyecto funciona correctamente en todos los navegadores modernos sin degradación de accesibilidad.
+**Edge**
+
+**Chrome**
+
+**Firefox**
 
 ---
 
-## 7. Resultados Finales Después de Correcciones
+## 7. Resultados finales después de correcciones
 
-### Mejora de Auditoría
+### Mejora de auditoría - Resumen general
 
 | Herramienta | Antes | Después | Mejora |
 |-------------|-------|---------|--------|
@@ -432,9 +410,43 @@ Se verificó el proyecto en 3 navegadores diferentes:
 | **WAVE** | 3 errores, 8 alertas | 0 errores, 3 alertas | -3 errores, -5 alertas |
 | **TAW** | 5 problemas | 1 problema menor | -4 problemas |
 
+---
+
+### Capturas comparativas
+
+#### Lighthouse - Antes y después
+
+| Página | ANTES | DESPUÉS |
+|--------|-------|---------|
+| **Home** | ![Lighthouse Home Antes](../capturas/lighthouse-antes-home.png) | ![Lighthouse Home Después](../capturas/Lighthouse-despues-home.png) |
+| **Curiosidades** | ![Lighthouse Curiosidades Antes](../capturas/lighthouse-antes-curiosidades.png) | ![Lighthouse Curiosidades Después](../capturas/Lighthouse-despues-curiosidades.png) |
+| **Minijuegos** | ![Lighthouse Minijuegos Antes](../capturas/lighthouse-antes-minijuegos.png) | ![Lighthouse Minijuegos Después](../capturas/Lighthouse-despues-minijuegos.png) |
+| **Contacto** | ![Lighthouse Contacto Antes](../capturas/lighthouse-antes-contacto.png) | ![Lighthouse Contacto Después](../capturas/Lighthouse-despues-contacto.png) |
+| **Órdenes** | ![Lighthouse Órdenes Antes](../capturas/lighthouse-antes-ordenes.png) | ![Lighthouse Órdenes Después](../capturas/Lighthouse-despues-ordenes.png) |
+
+#### WAVE - Antes y después
+
+| Página | ANTES | DESPUÉS |
+|--------|-------|---------|
+| **Home** | ![WAVE Home Antes](../capturas/wave-antes-home.png) | ![WAVE Home Después](../capturas/wave-despues-home.png) |
+| **Curiosidades** | ![WAVE Curiosidades Antes](../capturas/wave-antes-curiosidades.png) | ![WAVE Curiosidades Después](../capturas/wave-despues-curiosidades.png) |
+| **Minijuegos** | ![WAVE Minijuegos Antes](../capturas/wave-antes-minijuegos.png) | ![WAVE Minijuegos Después](../capturas/wave-despues-minijuegos.png) |
+| **Contacto** | ![WAVE Contacto Antes](../capturas/wave-antes-contacto.png) | ![WAVE Contacto Después](../capturas/wave-despues-contacto.png) |
+| **Órdenes** | ![WAVE Órdenes Antes](../capturas/wave-antes-ordenes.png) | ![WAVE Órdenes Después](../capturas/wave-despues-ordenes.png) |
+
+---
+
+### Los 3 problemas más graves detectados en la auditoría inicial
+
+| # | Problema | Herramienta(s) | Impacto | Solución aplicada |
+|---|----------|----------------|---------|-------------------|
+| 1 | **Contraste insuficiente** en texto secundario (ratio 3.5:1) | Lighthouse, WAVE | Usuarios con baja visión no pueden leer el contenido | Cambio de color #999 → #555 (ratio 5.2:1) |
+| 2 | **Icono "me gusta" sin etiqueta accesible** - Solo `<span>` clickeable | WAVE, TAW | Lectores de pantalla no identifican la función del elemento | Cambio a `<button>` con `aria-label` y `aria-pressed` |
+| 3 | **Iframe de video sin atributo `title`** | TAW, Lighthouse | Los lectores de pantalla no pueden identificar el contenido multimedia | Agregado `title="El Mundo de los Dinosaurios - Documental educativo"` |
+
 **Análisis:** Las correcciones implementadas resultaron en mejoras significativas. Los 3 errores críticos se eliminaron completamente.
 
-### Checklist de Conformidad WCAG 2.1 Nivel AA
+### Checklist de conformidad WCAG 2.1 nivel AA
 
 **PERCEPTIBLE**
 - ✅ 1.1.1 - Contenido no textual (alt en imágenes) - **Cumple**
@@ -456,7 +468,7 @@ Se verificó el proyecto en 3 navegadores diferentes:
 **ROBUSTO**
 - ✅ 4.1.2 - Nombre, función, valor (ARIA) - **Cumple**
 
-### Nivel de Conformidad Alcanzado
+### Nivel de conformidad alcanzado
 
 **WCAG 2.1 Nivel AA** ✅
 
@@ -464,7 +476,7 @@ El proyecto cumple completamente con los criterios de Nivel AA. Se implementaron
 
 ---
 
-## 8. Conclusiones y Reflexión
+## 8. Conclusiones y reflexión
 
 ### ¿Es accesible mi proyecto?
 
@@ -474,7 +486,7 @@ Lo que más me sorprendió fue que **al usar NVDA**, el lector anunciaba todo cl
 
 **Ha cambiado mi forma de pensar:** Ahora entiendo que la accesibilidad no es un "extra", sino parte integral del diseño. Usar Tab + Enter en lugar del ratón, o escuchar cómo un lector de pantalla describe tu página, realmente te abre los ojos. Es como diseñar para una audiencia 10x más grande sin trabajo adicional importante.
 
-### Principales Mejoras Aplicadas
+### Principales mejoras aplicadas
 
 1. **Agregué `aria-label` y `aria-pressed` al botón "me gusta"** - Antes era solo un icono sin significado, ahora los lectores de pantalla entienden su función y estado.
 
@@ -486,7 +498,7 @@ Lo que más me sorprendió fue que **al usar NVDA**, el lector anunciaba todo cl
 
 5. **Binding dinámico `[alt]="title"` en imágenes** - Todas las imágenes tienen descripciones automáticas basadas en el nombre del dinosaurio.
 
-### Mejoras Futuras
+### Mejoras futuras
 
 1. **Captions sincronizados** - Agregar subtítulos quemados en el video descargado localmente para usuarios que no puedan ver YouTube.
 
@@ -498,13 +510,13 @@ Lo que más me sorprendió fue que **al usar NVDA**, el lector anunciaba todo cl
 
 5. **Validación de formularios accesibles** - Si existen formularios, asegurar que los errores sean anunciados por lectores de pantalla.
 
-### Aprendizaje Clave
+### Aprendizaje clave
 
 **La accesibilidad es un proceso, no un destino.** Implementar WCAG 2.1 AA no significa que sea perfecta, pero sí garantiza que la mayoría de personas con discapacidades puedan usar tu sitio. Lo importante es que desde el inicio uses HTML semántico, pienses en usuarios de teclado, y hagas pruebas reales con tecnologías de asistencia. Los automáticos (Lighthouse, WAVE) son útiles, pero **nada sustituye a probar con un lector de pantalla real**.
 
 ---
 
-## 📊 Resumen Ejecutivo
+## 📊 Resumen ejecutivo
 
 | Métrica | Valor |
 |---------|-------|
@@ -517,7 +529,7 @@ Lo que más me sorprendió fue que **al usar NVDA**, el lector anunciaba todo cl
 
 ---
 
-## 📚 Referencias Utilizadas
+## 📚 Referencias utilizadas
 
 - [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
 - [WebAIM - Web Accessibility In Mind](https://webaim.org)
@@ -527,7 +539,7 @@ Lo que más me sorprendió fue que **al usar NVDA**, el lector anunciaba todo cl
 
 ---
 
-**Documento generado:** 14 de febrero de 2026  
+**Documento generado:** 16 de febrero de 2026  
 **Autor:** Víctor Gómez Tejada  
 **Módulo:** Diseño de Interfaces Web (DIW)  
 **Curso:** 2º DAW - Desarrollo de Aplicaciones Web  

@@ -24,14 +24,17 @@
 
         @for (discovery of discoveries; track discovery.region) {
           <div class="map-point-wrapper" [style.top]="discovery.position.top" [style.left]="discovery.position.left">
-            <div
+            <button
+              type="button"
               class="map-point"
-              [title]="discovery.region"
+              [attr.aria-label]="'Descubrimiento en ' + discovery.region + ': ' + discovery.dinosaur"
               (mouseenter)="showTooltip(discovery)"
-              (mouseleave)="hideTooltip()">
-            </div>
+              (mouseleave)="hideTooltip()"
+              (focus)="showTooltip(discovery)"
+              (blur)="hideTooltip()">
+            </button>
             @if (activeTooltip === discovery) {
-              <div class="map-tooltip">
+              <div class="map-tooltip" role="tooltip" aria-live="polite">
                 <h3 class="map-tooltip__title">{{ discovery.dinosaur }}</h3>
                 <p class="map-tooltip__text">{{ discovery.discovery }}</p>
               </div>
@@ -74,12 +77,12 @@
         </div>
 
         <div class="carousel-arrows">
-          <button class="carousel-arrow carousel-arrow--left" (click)="scrollLeft()">
-            <span class="material-icons">chevron_left</span>
+          <button class="carousel-arrow carousel-arrow--left" (click)="scrollLeft()" aria-label="Ver tarjetas anteriores">
+            <span class="material-icons" aria-hidden="true">chevron_left</span>
           </button>
 
-          <button class="carousel-arrow carousel-arrow--right" (click)="scrollRight()">
-            <span class="material-icons">chevron_right</span>
+          <button class="carousel-arrow carousel-arrow--right" (click)="scrollRight()" aria-label="Ver tarjetas siguientes">
+            <span class="material-icons" aria-hidden="true">chevron_right</span>
           </button>
         </div>
       </div>

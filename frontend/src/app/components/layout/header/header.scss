@@ -68,6 +68,11 @@
       overflow: hidden;
       padding: 0;
 
+      .visually-hidden {
+        color: #fff;
+        background-color: var(--primary-color);
+      }
+
       .header__search-icon-btn {
         background-color: var(--primary-color);
         color: var(--text-color-light);
