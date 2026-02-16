@@ -1,0 +1,92 @@
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║           EDUCADINO - Docker Compose para Producción          ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+services:
+  # ═══════════════════════════════════════════════════════════════
+  # BASE DE DATOS POSTGRESQL
+  # ═══════════════════════════════════════════════════════════════
+  postgres:
+    image: postgres:16-alpine
+    container_name: educadino-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-educadino}
+      POSTGRES_USER: ${POSTGRES_USER:-educadino}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-educadino_secret_2024}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/init-db.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - educadino-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-educadino} -d ${POSTGRES_DB:-educadino}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ═══════════════════════════════════════════════════════════════
+  # BACKEND - SPRING BOOT API
+  # ═══════════════════════════════════════════════════════════════
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: educadino-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      # Base de datos
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-educadino}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-educadino}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-educadino_secret_2024}
+      # JWT - ¡CAMBIAR EN PRODUCCIÓN!
+      JWT_SECRET: ${JWT_SECRET:-EducaDino2024SecretKeyForJWTTokenGenerationMustBeAtLeast256BitsLong!}
+      JWT_EXPIRATION: ${JWT_EXPIRATION:-86400000}
+      # Spring
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
+      SERVER_PORT: 8080
+    networks:
+      - educadino-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ═══════════════════════════════════════════════════════════════
+  # FRONTEND - ANGULAR + NGINX
+  # ═══════════════════════════════════════════════════════════════
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: educadino-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${APP_PORT:-80}:80"
+      - "${APP_SSL_PORT:-443}:443"
+    networks:
+      - educadino-network
+    volumes:
+      - ./nginx/ssl:/etc/nginx/ssl:ro  # Certificados SSL (opcional)
+
+# ═══════════════════════════════════════════════════════════════
+# REDES
+# ═══════════════════════════════════════════════════════════════
+networks:
+  educadino-network:
+    driver: bridge
+
+# ═══════════════════════════════════════════════════════════════
+# VOLÚMENES PERSISTENTES
+# ═══════════════════════════════════════════════════════════════
+volumes:
+  postgres_data:
+    driver: local
+

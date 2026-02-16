@@ -1,0 +1,82 @@
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║           EDUCADINO - Configuración Producción                ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: EducaDino Backend
+
+  # ═══════════════════════════════════════════════════════════════
+  # CONFIGURACIÓN DE BASE DE DATOS (Variables de entorno)
+  # ═══════════════════════════════════════════════════════════════
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/educadino}
+    username: ${SPRING_DATASOURCE_USERNAME:educadino}
+    password: ${SPRING_DATASOURCE_PASSWORD:educadino}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: false
+
+  # ═══════════════════════════════════════════════════════════════
+  # JACKSON (Serialización JSON)
+  # ═════════════════════════════════════════════════════════��═════
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    time-zone: Europe/Madrid
+
+# ═══════════════════════════════════════════════════════════════
+# CONFIGURACIÓN JWT (Variables de entorno)
+# ═══════════════════════════════════════════════════════════════
+jwt:
+  secret: ${JWT_SECRET:DefaultSecretKeyMustBeAtLeast256BitsLongForHS256Algorithm!}
+  expiration: ${JWT_EXPIRATION:86400000}
+
+# ═══════════════════════════════════════════════════════════════
+# SWAGGER/OPENAPI - Deshabilitado en producción
+# ═══════════════════════════════════════════════════════════════
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
+# ═══════════════════════════════════════════════════════════════
+# ACTUATOR (Health checks)
+# ═══════════════════════════════════════════════════════════════
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+
+# ═══════════════════════════════════════════════════════════════
+# LOGGING
+# ═══════════════════════════════════════════════════════════════
+logging:
+  level:
+    root: WARN
+    com.educadino: INFO
+    org.springframework.security: WARN
+

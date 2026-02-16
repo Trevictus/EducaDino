@@ -393,22 +393,22 @@ Se verificó el proyecto en 3 navegadores diferentes:
 | Edge | 131+ | ✅ | ✅ | Sin problemas. |
 
 **Edge**
-
+![cross-browse-edge.png](../capturas/cross-browse-edge.png)
 **Chrome**
-
+![cross-browse-chrome.png](../capturas/cross-browse-chrome.png)
 **Firefox**
-
+![cross-browse-firefox.png](../capturas/cross-browse-firefox.png)
 ---
 
 ## 7. Resultados finales después de correcciones
 
 ### Mejora de auditoría - Resumen general
 
-| Herramienta | Antes | Después | Mejora |
-|-------------|-------|---------|--------|
-| **Lighthouse** | 85/100 | 92/100 | +7 puntos |
-| **WAVE** | 3 errores, 8 alertas | 0 errores, 3 alertas | -3 errores, -5 alertas |
-| **TAW** | 5 problemas | 1 problema menor | -4 problemas |
+| Herramienta | Antes                          | Después              | Mejora                  |
+|-------------|--------------------------------|----------------------|-------------------------|
+| **Lighthouse** | 92/100                         | 96/100               | +4 puntos               |
+| **WAVE** | 35 contrast errores, 6 alertas | 0 errores, 1 alertas | -35 errores, -5 alertas |
+| **TAW** | 5 problemas                    | 1 problema menor     | -4 problemas            |
 
 ---
 
@@ -449,24 +449,24 @@ Se verificó el proyecto en 3 navegadores diferentes:
 ### Checklist de conformidad WCAG 2.1 nivel AA
 
 **PERCEPTIBLE**
-- ✅ 1.1.1 - Contenido no textual (alt en imágenes) - **Cumple**
-- ✅ 1.3.1 - Información y relaciones (HTML semántico) - **Cumple**
-- ✅ 1.4.3 - Contraste mínimo (4.5:1 en texto) - **Cumple**
-- ✅ 1.4.4 - Redimensionar texto (sin pérdida) - **Cumple**
+- [X] 1.1.1 - Contenido no textual (alt en imágenes)
+- [X] 1.3.1 - Información y relaciones (HTML semántico)
+- [X] 1.4.3 - Contraste mínimo (4.5:1 en texto)
+- [X] 1.4.4 - Redimensionar texto (sin pérdida)
 
 **OPERABLE**
-- ✅ 2.1.1 - Teclado (toda la funcionalidad) - **Cumple**
-- ✅ 2.1.2 - Sin trampas de teclado - **Cumple**
-- ✅ 2.4.3 - Orden del foco (lógico y predecible) - **Cumple**
-- ✅ 2.4.7 - Foco visible (se ve claramente) - **Cumple**
+- [X] 2.1.1 - Teclado (toda la funcionalidad)
+- [X] 2.1.2 - Sin trampas de teclado
+- [X] 2.4.3 - Orden del foco (lógico y predecible)
+- [X] 2.4.7 - Foco visible (se ve claramente)
 
 **COMPRENSIBLE**
-- ✅ 3.1.1 - Idioma de la página (`lang="es"`) - **Cumple**
-- ✅ 3.2.3 - Navegación consistente - **Cumple**
-- ✅ 3.3.2 - Etiquetas en formularios - **Cumple**
+- [X] 3.1.1 - Idioma de la página (`lang="es"`)
+- [X] 3.2.3 - Navegación consistente
+- [X] 3.3.2 - Etiquetas en formularios
 
 **ROBUSTO**
-- ✅ 4.1.2 - Nombre, función, valor (ARIA) - **Cumple**
+- [X] 4.1.2 - Nombre, función, valor (ARIA)
 
 ### Nivel de conformidad alcanzado
 
@@ -480,68 +480,34 @@ El proyecto cumple completamente con los criterios de Nivel AA. Se implementaron
 
 ### ¿Es accesible mi proyecto?
 
-**Sí, EducaDino es accesible después de las mejoras implementadas.** El proyecto alcanzó el nivel WCAG 2.1 AA, lo que significa que es usable por la mayoría de personas con discapacidades. Las tarjetas de curiosidades permiten navegación por teclado y tienen descripciones de imágenes apropiadas. El video incluye una transcripción completa, lo que beneficia a usuarios sordos y a todos en general (puedes leer mientras haces otras cosas).
+**Sí, EducaDino es accesible tras las mejoras implementadas.** El proyecto alcanzó el nivel WCAG 2.1 AA, siendo usable por personas con discapacidades. Las tarjetas permiten navegación por teclado con descripciones de imágenes apropiadas, y el video incluye transcripción completa para usuarios sordos.
 
-Lo que más me sorprendió fue que **al usar NVDA**, el lector anunciaba todo claramente, incluso los cambios de estado del botón "me gusta". Inicialmente pensé que habría muchos más problemas, pero las bases estaban bien (HTML semántico desde el principio). La mayor dificultad fue el tema de **los pequeños detalles**: los atributos `title` en iframes, los estados de focus visibles, y los `aria-label` en botones que no tienen texto visible.
+Lo que más me sorprendió fue que al usar NVDA*, funcionase perfectamente y el lector anunciaba todo claramente, incluso los cambios de estado del botón "me gusta". La mayor dificultad fueron los atributos `title` en iframes, estados de focus visibles, y `aria-label` en botones sin texto.
 
-**Ha cambiado mi forma de pensar:** Ahora entiendo que la accesibilidad no es un "extra", sino parte integral del diseño. Usar Tab + Enter en lugar del ratón, o escuchar cómo un lector de pantalla describe tu página, realmente te abre los ojos. Es como diseñar para una audiencia 10x más grande sin trabajo adicional importante.
+La accesibilidad no es un extra, sino parte integral del diseño. Usar Tab y Enter en lugar del ratón, o escuchar cómo un lector de pantalla describe tu página, realmente abre los ojos y hace que esta rama de la programación sea más enrevesada y esencial de lo que pensaba.
 
 ### Principales mejoras aplicadas
 
-1. **Agregué `aria-label` y `aria-pressed` al botón "me gusta"** - Antes era solo un icono sin significado, ahora los lectores de pantalla entienden su función y estado.
+**Botón "me gusta" accesible** - Añadido `aria-label` y `aria-pressed` para que los lectores de pantalla identifiquen su función y estado.
 
-2. **Mejora de contraste en texto de categoría** - De #999 a #555, aumentando el ratio de 3.5:1 a 5.2:1 para cumplir WCAG AA.
+**Mejora de contraste** - Color de texto secundario de #999 a #555 (ratio 3.5:1 → 5.2:1) para cumplir WCAG AA.
 
-3. **Atributo `title` descriptivo en iframe de video** - Ahora lectores de pantalla saben que es un documental sobre dinosaurios.
+**Focus visible en elementos interactivos** - Estilos `:focus-visible` con outline de 3px para navegación por teclado.
 
-4. **Estilos `:focus-visible` mejorados en botones** - Outline visible con offset para que usuarios de teclado sepan dónde están.
+**Atributo `title` en iframe de video** - Los lectores de pantalla ahora identifican el contenido multimedia correctamente.
 
-5. **Binding dinámico `[alt]="title"` en imágenes** - Todas las imágenes tienen descripciones automáticas basadas en el nombre del dinosaurio.
+**Binding dinámico `[alt]="title"` en imágenes** - Todas las imágenes tienen descripciones automáticas basadas en el contenido.
 
 ### Mejoras futuras
 
-1. **Captions sincronizados** - Agregar subtítulos quemados en el video descargado localmente para usuarios que no puedan ver YouTube.
+**Captions sincronizados** - Agregar subtítulos en el video descargado localmente para usuarios que no puedan ver YouTube.
 
-2. **Modo oscuro optimizado** - Verificar contraste también en modo oscuro (probablemente haya algunos elementos que bajen de 4.5:1).
+**Modo oscuro optimizado** - Verificar contraste también en modo oscuro (probablemente haya algunos elementos que bajen de 4.5:1).
 
-3. **Componentes interactivos más complejos** - Si agregas carruseles, menús desplegables o sliders, necesitarían ARIA adicional (`aria-live`, `role="tablist"`, etc.).
+**Componentes interactivos más complejos** - Carruseles, menús desplegables o sliders, necesitarían ARIA adicional `aria-live` o `role="tablist"` entre otros.
 
-4. **Pruebas con tecnologías más específicas** - JAWS, ZoomText, o Dragon NaturallySpeaking para usuarios con discapacidades más severas.
-
-5. **Validación de formularios accesibles** - Si existen formularios, asegurar que los errores sean anunciados por lectores de pantalla.
+**Pruebas con tecnologías más específicas** - JAWS, ZoomText, o Dragon NaturallySpeaking para usuarios con discapacidades más severas.
 
 ### Aprendizaje clave
 
-**La accesibilidad es un proceso, no un destino.** Implementar WCAG 2.1 AA no significa que sea perfecta, pero sí garantiza que la mayoría de personas con discapacidades puedan usar tu sitio. Lo importante es que desde el inicio uses HTML semántico, pienses en usuarios de teclado, y hagas pruebas reales con tecnologías de asistencia. Los automáticos (Lighthouse, WAVE) son útiles, pero **nada sustituye a probar con un lector de pantalla real**.
-
----
-
-## 📊 Resumen ejecutivo
-
-| Métrica | Valor |
-|---------|-------|
-| **Nivel WCAG alcanzado** | AA ✅ |
-| **Errores críticos eliminados** | 5/5 |
-| **Herramientas auditadas** | 3 (Lighthouse, WAVE, TAW) |
-| **Navegadores verificados** | 3 (Chrome, Firefox, Edge) |
-| **Tecnologías de asistencia probadas** | 2 (Teclado, NVDA) |
-| **Puntuación Lighthouse final** | 92/100 |
-
----
-
-## 📚 Referencias utilizadas
-
-- [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
-- [WebAIM - Web Accessibility In Mind](https://webaim.org)
-- [MDN - Accessibility](https://developer.mozilla.org/en-US/docs/Web/Accessibility)
-- [Accesible.es - Normativa española](https://accesible.es)
-- [NVDA Screen Reader](https://www.nvaccess.org)
-
----
-
-**Documento generado:** 16 de febrero de 2026  
-**Autor:** Víctor Gómez Tejada  
-**Módulo:** Diseño de Interfaces Web (DIW)  
-**Curso:** 2º DAW - Desarrollo de Aplicaciones Web  
-**Institución:** [Tu centro educativo]
-
+Implementar WCAG 2.1 AA no significa que sea perfecta, pero sí garantiza que la mayoría de personas con discapacidades puedan usar tu sitio. Lo importante es que desde el inicio uses HTML semántico, pienses en usuarios de teclado, y hagas pruebas reales con tecnologías de asistencia. Los automáticos son útiles y te ganas un sector de mercado más grande.

@@ -1,7 +1,52 @@
-# EducaDino
+# Proyecto 4 - Accesibilidad y Multimedia
 
-EducaDino es una aplicación web educativa interactiva para aprender sobre dinosaurios, dirigida a público infantil y familiar. Permite explorar información, curiosidades, minijuegos y actividades de forma visual y divertida.
+## Descripción
+EducaDino es una aplicación web educativa interactiva para aprender sobre dinosaurios, dirigida a público infantil y familiar. Permite explorar información, curiosidades, minijuegos y actividades de forma visual y divertida, con un enfoque especial en accesibilidad web.
 
+## Componente multimedia añadido
+**Tipo:** Galería de tarjetas interactivas + Video
+**Descripción:** Tarjetas de curiosidades con navegación dinámica y video documental con transcripción completa.
+
+## Resultados de auditoría de accesibilidad
+
+| Herramienta | Puntuación inicial | Puntuación final | Mejora |
+|-------------|-------------------|------------------|--------|
+| Lighthouse | 92/100 | 96/100 | +4 |
+| WAVE | 35 errores | 0 errores | -35 |
+| TAW | 5 problemas | 1 problema | -4 |
+
+**Nivel de conformidad alcanzado:** WCAG 2.1 AA ✅
+
+## Documentación completa
+📄 **[Ver análisis completo de accesibilidad](./frontend/src/docs/accesibilidad/README.md)**
+
+## Verificación realizada
+- ✅ Auditoría con Lighthouse, WAVE y TAW
+- ✅ Test con lector de pantalla (NVDA)
+- ✅ Test de navegación por teclado
+- ✅ Verificación cross-browser (Chrome, Firefox, Edge)
+
+## Tecnologías utilizadas
+- HTML5 semántico
+- CSS3/SCSS (con media queries de accesibilidad)
+- Angular 21 (standalone components)
+- TypeScript 5.9
+- Spring Boot 3.4 (Backend)
+- PostgreSQL (Base de datos)
+
+## Instalación rápida
+
+**--------------------------------------------TODO-----------------------------**
+> **[instrucciones detalladas de instalación](#-instalación-y-ejecución)**
+
+## Autor
+**Nombre:** Víctor
+**Curso:** 2º DAW - Desarrollo de Aplicaciones Web
+**Módulo:** Diseño de Interfaces Web (DIW)
+
+---
+
+## Enlaces del proyecto
 - **URL de producción:** https://trevictus.github.io/EducaDino/
 - **API Backend:** `http://localhost:8080/api` (desarrollo local)
 - **Swagger UI:** `http://localhost:8080/api/swagger-ui.html`
@@ -35,27 +80,6 @@ EducaDino ahora tiene una **arquitectura full-stack**:
 
 ---
 
-## Tecnologías utilizadas
-
-### Frontend
-- Angular 21 (standalone components)
-- TypeScript 5.9
-- SCSS (ITCSS, BEM)
-- Angular Signals
-- RxJS 7.8
-- HTML5 y CSS3
-
-### Backend
-- Spring Boot 3.4
-- Java 21
-- Spring Security
-- JWT (JSON Web Tokens)
-- Spring Data JPA
-- PostgreSQL
-- Maven
-- Swagger/OpenAPI
-
----
 
 ## Características principales
 

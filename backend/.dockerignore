@@ -1,0 +1,21 @@
+# Maven
+target/
+*.jar
+*.war
+*.class
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Maven wrapper (se copia explícitamente)
+!.mvn/wrapper/maven-wrapper.jar
+
