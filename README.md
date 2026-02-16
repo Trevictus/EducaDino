@@ -39,16 +39,16 @@ EducaDino es una aplicación web educativa interactiva para aprender sobre dinos
 **--------------------------------------------TODO-----------------------------**
 
 ## Autor
-**Nombre:** Víctor Gómez Tejada
-**Curso:** 2º DAW - Desarrollo de Aplicaciones Web
+**Nombre:** Víctor Gómez Tejada  
+**Curso:** 2º DAW - Desarrollo de Aplicaciones Web  
 **Módulo:** Diseño de Interfaces Web (DIW)
 
 ---
 
 ## Enlaces del proyecto
-- **URL de producción:** https://trevictus.github.io/EducaDino/
-- **API Backend:** `http://localhost:8080/api` (desarrollo local)
-- **Swagger UI:** `http://localhost:8080/api/swagger-ui.html`
+- **URL de producción:** https://trevictus.github.io/EducaDino/  
+- **API Backend:** `http://localhost:8080/api` (desarrollo local)  
+- **Swagger UI:** `http://localhost:8080/api/swagger-ui.html`  
 
 ---
 
