@@ -15,10 +15,10 @@ EducaDino es una aplicación web educativa interactiva para aprender sobre dinos
 | WAVE | 35 errores | 0 errores | -35 |
 | TAW | 5 problemas | 1 problema | -4 |
 
-**Nivel de conformidad alcanzado:** WCAG 2.1 AA ✅
+**Nivel de conformidad alcanzado:** WCAG 2.1 AA
 
 ## Documentación completa
-📄 **[Ver análisis completo de accesibilidad](./frontend/src/docs/accesibilidad/README.md)**
+**[Ver análisis completo de accesibilidad](./frontend/src/docs/accesibilidad/README.md)**
 
 ## Verificación realizada
 - ✅ Auditoría con Lighthouse, WAVE y TAW
@@ -34,13 +34,12 @@ EducaDino es una aplicación web educativa interactiva para aprender sobre dinos
 - Spring Boot 3.4 (Backend)
 - PostgreSQL (Base de datos)
 
-## Instalación rápida
+## Link a EducaDino desplegado
 
 **--------------------------------------------TODO-----------------------------**
-> **[instrucciones detalladas de instalación](#-instalación-y-ejecución)**
 
 ## Autor
-**Nombre:** Víctor
+**Nombre:** Víctor Gómez Tejada
 **Curso:** 2º DAW - Desarrollo de Aplicaciones Web
 **Módulo:** Diseño de Interfaces Web (DIW)
 
@@ -109,7 +108,7 @@ EducaDino ahora tiene una **arquitectura full-stack**:
 
 ---
 
-## 🚀 Instalación y ejecución
+## Instalación y ejecución
 
 ### Requisitos previos
 - **Java 21** - [Descargar](https://www.oracle.com/java/technologies/downloads/#java21)
@@ -117,16 +116,7 @@ EducaDino ahora tiene una **arquitectura full-stack**:
 - **PostgreSQL** (opcional si usas Neon)
 - **Git**
 
-### Opción 1: Ejecución rápida (Script PowerShell)
-
-```powershell
-# Desde la raíz del proyecto
-.\start-educadino.ps1
-```
-
-Selecciona opción **2** para ejecutar Backend + Frontend automáticamente.
-
-### Opción 2: Ejecución manual
+### Opción 1: Ejecución manual
 
 #### Terminal 1 - Backend
 ```powershell
@@ -162,7 +152,7 @@ Espera hasta ver:
 
 ---
 
-## 🔐 Credenciales de prueba
+## Credenciales de prueba
 
 | Usuario | Contraseña | Rol | Descripción |
 |---------|-----------|-----|------------|
@@ -173,7 +163,7 @@ O registra tu propio usuario en `/perfil`
 
 ---
 
-## 📱 Uso de la aplicación
+## Uso de la aplicación
 
 ### Para usuarios normales (USER)
 1. Abre http://localhost:4200
@@ -196,7 +186,7 @@ O registra tu propio usuario en `/perfil`
 
 ---
 
-## 🧪 Probar CORS
+## Probar CORS
 
 El sistema CORS está completamente configurado. Para verificar:
 
@@ -211,7 +201,7 @@ El sistema CORS está completamente configurado. Para verificar:
 
 ---
 
-## 📂 Estructura del proyecto
+## Estructura del proyecto
 
 ```
 EducaDino/
@@ -255,7 +245,7 @@ EducaDino/
 
 ---
 
-## 🔗 Flujo de CORS
+## Flujo de CORS
 
 ```
 Navegador (http://localhost:4200)
@@ -292,7 +282,7 @@ Navegador (http://localhost:4200)
 ---
 
 
-## 🐛 Solución de problemas
+## Solución de problemas
 
 ### Error: "Cannot GET /api/auth/register"
 - ✅ Verifica que el backend está corriendo en puerto 8080
@@ -313,7 +303,7 @@ Navegador (http://localhost:4200)
 
 ---
 
-## 🚀 Despliegue a producción
+## Despliegue a producción
 
 ### Backend
 - Opción 1: Heroku
@@ -332,19 +322,19 @@ Navegador (http://localhost:4200)
 
 ---
 
-## 📄 Licencia
+## Licencia
 
 MIT License - Consulta [LICENSE](./LICENSE) para detalles
 
 ---
 
-## 👨‍💻 Autor
+## Autor
 
-**Víctor** - Full Stack Developer
+**VíctorGT** - Full Stack Developer
 
 ---
 
-## 🤝 Contribuir
+## Contribuir
 
 Las contribuciones son bienvenidas. Por favor:
 1. Fork el repositorio
@@ -355,7 +345,7 @@ Las contribuciones son bienvenidas. Por favor:
 
 ---
 
-## 📞 Soporte
+## Soporte
 
 Para problemas o preguntas:
 1. Abre un issue en GitHub
