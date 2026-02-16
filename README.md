@@ -35,8 +35,7 @@ EducaDino es una aplicación web educativa interactiva para aprender sobre dinos
 - PostgreSQL (Base de datos)
 
 ## Link a EducaDino desplegado
-
-**--------------------------------------------TODO-----------------------------**
+https://educadino.alcina.es/
 
 ## Autor
 **Nombre:** Víctor Gómez Tejada  
