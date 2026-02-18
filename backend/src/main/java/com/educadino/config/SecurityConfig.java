@@ -45,6 +45,7 @@ public class SecurityConfig {
         // Rutas públicas
         .requestMatchers("/auth/**").permitAll()
         .requestMatchers("/docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+        .requestMatchers("/actuator/**").permitAll()
         .requestMatchers(HttpMethod.GET, "/dinosaurs/**").permitAll()
         .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
         .requestMatchers(HttpMethod.POST, "/contact").permitAll()

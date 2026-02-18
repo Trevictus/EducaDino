@@ -1,0 +1,58 @@
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║        EDUCADINO - Configuración para Tests                   ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: EducaDino Backend Test
+
+  # Base de datos en memoria para tests
+  datasource:
+    url: jdbc:postgresql://ep-curly-butterfly-agj81bzd-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require
+    username: neondb_owner
+    password: npg_HrwONEcZn62A
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+# JWT para tests
+jwt:
+  secret: EducaDino2024SecretKeyForJWTTokenGenerationMustBeAtLeast256BitsLong!
+  expiration: 86400000
+
+# Swagger/OpenAPI
+springdoc:
+  api-docs:
+    path: /docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+
+# Logging reducido para tests
+logging:
+  level:
+    root: WARN
+    com.educadino: INFO
+
